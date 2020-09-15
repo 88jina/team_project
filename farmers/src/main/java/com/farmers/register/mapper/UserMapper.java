@@ -21,7 +21,15 @@ public interface UserMapper {
 	public List<String> checkUserInfo(UserBean userBean);
 
 	// 모든 회원 정보 조회
-	@Select("SELECT userId, loginId, userType FROM users")
-	public List<String> userView(UserBean userBean);
+	@Select("SELECT * FROM users")
+	public Map<String,String> userView(UserBean userBean);
+	
+	//특정 회원 정보 검색
+	@Select("SELECT loginId, userType FROM users WHERE loginId LIKE %#{loginId}%")
+	public List<String> searchUser(UserBean userBean);
+	
+	//판매자등록
+	@Update("UPDATE users SET userType=#{userType} WHERE loginId=#{loginId}")
+	public void changeUserType(UserBean userBean);
 
 }

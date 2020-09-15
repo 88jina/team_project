@@ -18,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		if(!loginBean.isLoggedIn()) {
-			response.sendRedirect("home/home");
+			response.sendRedirect("/farmers/");
 			return false;
 		}
 		return true;

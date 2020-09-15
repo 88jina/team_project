@@ -13,7 +13,6 @@ import com.farmers.register.interceptor.*;
 public class ServletConfiguration implements WebMvcConfigurer {
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		WebMvcConfigurer.super.configureViewResolvers(registry);
 		registry.jsp("/views/",".jsp");
 
 	}
@@ -21,7 +20,7 @@ public class ServletConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 
 	}
 	
