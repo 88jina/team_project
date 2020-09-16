@@ -572,6 +572,20 @@ img {
     transition: all .3s;
 }
 
+//joinPage
+.join-pw {
+    position: relative;
+    .open-eye {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        right: 0;
+    }
+    .closed-eye {
+        position: absolute;
+    }
+}
+
 //stars
 .stars {
     i {

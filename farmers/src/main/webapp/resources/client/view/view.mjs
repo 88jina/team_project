@@ -295,6 +295,7 @@ class JoinPage extends HTMLElement {
 
         const lId = document.querySelector('#id');
         const uPw = document.querySelector('#password');
+        const pwC = document.querySelector('#passwordChk');
         const uNm = document.querySelector('#name');
         const uEm = document.querySelector('#email');
         const uPn = document.querySelector('#phone');
@@ -305,6 +306,8 @@ class JoinPage extends HTMLElement {
         ?   "아이디를 입력해주세요"
         :   (uPw.value === "")
         ?   "패스워드를 입력해주세요"
+        :   (uPw.value !== pwC.value)
+        ?   "패스워드가 다르게 입력되었습니다."
         :   (uNm.value === "")
         ?   "이름을 입력해주세요"
         :   (uEm.value === "")
@@ -316,6 +319,7 @@ class JoinPage extends HTMLElement {
         :   true;
 
         if (typeof(msg) === "string") {
+
             alert(msg);
             return false;
         }
@@ -327,7 +331,7 @@ class JoinPage extends HTMLElement {
             userEmail: uEm.value,
             userPhoneNum: uPn.value,
         };
-        
+
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/join');
         xhr.setRequestHeader('Content-type', 'application/json');
@@ -369,7 +373,26 @@ class LoginPage extends HTMLElement {
         this.loginPage = document.querySelector('login-page');
         document.querySelector('#loginExit').addEventListener('click', this.hideLoginPage.bind(this));
         document.querySelector('#join').addEventListener('click', this.showJoinPage.bind(this));
+        document.getElementById('loginBtn').addEventListener('click', this.sendAjax.bind(this));
         this.hideLoginPage();
+    }
+
+    sendAjax() {
+        const data = {
+            loginId: document.getElementById('loginId').value,
+            userPw: document.getElementById('loginPw').value
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'api/login', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status ==200) {
+                alert(xhr.responseText);
+            }
+        }
+        xhr.send(`loginId=${data.loginId}&userPw=${data.userPw}`);
+        console.log(data);
+
     }
     
     showLoginPage() {
@@ -465,3 +488,4 @@ window.customElements.define('review-page', ReviewPage);
 window.customElements.define('payment-page', PaymentPage);
 window.customElements.define('wishlist-page', WishlistPage);
 window.customElements.define('category-page', CategoryPage);
+

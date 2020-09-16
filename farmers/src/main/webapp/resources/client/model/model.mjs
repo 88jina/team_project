@@ -10,7 +10,7 @@ const carouselModel = `
 
 <div class="carousel-inner container">
     <div class="carousel-item show">
-      <img src="http://192.168.1.137:8090/farmers/img/cheese.jpg" class="d-block w-100" alt="...">
+      <img src="/FARMER/teamProject_frontend/app/client/img/cheese.jpg" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
         <h5>First slide label</h5>
         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -63,7 +63,7 @@ const mainFooterModel = `
       <span>개인정보처리방침</span>
     </div>
     <div class="pd-a-5px">
-      <div class="pd-lr-10px">대표자: 박기둥</div>
+      <div class="pd-lr-10px">대표자: 변지혜</div>
       <div class="pd-lr-10px">사업자등록번호: 11111111</div>
       <div class="pd-lr-10px">통신판매업: 제 1212-가나다-1111</div>
       <div class="pd-lr-10px">주소: 서울특별시 분당구 신의성실로 12</div>
@@ -137,10 +137,6 @@ const subTopNavModel = `
 
 `
 
-// const animatedAnchorModel = `
-// <i class="fas fa-arrow-circle-up fa-3x c-ggrn round">
-// </i>
-// `
 
 //----------------pages--------------------
 const loginPageModel = `
@@ -151,8 +147,8 @@ const loginPageModel = `
             <i class="fas fa-times"></i>
         </h2>
     </div>
-    <div class="container flex-col bgc-wgrn pd-a-15px">
-        <input class="fs-xl pd-a-15px mg-a-5px fcenter width-90" type="text" name="userId" id="id" placeholder="아이디를 입력하세요">
+    <form method="post" class="container flex-col bgc-wgrn pd-a-15px">
+        <input class="fs-xl pd-a-15px mg-a-5px fcenter width-90" type="text" name="loginId" id="loginId" placeholder="아이디를 입력하세요">
         <input class="fs-xl pd-a-15px mg-a-5px fcenter width-90" type="password" name="userPw" id="password" placeholder="비밀번호를 입력하세요">
         
         <div class="width-90 fcenter mg-a-5px flex-row just-between">
@@ -165,8 +161,8 @@ const loginPageModel = `
                 <label class="pd-a-15px" for="autoLogin">자동 로그인</label>
             </div>
         </div>
-        <button class="fs-xl pd-a-5px width-90 fcenter mg-t-20px btns" type="submit">로그인</button>
-    </div>
+        <button id="loginBtn" class="fs-xl pd-a-5px width-90 fcenter mg-t-20px btns" type="submit">로그인</button>
+    </form>
     <div class="contariner pd-a-15px flex-col">
         <div class="center width-90 flex-row just-between">
             <a class="c-lgrn" href="http://">아이디 찾기</a>
@@ -188,19 +184,31 @@ const joinPageModel = `
     <div class="width-100 flex-col pd-a-15px">
     
         <div class="flex-row width-100">
-            <input class="fs-xl pd-a-10px mg-a-10px width-100" type="text" name="loginId" id="id" placeholder="아이디를 입력해주세요" required>
+            <input class="fs-xl pd-a-10px mg-a-10px width-100" type="text" name="loginId" id="id" placeholder="아이디를 입력해주세요">
             <input class="fs-xl mg-a-10px width-140px btns" id="duplicateCheck" type="button" value="중복확인">
         </div>
-        <input class="fs-xl pd-a-10px mg-a-10px" type="password" name="userPw" id="password" placeholder="비밀번호를 입력해주세요" required>
-        <input class="fs-xl pd-a-10px mg-a-10px" type="password" name="userPwCheck" id="password-checker" placeholder="비밀번호를 한번 더 입력해주세요" required>
-        <input class="fs-xl pd-a-10px mg-a-10px" type="text" name="userName" id="name" placeholder="이름을 입력해주세요" required>
-        <input class="fs-xl pd-a-10px mg-a-10px" type="email" name="userEmail" id="email" placeholder="이메일 주소를 입력해주세요" required>
+        <div class="join-pw width-100">
+            <input class="fs-xl pd-a-10px mg-a-10px" type="password" name="userPw" id="loginPw" placeholder="비밀번호를 입력해주세요">
+            <div class="open-eye">
+                <i class="fas fa-eye fa-larger"></i>
+            </div>
+            <div class="closed-eye">
+                <i class="fas fa-eye-slash fa-larger"></i>
+            </div>
+        </div>
+        <div class="join-pw width-100">
+            <input class="fs-xl pd-a-10px mg-a-10px" type="password" name="userPw" id="passwordChk" placeholder="비밀번호를 한번 더 입력해주세요">
+            <i class="fas fa-eye fa-larger"></i>
+            <i class="fas fa-eye-slash fa-larger"></i>
+        </div>
+            <input class="fs-xl pd-a-10px mg-a-10px" type="text" name="userName" id="name" placeholder="이름을 입력해주세요">
+            <input class="fs-xl pd-a-10px mg-a-10px" type="email" name="userEmail" id="email" placeholder="이메일 주소를 입력해주세요">
         <div class="flex-row">
-            <input class="fs-xl pd-a-10px mg-a-10px width-100" type="tel" name="userPhoneNum" id="phone" maxlength="13" placeholder="핸드폰 번호를 입력해주세요" required>
+            <input class="fs-xl pd-a-10px mg-a-10px width-100" type="tel" name="userPhoneNum" id="phone" maxlength="13" placeholder="핸드폰 번호를 입력해주세요">
             <input class="fs-xl mg-a-10px width-140px btns" id="certification" type="button" value="인증번호">
         </div>
         <div class="flex-row mg-a-10px">
-            <input class="pd-a-10px mg-a-10px" type="checkbox" name="agreement" id="agrChk" required>
+            <input class="pd-a-10px mg-a-10px" type="checkbox" name="agreement" id="agrChk">
             <label class="fs-xl" for="agrChk">전체 동의합니다.</label>
         </div>
         <input class="fs-xl pd-a-10px mg-a-10px btns" id="postBtn" type="button" value="가입하기">

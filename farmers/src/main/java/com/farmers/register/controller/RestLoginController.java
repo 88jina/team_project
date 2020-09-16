@@ -18,9 +18,11 @@ public class RestLoginController {
 	@Autowired
 	UserBean userBean;
 
-	@PostMapping("/login")
+	@PostMapping("api/login")
 	public LoginBean doLogin(@Valid UserBean userBean, BindingResult rs) {
 		LoginBean loginBean = new LoginBean();
+		System.out.println(userBean.getLoginId());
+		System.out.println(userBean.getUserPw());
 		loginBean.setLoginId(userBean.getLoginId());
 		loginBean.setUserPw(userBean.getUserPw());
 
