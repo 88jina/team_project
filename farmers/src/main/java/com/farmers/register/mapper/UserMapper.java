@@ -18,7 +18,7 @@ public interface UserMapper {
 
 	// 로그인할때
 	@Select("SELECT userType FROM users WHERE loginId=#{loginId} AND userPw=#{userPw}")
-	public List<String> checkUserInfo(UserBean userBean);
+	public String checkUserInfo(UserBean userBean);
 
 	// 모든 회원 정보 조회
 	@Select("SELECT * FROM users")

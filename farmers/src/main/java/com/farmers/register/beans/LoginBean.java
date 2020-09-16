@@ -1,10 +1,14 @@
 package com.farmers.register.beans;
 
+import javax.validation.constraints.*;
+
 public class LoginBean {
+	@NotBlank(message = "빈칸이 있습니다")
+	private String loginId;
+	@NotBlank
+	private String userPw;
 	private boolean isExist;
 	private boolean isLoggedIn;
-	private String loginId;
-	private String userPw;
 	private String userType;
 	private String errorMsg;
 

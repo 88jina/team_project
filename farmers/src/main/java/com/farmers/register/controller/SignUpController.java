@@ -16,8 +16,8 @@ public class SignUpController {
 	@Autowired
 	SignUpService service;
 
-	@RequestMapping(value = "/api/join", method = RequestMethod.POST)
-	public String doSignUp(@Valid UserBean userBean, BindingResult result, Model model) {
+	@RequestMapping(value = "/api/join", method = RequestMethod.POST, produces="application/json; charset=utf8")
+	public @ResponseBody String doSignUp(@Valid UserBean userBean, BindingResult result, Model model) {
 		
 		if (result.hasErrors()) {
 			String msg = result.getAllErrors().get(0).getDefaultMessage();

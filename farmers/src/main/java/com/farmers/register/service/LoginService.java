@@ -1,8 +1,5 @@
 package com.farmers.register.service;
 
-import java.util.*;
-
-import javax.annotation.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -15,15 +12,12 @@ public class LoginService {
 	@Autowired
 	UserMapper userMapper;
 
-	@Resource
-	private LoginBean loginBean;
-
 	public boolean checkUserExist(UserBean userBean) {
 		boolean check = false;
-		List<String> list = userMapper.checkUserInfo(userBean);
-		if (list.size() != 0) {
+		String userType = userMapper.checkUserInfo(userBean);
+		if (userType != null) {
 			check = true;
-			loginBean.setExist(true);
+			userBean.setExist(true);
 		} else {
 			check = false;
 		}
@@ -32,11 +26,7 @@ public class LoginService {
 	}
 
 	public String userType(UserBean userBean) {
-		List<String> list = userMapper.checkUserInfo(userBean);
-		String userType=null;
-		if(list.size()!=0) {
-		 userType = list.get(0);}
-
+		String userType = userMapper.checkUserInfo(userBean);
 		return userType;
 	}
 

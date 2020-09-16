@@ -49,17 +49,18 @@ public class RootConfiguration {
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
+	@Bean 
 	
+	public UserBean userBean() {
+		return new UserBean();
+	}
 	@Bean
 	@SessionScope
 	public LoginBean loginBean() {
 		return new LoginBean();
 	}
 	
-	@Bean 
-	public UserBean userBean() {
-		return new UserBean();
-	}
+	
 	
 	
 	
