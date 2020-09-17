@@ -8,7 +8,7 @@
 </head>
 <body>
 관리자페이지입니다
-<form action="admin/allUsers" method="get"><button type="submit">회원목록조회</button></form>
+<form action="userList" method="get"><button type="submit">회원목록조회</button></form>
 
 
 </body>

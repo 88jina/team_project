@@ -205,12 +205,7 @@ const joinPageModel = `
                 <i class="fas fa-eye-slash fa-larger"></i>
             </div>
         </div>
-            <input class="fs-xl pd-a-10px mg-a-10px" type="text" name="userName" id="name" placeholder="이름을 입력해주세요">
             <input class="fs-xl pd-a-10px mg-a-10px" type="email" name="userEmail" id="email" placeholder="이메일 주소를 입력해주세요">
-        <div class="flex-row">
-            <input class="fs-xl pd-a-10px mg-a-10px width-100" type="tel" name="userPhoneNum" id="phone" maxlength="13" placeholder="핸드폰 번호를 입력해주세요">
-            <input class="fs-xl mg-a-10px width-140px btns" id="certification" type="button" value="인증번호">
-        </div>
         <div class="flex-row mg-a-10px">
             <input class="pd-a-10px mg-a-10px" type="checkbox" name="agreement" id="agrChk">
             <label class="fs-xl" for="agrChk">전체 동의합니다.</label>

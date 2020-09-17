@@ -1,5 +1,5 @@
-// import Controller from './client/controller/controller';
-// import Service from './client/service/service';
-// import View from './client/view/view';
+import Controller from './controller/controller';
+import View from './view/view';
+import Service from './service/service';
 
-// const app = new Controller(new Service(), new View());
+const app = new Controller(new Service(), new View());

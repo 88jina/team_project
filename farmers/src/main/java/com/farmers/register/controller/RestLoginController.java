@@ -7,6 +7,7 @@ import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.farmers.register.beans.*;
+import com.farmers.register.config.*;
 import com.farmers.register.service.*;
 
 @RestController

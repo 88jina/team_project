@@ -24,6 +24,26 @@ import {
     categoryPageModel
 } from "../model/model.mjs";
 
+
+class View {
+    constructor() {
+        this.search_box = this.get('search-box');
+        this.item_slide = this.get('item-slide');
+        
+    }
+    get(selector) {
+        return document.querySelector(selector);
+    }
+    show(selector) {
+        this.get(selector).style.display = "block";
+    }
+    hide(selector) {
+        this.get(selector).style.display = "none";
+    }
+
+}
+const __v = new View();
+
 class Carousel extends HTMLElement {
     constructor() {
         super();
@@ -259,14 +279,13 @@ class JoinPage extends HTMLElement {
         document.querySelector('#joinExit').addEventListener('click', this.hideJoinPage.bind(this));
         document.querySelector('#postBtn').addEventListener('click', this.joinPostRequest.bind(this));
         document.querySelector('#duplicateCheck').addEventListener('click', this.duplGetRequest.bind(this));
-        document.querySelector('#certification').addEventListener('click', this.certGetRequest.bind(this));
         document.querySelectorAll('.open-eye')[0].addEventListener('click', this.showPassword);
         document.querySelectorAll('.open-eye')[1].addEventListener('click', this.showPasswordChk);
         document.querySelectorAll('.closed-eye')[0].addEventListener('click', this.hidePassword);
         document.querySelectorAll('.closed-eye')[1].addEventListener('click', this.hidePasswordChk);
 
-        const phone = document.querySelector('#phone');
-        phone.onkeypress = this.isPhone;
+        // const phone = document.querySelector('#phone');
+        // phone.onkeypress = this.isPhone;
         this.hideJoinPage();
 
     }
@@ -294,21 +313,21 @@ class JoinPage extends HTMLElement {
         document.querySelectorAll('.closed-eye')[1].style.display = "none";
     }
 
-    isPhone() {
-        console.log(this.value);
-        if (event.keyCode<48 || event.keyCode>57){
-            event.returnValue=false;
-        }
+    // isPhone() {
+    //     console.log(this.value);
+    //     if (event.keyCode<48 || event.keyCode>57){
+    //         event.returnValue=false;
+    //     }
 
-        const fst = /^[\d]{3}$/;
-        const snd = /^[\d]{3}-[\d]{4}$/;
+    //     const fst = /^[\d]{3}$/;
+    //     const snd = /^[\d]{3}-[\d]{4}$/;
 
-        if (this.value.match(fst)) {
-            this.value = this.value+'-';
-        }else if(this.value.match(snd)) {
-            this.value = this.value+'-';
-        }
-    }
+    //     if (this.value.match(fst)) {
+    //         this.value = this.value+'-';
+    //     }else if(this.value.match(snd)) {
+    //         this.value = this.value+'-';
+    //     }
+    // }
 
     hideJoinPage() {
         // this
@@ -323,10 +342,7 @@ class JoinPage extends HTMLElement {
         const lId = document.querySelector('#joinId');
         const uPw = document.querySelector('#joinPw');
         const pwC = document.querySelector('#passwordChk');
-        const uNm = document.querySelector('#name');
         const uEm = document.querySelector('#email');
-        const uPn = document.querySelector('#phone');
-        const uPr = /^[\d]{3}-[\d]{4}-[\d]{4}$/;
 
         const msg = 
             (lId.value === "")
@@ -335,14 +351,8 @@ class JoinPage extends HTMLElement {
         ?   "패스워드를 입력해주세요"
         :   (uPw.value !== pwC.value)
         ?   "패스워드가 다르게 입력되었습니다."
-        :   (uNm.value === "")
-        ?   "이름을 입력해주세요"
         :   (uEm.value === "")
         ?   "메일 주소를 입력해주세요"
-        :   (uPn.value === "")
-        ?   "폰 번호를 입력해주세요"
-        :   (uPr.test(uPn.value) === false)
-        ?   "폰 번호를 양식에 맞춰서 보내주세요"
         :   true;
 
         if (typeof(msg) === "string") {
@@ -351,42 +361,35 @@ class JoinPage extends HTMLElement {
             return false;
         }
 
-        const data = {
-            loginId: lId.value,
-            userPw: uPw.value,
-            userName: uNm.value,
-            userEmail: uEm.value,
-            userPhoneNum: uPn.value,
-        };
-
+        const param = `loginId=${lId.value}&userPw=${uPw.value}&userEmail=${uEm.value}`;
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/join');
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(data));
-        console.log(data);
-
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.send(param);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        };
+        console.log(param);
 
     }
+    
     duplGetRequest() {
-        const data = {
-            loginId: document.querySelector('#id').value,
-        };
+        const joinId = document.querySelector('#joinId').value;
+        const param = `loginId=${joinId}`;
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/join/duplicateCheck');
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(data));
-        console.log(data);
-    }
-    certGetRequest() {
-        const data = {
-            userPhoneNum: document.querySelector('#phone').value,
+        xhr.open('GET', './api/join/duplicateCheck?'+'loginId='+joinId);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.send(param);
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
         };
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/join/certification');
-        xhr.setRequestHeader('Content-type', 'application/json');
-        xhr.send(JSON.stringify(data));
-        console.log(data);
+        console.log(param);
     }
+
 
 }
 
@@ -479,7 +482,8 @@ class WishlistPage extends HTMLElement {
         this.template.innerHTML = wishlistPageModel;
         this.appendChild(this.template.content.cloneNode(true));
         // this.shadowRoot.querySelector('#wishlistExit').addEventListener('click', this.hidePage.bind(this));
-        this.hideWishlisPage();
+        // this.hideWishlisPage();
+        __v.hide('wishlist-page');
     }
     hideWishlisPage() {
         document.querySelector('wishlist-page').style.display = "none";
@@ -518,4 +522,5 @@ window.customElements.define('review-page', ReviewPage);
 window.customElements.define('payment-page', PaymentPage);
 window.customElements.define('wishlist-page', WishlistPage);
 window.customElements.define('category-page', CategoryPage);
+
 
