@@ -5,8 +5,12 @@ import javax.validation.constraints.*;
 public class UserBean {
 	private String userId;
 	@NotEmpty(message = "빈칸이 있습니다")
+	@Pattern(regexp="[a-zA-Z0-1]*")
+	@Size(min=4, max=20)
 	private String loginId;
 	@NotEmpty(message = "빈칸이 있습니다")
+	@Size(min=4, max=20)
+	@Pattern(regexp="[a-zA-Z0-1]*")
 	private String userPw;
 	@NotEmpty(message = "빈칸이 있습니다")
 	@Email(message = "이메일 형식으로 입력해주세요")

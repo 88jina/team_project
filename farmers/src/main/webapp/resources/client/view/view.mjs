@@ -260,11 +260,38 @@ class JoinPage extends HTMLElement {
         document.querySelector('#postBtn').addEventListener('click', this.joinPostRequest.bind(this));
         document.querySelector('#duplicateCheck').addEventListener('click', this.duplGetRequest.bind(this));
         document.querySelector('#certification').addEventListener('click', this.certGetRequest.bind(this));
-        // this.shadowRoot.querySelector('#searchAddr').addEventListener('click', this.addrPostRequest.bind(this));
+        document.querySelectorAll('.open-eye')[0].addEventListener('click', this.showPassword);
+        document.querySelectorAll('.open-eye')[1].addEventListener('click', this.showPasswordChk);
+        document.querySelectorAll('.closed-eye')[0].addEventListener('click', this.hidePassword);
+        document.querySelectorAll('.closed-eye')[1].addEventListener('click', this.hidePasswordChk);
+
         const phone = document.querySelector('#phone');
         phone.onkeypress = this.isPhone;
         this.hideJoinPage();
 
+    }
+
+    showPassword() {
+        document.getElementById('joinPw').type = "text";
+        document.querySelectorAll('.open-eye')[0].style.display = "none";
+        document.querySelectorAll('.closed-eye')[0].style.display = "block";
+    }
+    showPasswordChk() {
+        document.getElementById('passwordChk').type = "text";
+        document.querySelectorAll('.open-eye')[1].style.display = "none";
+        document.querySelectorAll('.closed-eye')[1].style.display = "block";
+    }
+
+    hidePassword() {
+        document.getElementById('joinPw').type = "password";
+        document.querySelectorAll('.open-eye')[0].style.display = "block";
+        document.querySelectorAll('.closed-eye')[0].style.display = "none";
+    }
+
+    hidePasswordChk() {
+        document.getElementById('passwordChk').type = "password";
+        document.querySelectorAll('.open-eye')[1].style.display = "block";
+        document.querySelectorAll('.closed-eye')[1].style.display = "none";
     }
 
     isPhone() {
@@ -293,8 +320,8 @@ class JoinPage extends HTMLElement {
     }
     joinPostRequest() {
 
-        const lId = document.querySelector('#id');
-        const uPw = document.querySelector('#password');
+        const lId = document.querySelector('#joinId');
+        const uPw = document.querySelector('#joinPw');
         const pwC = document.querySelector('#passwordChk');
         const uNm = document.querySelector('#name');
         const uEm = document.querySelector('#email');
@@ -376,22 +403,25 @@ class LoginPage extends HTMLElement {
         document.getElementById('loginBtn').addEventListener('click', this.sendAjax.bind(this));
         this.hideLoginPage();
     }
-
+//loginId=ads&userPw=asd
+//loginId=asd&userPw=asd
     sendAjax() {
-        const data = {
-            loginId: document.getElementById('loginId').value,
-            userPw: document.getElementById('loginPw').value
-        }
+        const loginId = document.getElementById('loginId');
+        const userPw = document.getElementById('loginPw');
+
+        const param = `loginId=${loginId.value}&userPw=${userPw.value}`
+        console.log(loginId, userPw);
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'api/login', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.open('POST', 'api/login');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.onreadystatechange = function() {
-            if(xhr.readyState == 4 && xhr.status ==200) {
+            if(xhr.readyState == 4 && xhr.status == 200) {
                 alert(xhr.responseText);
             }
         }
-        xhr.send(`loginId=${data.loginId}&userPw=${data.userPw}`);
-        console.log(data);
+        xhr.send(param);
+        console.log(param);
 
     }
     

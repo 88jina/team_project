@@ -25,18 +25,19 @@ public class RestLoginController {
 		System.out.println(userBean.getUserPw());
 		loginBean.setLoginId(userBean.getLoginId());
 		loginBean.setUserPw(userBean.getUserPw());
-
+		String msg=null;
 		if (rs.hasErrors()) {
-			String msg = rs.getAllErrors().get(0).getDefaultMessage();
+			msg = rs.getAllErrors().get(0).getDefaultMessage();
 			loginBean.setErrorMsg(msg);
 		}
+		loginBean.setErrorMsg("no errors");
 		System.out.println("에러 없음");
 
 		boolean exist = service.checkUserExist(userBean);
 		loginBean.setExist(exist);
 		System.out.println("가입 여부 : " + exist);
 		if (exist == false) {
-			String msg = "가입된 계정이 아닙니다";
+			msg = "가입된 계정이 아닙니다";
 			loginBean.setErrorMsg(msg);
 			loginBean.setLoggedIn(false);
 		} else {

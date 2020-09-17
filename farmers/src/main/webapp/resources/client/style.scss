@@ -238,14 +238,6 @@ img {
     right: 5%;
 }
 
-//fixed position
-.fixed-top-right {
-    position: fixed;
-    padding: 3px;
-    top: 10px;
-    right: 10px;
-}
-
 
 .to-top-anchor {
     position: fixed;
@@ -427,51 +419,86 @@ img {
     }
 }
 
-.top-nav {
-    width: 100%;
-    position: fixed;
-    z-index: 15;
-    top: 0;
+//searchBoxModel
 
-    h1 {
-        font-style: italic;
-    }
-
-    h1:hover {
+#search-box {
+    #close:hover {
         cursor: pointer;
+        background-color: #f6d743;
         color: #000000;
-        transition: all .2s;
+        transition: all .3s;
     }
-
-    nav {
-        font-size: medium;
-        font-weight: bold;
-    }
-
     nav:hover {
         cursor: pointer;
-        color: map-get($foundation-palette, paleyel);
-        border-radius: .5em;
-        background-color: map-get($foundation-palette, leafgreen);
-        transition: all .4s;
-        margin: 4px;
+        background-color: #f6d743;
+        border-radius: 10px;
+        margin: 5px;
+        color: #000000;
+        transition: all .3s;
     }
+}
 
-    i {
-        font-size: larger;
-        border-radius: 100%;
-    }
 
-    ;
+#main-header {
+    .top-nav-wrapper {
+        width: 100%;
+        position: fixed;
+        z-index: 15;
+        top: 0;
 
-    #wishlist:hover {
-        cursor: pointer;
+        .top-nav {
+            position: relative;
+
+        }
+
+        .seedling {
+            position: absolute;
+            padding: 10px;
+            margin: auto;
+            top: 0;
+            right: 0;
+        }
+
+        h1 {
+            font-style: italic;
+        }
+
+        h1:hover {
+            cursor: pointer;
+            color: #000000;
+            transition: all .2s;
+        }
+
+        nav {
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        nav:hover {
+            cursor: pointer;
+            color: map-get($foundation-palette, paleyel);
+            border-radius: .5em;
+            background-color: map-get($foundation-palette, leafgreen);
+            transition: all .4s;
+            margin: 4px;
+        }
 
         i {
-            background-color: #06623b;
+            font-size: larger;
+            border-radius: 100%;
+        }
 
-            color: #f6d743;
-            transition: all .4s;
+
+
+        #wishlist:hover {
+            cursor: pointer;
+
+            i {
+                background-color: #06623b;
+
+                color: #f6d743;
+                transition: all .4s;
+            }
         }
     }
 }
@@ -575,14 +602,31 @@ img {
 //joinPage
 .join-pw {
     position: relative;
+
     .open-eye {
         position: absolute;
-        bottom: 0;
+        padding: 10px;
+        margin: 10px;
         top: 0;
         right: 0;
     }
+
+    .open-eye:hover {
+        cursor: pointer;
+
+    }
+
     .closed-eye {
+        display: none;
         position: absolute;
+        padding: 10px;
+        margin: 10px;
+        top: 0;
+        right: 0;
+    }
+
+    .closed-eye:hover {
+        cursor: pointer;
     }
 }
 
