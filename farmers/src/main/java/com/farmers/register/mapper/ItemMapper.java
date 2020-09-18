@@ -1,5 +1,7 @@
 package com.farmers.register.mapper;
 
+import java.util.*;
+
 import org.apache.ibatis.annotations.*;
 
 import com.farmers.register.beans.*;
@@ -12,16 +14,16 @@ public interface ItemMapper {
 	public void postItem(ItemBean itemBean);
 	
 	//상품 정보 수정하기 위해 상품 정보 불러오기
-	@Select("SELECT sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit "
+	@Select("SELECT *"
 			+ "FROM items WHERE itemId=#{itemId}")
-	public void callItem(ItemBean itemBean);
+	public List<ItemBean> callItem(ItemBean itemBean);
 	
 	//수정된 상품 정보 저장
 	@Update("UPDATE items SET itemName=#{itemName},category=#{category},"
 			+ "sellingUnit=#{sellingUnit}, totalAmount=#{totalAmount}, "
 			+ "description=#{description}, pricePerUnit=#{pricePerUnit} "
 			+ "WHERE itemId=#{pricePerUnit}")
-	public void modifyItem(ItemBean itemBean);
+	public List<ItemBean> modifyItem(ItemBean itemBean);
 	
 	//상품 삭제
 	@Delete("DELETE FROM items WHERE itemId=#{itemId}")

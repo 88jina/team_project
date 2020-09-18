@@ -52,8 +52,8 @@ const searchBoxModel = `
 </div>
 `;
 
-const pSearchTags = ['양파', '마늘', '쪽파', '흑돼지', '부추', '치즈'];
-const rSearchTags = ['배고파', '뭐먹지', '라면은', '이제', '그만', '김밥'];
+const popularSearchTagsModel = ['양파', '마늘', '쪽파', '흑돼지', '부추', '치즈'];
+const recentSearchTagsModel = ['배고파', '뭐먹지', '라면은', '이제', '그만', '김밥'];
 
 const mainFooterModel = `
 
@@ -189,19 +189,19 @@ const joinPageModel = `
         </div>
         <div class="join-pw flex-row width-100">
             <input class="width-100 fs-xl pd-a-10px mg-a-10px" type="password" name="userPw" id="joinPw" placeholder="비밀번호를 입력해주세요">
-            <div class="open-eye">
+            <div id="oEye1" class="open-eye">
                 <i class="fas fa-eye fa-larger"></i>
             </div>
-            <div class="closed-eye">
+            <div id="cEye1" class="closed-eye">
                 <i class="fas fa-eye-slash fa-larger"></i>
             </div>
         </div>
         <div class="join-pw flex-row width-100">
             <input class="width-100 fs-xl pd-a-10px mg-a-10px" type="password" name="userPw" id="passwordChk" placeholder="비밀번호를 한번 더 입력해주세요">
-            <div class="open-eye">
+            <div id="oEye2" class="open-eye">
                 <i class="fas fa-eye fa-larger"></i>
             </div>
-            <div class="closed-eye">
+            <div id="cEye2" class="closed-eye">
                 <i class="fas fa-eye-slash fa-larger"></i>
             </div>
         </div>
@@ -446,8 +446,8 @@ const categoryPageModel = `
 
 export {
     //searchbox,tags
-    rSearchTags,
-    pSearchTags,
+    recentSearchTagsModel,
+    popularSearchTagsModel,
     searchBoxModel,
     //main content
     carouselModel,

@@ -34,6 +34,7 @@
 <template id="category-page-template"></template>
 
 <body id="body" class="container">
+ <div class="shade z-mid center width-100"></div>
 
   <!-- page customElements -->
   <my-page class="container"></my-page>
@@ -46,11 +47,11 @@
   <wishlist-page class="container"></wishlist-page>
   <category-page class="container"></category-page>
 
-  <search-box id="search-box" class="container z-tom ap-top center bgc-wgrn"></search-box>
+  <search-box id="searchBox" class="container z-tom ap-top center bgc-wgrn"></search-box>
 
-  <div id="main-page" class="pd-t-100px container">
+  <div id="mainPage" class="pd-t-100px container">
 
-    <header id="main-header" class="container">
+    <header id="mainHeader" class="container">
       <nav id="mainTopNav" class="container top-nav flex-col c-lgrn bgc-wgrn">
         <top-nav class="flex-col container"></top-nav>
         <sub-top-nav class="flex-row justify-content-around"></sub-top-nav>
@@ -78,6 +79,6 @@
 </body>
 
 
-<script type="module" src="<c:url value="/resources/client/view/view.mjs" />"></script>
+<script type="module" src="<c:url value="/resources/client/view/view.js" />"></script>
 
 </html>

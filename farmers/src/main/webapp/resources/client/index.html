@@ -30,6 +30,7 @@
 <template id="category-page-template"></template>
 
 <body id="body" class="container">
+  <div class="shade z-mid center width-100"></div>
 
   <!-- page customElements -->
   <my-page class="container"></my-page>
@@ -42,11 +43,10 @@
   <wishlist-page class="container"></wishlist-page>
   <category-page class="container"></category-page>
 
-  <search-box id="search-box" class="container z-tom ap-top center bgc-wgrn"></search-box>
+  <search-box id="searchBox" class="container z-tom ap-top center bgc-wgrn"></search-box>
+  <div id="mainPage" class="pd-t-100px container">
 
-  <div id="main-page" class="pd-t-100px container">
-
-    <header id="main-header" class="container">
+    <header id="mainHeader" class="container">
       <nav id="mainTopNav" class="container top-nav-wrapper flex-col c-lgrn bgc-wgrn">
         <top-nav class="flex-col container"></top-nav>
         <sub-top-nav class="flex-row"></sub-top-nav>
@@ -54,13 +54,13 @@
     </header>
 
     <main class="container">
-      <div class="shade z-mid center"></div>
+
       <main-carousel class="container"></main-carousel>
       <item-slide></item-slide>
       <main-footer></main-footer>
     </main>
 
-    <footer-nav class="container z-mid bgc-wgrn footer-nav flex-row justify-content-around">
+    <footer-nav class="container z-tom bgc-wgrn footer-nav flex-row justify-content-around">
 
     </footer-nav>
     <!-- onclick="location.href='#body'"  -->
@@ -73,7 +73,7 @@
 </body>
 
 
-<script src="./view/view.mjs" type="module">
+<script src="./view/view.js" type="module">
 
 </script>
 

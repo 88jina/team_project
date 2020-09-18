@@ -5,20 +5,24 @@ const url = {
 }
 
 
-// class API {
+class API {
 
-//     getTodoList() {
-//         let url = '/api/todolist';
-//         let response = sendRequest('GET', url);
+    getTodoList() {
+        let url = '/api/todolist';
+        let response = sendRequest('GET', url);
 
-//         return response;
-//     }
+        return response;
+    }
 
-//     putList(data) {
-//         let url = '';
+    putList(data) {
+        let url = '';
         
-//     }
+    }
 
-// }
+    emailAuth() {
+        let url = ''
+    }
+
+}
 
 export default API;

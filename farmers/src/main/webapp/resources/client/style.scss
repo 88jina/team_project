@@ -42,11 +42,9 @@ img {
     display: none;
     position: fixed;
     top: 0;
-    opacity: .7;
     background: rgba(0, 0, 0, 0.7);
     height: 100vh;
-    width: 100%;
-    max-width: 1140px;
+    max-width: inherit;
 }
 
 .page {
@@ -421,7 +419,7 @@ img {
 
 //searchBoxModel
 
-#search-box {
+#searchBox {
     #close:hover {
         cursor: pointer;
         background-color: #f6d743;
@@ -439,7 +437,7 @@ img {
 }
 
 
-#main-header {
+#mainHeader {
     .top-nav-wrapper {
         width: 100%;
         position: fixed;
@@ -681,7 +679,7 @@ img {
     right: 15%;
     bottom: 20px;
     left: 15%;
-    z-index: 10;
+    z-index: 8;
     padding-top: 20px;
     padding-bottom: 20px;
     color: #fff;
