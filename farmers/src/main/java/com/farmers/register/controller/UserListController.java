@@ -16,14 +16,14 @@ public class UserListController {
 	@Autowired
 	UserListService service;
 
-	@RequestMapping(value = "/userList", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/userList", method = RequestMethod.GET)
 	public String userList(Model model) {
 		List<UserBean> list = service.userList();
 		model.addAttribute("list", list);
 		return "admin/userList";
 	}
 
-	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/findUser", method = RequestMethod.GET)
 	public String searchUser(UserBean userBean, Model model) {
 		List<UserBean> list = service.searchUser(userBean);
 		model.addAttribute("list", list);
@@ -31,7 +31,7 @@ public class UserListController {
 		return "admin/findUser";
 	}
 	
-	@RequestMapping(value="/seller", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/toSeller", method=RequestMethod.GET)
 	public String convertToSeller(UserBean userBean) {
 		System.out.println(userBean.getLoginId());
 		System.out.println("controller");
@@ -40,7 +40,7 @@ public class UserListController {
 		return "admin/adminHome";
 	}
 	
-	@RequestMapping(value="/user", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/toUser", method=RequestMethod.GET)
 	public String convertToUser(UserBean userBean) {
 		System.out.println(userBean.getLoginId());
 		service.convertToUser(userBean);

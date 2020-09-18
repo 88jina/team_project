@@ -50,8 +50,15 @@ public class RootConfiguration {
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-	@Bean 
 	
+	@Bean
+	public MapperFactoryBean<ItemMapper> itemMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<ItemMapper> factoryBean = new MapperFactoryBean<ItemMapper>(ItemMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+	
+	@Bean 
 	public UserBean userBean() {
 		return new UserBean();
 	}

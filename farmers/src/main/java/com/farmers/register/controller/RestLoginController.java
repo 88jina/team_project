@@ -1,5 +1,6 @@
 package com.farmers.register.controller;
 
+import javax.servlet.http.*;
 import javax.validation.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -7,7 +8,6 @@ import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.farmers.register.beans.*;
-import com.farmers.register.config.*;
 import com.farmers.register.service.*;
 
 @RestController
@@ -20,12 +20,11 @@ public class RestLoginController {
 	UserBean userBean;
 
 	@PostMapping("api/login")
-	public LoginBean doLogin(@Valid UserBean userBean, BindingResult rs) {
+	public LoginBean doLogin(@Valid UserBean userBean, BindingResult rs, HttpSession session, HttpServletResponse res) {
 		LoginBean loginBean = new LoginBean();
 		System.out.println(userBean.getLoginId());
 		System.out.println(userBean.getUserPw());
-		loginBean.setLoginId(userBean.getLoginId());
-		loginBean.setUserPw(userBean.getUserPw());
+		
 		String msg=null;
 		if (rs.hasErrors()) {
 			msg = rs.getAllErrors().get(0).getDefaultMessage();
@@ -42,7 +41,8 @@ public class RestLoginController {
 			loginBean.setErrorMsg(msg);
 			loginBean.setLoggedIn(false);
 		} else {
-
+			loginBean.setLoginId(userBean.getLoginId());
+			loginBean.setUserPw(userBean.getUserPw());
 			String userType = service.userType(userBean);
 			loginBean.setLoggedIn(true);
 			System.out.println("유저타입 : " + userType);
@@ -65,6 +65,11 @@ public class RestLoginController {
 				loginBean.setUserType(null);
 			}
 		}
+		Object login =session.getAttribute("login");
+		Cookie loginCookie = new Cookie("loginCookie",(String)login);
+		loginCookie.setPath("/");
+		loginCookie.setValue(loginBean.getLoginId());
+		res.addCookie(loginCookie);
 		return loginBean;
 	}
 

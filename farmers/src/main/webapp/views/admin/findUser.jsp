@@ -17,15 +17,15 @@
 <td>이메일</td>
 <td>비고</td>
 </tr>
-<form action="findUser" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
+<form action="admin/findUser" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
 <c:forEach var="row" items="${list}">
 <tr>
 <td>${row.loginId }</td>
 <td>${row.userType}</td>
 <td>${row.degree}</td>
 <td>${row.userEmail}</td>
-<td><a href="http://192.168.1.137:8090/farmers/seller?loginId=${row.loginId }">판매자 등록</a></td>
-<td><a href="http://192.168.1.137:8090/farmers/user?loginId=${row.loginId }">판매자 삭제</a>
+<td><a href="http://192.168.1.137:8090/farmers/admin/toSeller?loginId=${row.loginId }">판매자 등록</a></td>
+<td><a href="http://192.168.1.137:8090/farmers/admin/toUser?loginId=${row.loginId }">판매자 삭제</a>
 </tr>
 </c:forEach>
 </table>

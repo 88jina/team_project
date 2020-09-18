@@ -10,7 +10,7 @@
 </head>
 <body>
 회원목록 조회페이지입니다
-<form action="findUser" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
+<form action="admin/findUser" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
 <table>
 <tr>
 <td>아이디</td>

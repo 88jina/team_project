@@ -11,6 +11,24 @@ public class LoginBean {
 	private boolean isLoggedIn;
 	private String userType;
 	private String errorMsg;
+	private int availablePoint;
+	private String userId;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public int getAvailablePoint() {
+		return availablePoint;
+	}
+
+	public void setAvailablePoint(int availablePoint) {
+		this.availablePoint = availablePoint;
+	}
 
 	public String getErrorMsg() {
 		return errorMsg;

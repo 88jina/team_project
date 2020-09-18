@@ -32,6 +32,7 @@ public interface UserMapper {
 	@Update("UPDATE users SET userType=1 WHERE loginId=#{loginId}")
 	public void convertToSeller(UserBean userBean);
 	
+	//판매자삭제
 	@Update("UPDATE users SET userType=0 WHERE loginId=#{loginId}")
 	public void convertToUser(UserBean userBean);
 }
