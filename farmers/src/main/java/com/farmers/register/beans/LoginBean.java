@@ -13,6 +13,15 @@ public class LoginBean {
 	private String errorMsg;
 	private int availablePoint;
 	private String userId;
+	private String degree;
+
+	public String getDegree() {
+		return degree;
+	}
+
+	public void setDegree(String degree) {
+		this.degree = degree;
+	}
 
 	public String getUserId() {
 		return userId;

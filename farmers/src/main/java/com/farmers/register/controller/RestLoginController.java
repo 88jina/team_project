@@ -43,6 +43,7 @@ public class RestLoginController {
 		} else {
 			loginBean.setLoginId(userBean.getLoginId());
 			loginBean.setUserPw(userBean.getUserPw());
+			loginBean.setDegree(userBean.getDegree());
 			String userType = service.userType(userBean);
 			loginBean.setLoggedIn(true);
 			System.out.println("유저타입 : " + userType);
