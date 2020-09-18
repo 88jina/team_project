@@ -12,7 +12,6 @@ public class LoginBean {
 	private String userType;
 	private String errorMsg;
 	private int availablePoint;
-	private String userId;
 	private String degree;
 
 	public String getDegree() {
@@ -21,14 +20,6 @@ public class LoginBean {
 
 	public void setDegree(String degree) {
 		this.degree = degree;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public int getAvailablePoint() {
