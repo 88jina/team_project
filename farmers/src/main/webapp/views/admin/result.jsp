@@ -9,7 +9,7 @@
 <body>
 <script>
 alert('${msg}');
-history.back();
+window.location=document.referrer;
 </script>
 
 </body>

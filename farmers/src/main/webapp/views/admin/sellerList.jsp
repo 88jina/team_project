@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="selectById" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
 <table>
 <tr>
 <td>회원번호</td>

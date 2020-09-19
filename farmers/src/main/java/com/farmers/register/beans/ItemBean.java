@@ -17,7 +17,25 @@ public class ItemBean {
 	private String description;
 	@NotEmpty
 	private String pricePerUnit;
+	private String minAmount;
+	private String maxAmount;
 	private String msg;
+
+	public String getMinAmount() {
+		return minAmount;
+	}
+
+	public void setMinAmount(String minAmount) {
+		this.minAmount = minAmount;
+	}
+
+	public String getMaxAmount() {
+		return maxAmount;
+	}
+
+	public void setMaxAmount(String maxAmount) {
+		this.maxAmount = maxAmount;
+	}
 
 	public String getMsg() {
 		return msg;

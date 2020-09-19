@@ -8,9 +8,17 @@ import com.farmers.register.beans.*;
 
 public interface ItemMapper {
 	
+	//상품목록보기(구매자/관리자)
+	@Select ("SELECT * FROM items")
+	public List<ItemBean> itemList();
+	
+	//내상품목록보기(판매자)
+	@Select("SELECT * FROM items WHERE sellerId=#{sellerId}")
+	public List<ItemBean> myItemList(ItemBean itemBean);
+	
 	//상품등록
-	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit) "
-			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit}) ")
+	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount) "
+			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount}) ")
 	public void postItem(ItemBean itemBean);
 	
 	//상품 정보 수정하기 위해 상품 정보 불러오기
@@ -21,9 +29,10 @@ public interface ItemMapper {
 	//수정된 상품 정보 저장
 	@Update("UPDATE items SET itemName=#{itemName},category=#{category},"
 			+ "sellingUnit=#{sellingUnit}, totalAmount=#{totalAmount}, "
-			+ "description=#{description}, pricePerUnit=#{pricePerUnit} "
-			+ "WHERE itemId=#{pricePerUnit}")
-	public List<ItemBean> modifyItem(ItemBean itemBean);
+			+ "description=#{description}, pricePerUnit=#{pricePerUnit},"
+			+ "minAmount=#{minAmount}, maxAmount=#{maxAmount}"
+			+ "WHERE itemId=#{itemId}")
+	public void modifyItem(ItemBean itemBean);
 	
 	//상품 삭제
 	@Delete("DELETE FROM items WHERE itemId=#{itemId}")
