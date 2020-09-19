@@ -5,21 +5,21 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
-	@RequestMapping(value="/")
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home() {
-		return "home/index";
+		return "home/home";
 	}
-	@RequestMapping(value="/api", method=RequestMethod.GET)
-	public String join() {
-		return "join/join";
-	}
-	
-	@RequestMapping(value="/auth", method=RequestMethod.GET)
-	public String joinAuth() {
-		return"join/joinAuth";
-	}
-	@GetMapping(value="/dupl")
-	public String duplCheck() {
-		return "join/joinDuplCheck";
-	}
+//	@RequestMapping(value="/api", method=RequestMethod.GET)
+//	public String join() {
+//		return "join/join";
+//	}
+//	
+//	@RequestMapping(value="/auth", method=RequestMethod.GET)
+//	public String joinAuth() {
+//		return"join/joinAuth";
+//	}
+//	@GetMapping(value="/dupl")
+//	public String duplCheck() {
+//		return "join/joinDuplCheck";
+//	}
 }

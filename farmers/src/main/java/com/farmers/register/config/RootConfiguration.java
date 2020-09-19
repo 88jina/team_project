@@ -58,6 +58,13 @@ public class RootConfiguration {
 		return factoryBean;
 	}
 	
+	@Bean
+	public MapperFactoryBean<AdminMapper> adminMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<AdminMapper> factoryBean = new MapperFactoryBean<AdminMapper>(AdminMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+	
 	@Bean 
 	public UserBean userBean() {
 		return new UserBean();

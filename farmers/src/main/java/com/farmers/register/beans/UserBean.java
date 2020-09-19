@@ -17,9 +17,17 @@ public class UserBean {
 	private String userEmail;
 	private String degree;
 	private String userType;
-
+	private int availablePoint;
 	private boolean isExist;
 	private boolean isLoggedIn;
+	
+	public int getAvailablePoint() {
+		return availablePoint;
+	}
+
+	public void setAvailablePoint(int availablePoint) {
+		this.availablePoint = availablePoint;
+	}
 
 	public UserBean() {
 		this.isExist = false;

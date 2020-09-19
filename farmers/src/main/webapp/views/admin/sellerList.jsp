@@ -8,27 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <table>
 <tr>
+<td>회원번호</td>
 <td>아이디</td>
 <td>유형</td>
 <td>회원등급</td>
 <td>이메일</td>
+<td>잔여포인트</td>
 <td>비고</td>
 </tr>
-<form action="admin/findUser" method="get">아이디로 찾기<input type="text" name="loginId"/><br><button type="submit">검색</button></form>
-<c:forEach var="row" items="${list}">
+<c:forEach var="row" items="${sellerList}">
 <tr>
+<td>${row.userId }</td>
 <td>${row.loginId }</td>
 <td>${row.userType}</td>
 <td>${row.degree}</td>
 <td>${row.userEmail}</td>
-<td><a href="http://192.168.1.137:8090/farmers/admin/toSeller?loginId=${row.loginId }">판매자 등록</a></td>
-<td><a href="http://192.168.1.137:8090/farmers/admin/toUser?loginId=${row.loginId }">판매자 삭제</a>
+<td>${row.availablePoint }</td>
+<td><a href="http://localhost:8090/farmers/admin/delSeller?userId=${row.userId }&sellerId=+${row.userId}" >판매자 삭제</a></td>
 </tr>
 </c:forEach>
 </table>
-
 </body>
 </html>

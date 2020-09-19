@@ -20,19 +20,5 @@ public interface UserMapper {
 	@Select("SELECT userType FROM users WHERE loginId=#{loginId} AND userPw=#{userPw}")
 	public String checkUserInfo(UserBean userBean);
 
-	// 모든 회원 정보 조회
-	@Select("SELECT loginId, userType, degree, userEmail FROM users")
-	public List<UserBean> userView();
-	
-	//특정 회원 정보 검색
-	@Select("SELECT loginId, userType, degree, userEmail FROM users WHERE loginId=#{loginId}")
-	public List<UserBean> searchUser(UserBean userBean);
-	
-	//판매자등록
-	@Update("UPDATE users SET userType=1 WHERE loginId=#{loginId}")
-	public void convertToSeller(UserBean userBean);
-	
-	//판매자삭제
-	@Update("UPDATE users SET userType=0 WHERE loginId=#{loginId}")
-	public void convertToUser(UserBean userBean);
+
 }
