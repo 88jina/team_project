@@ -65,6 +65,13 @@ public class RootConfiguration {
 		return factoryBean;
 	}
 	
+	@Bean
+	public MapperFactoryBean<DealMapper> dealMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<DealMapper> factoryBean = new MapperFactoryBean<DealMapper>(DealMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+	
 	@Bean 
 	public UserBean userBean() {
 		return new UserBean();
