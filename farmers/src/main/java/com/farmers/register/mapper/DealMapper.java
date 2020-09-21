@@ -1,6 +1,8 @@
 package com.farmers.register.mapper;
 
 
+import java.util.*;
+
 import org.apache.ibatis.annotations.*;
 
 import com.farmers.register.beans.*;
@@ -37,5 +39,10 @@ public interface DealMapper {
 	public void completeOrder(OrderBean orderBean);
 	@Update("UPDATE deals SET complete=1 WHERE dealId=#{dealId}")
 	public void completeDeal(DealBean dealBean);
+	
+	
+	//내가 참여,생성한 딜 보기
+	@Select("SELECT * FROM orders WHERE userId=#{userId}")
+	public List<OrderBean> myOrderList(OrderBean orderBean);
 	
 }

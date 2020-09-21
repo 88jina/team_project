@@ -5,6 +5,15 @@ public class OrderBean {
 	private String dealId;
 	private String ordered;
 	private String delivery;
+	private String complete;
+	
+	
+	public String getComplete() {
+		return complete;
+	}
+	public void setComplete(String complete) {
+		this.complete = complete;
+	}
 	public String getUserId() {
 		return userId;
 	}

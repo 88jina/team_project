@@ -1,6 +1,8 @@
 package com.farmers.register.service;
 
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -16,7 +18,6 @@ public class DealService {
 	//딜 생성
 	public void createDeal(DealBean dealBean,OrderBean orderBean){
 		dealMapper.createDeal(dealBean);
-		DealBean bean = new DealBean();
 		String dealId =dealMapper.callDealId(dealBean);
 		orderBean.setDealId(dealId);
 		dealMapper.createOrder(orderBean);
@@ -48,6 +49,12 @@ public class DealService {
 	public void completeDeal(DealBean dealBean, OrderBean orderBean) {
 		dealMapper.completeDeal(dealBean);
 		dealMapper.completeOrder(orderBean);
+	}
+	
+	//내가 참여한 딜 보기
+	public List<OrderBean> myOrderList(OrderBean orderBean){
+		List<OrderBean> list = dealMapper.myOrderList(orderBean);
+		return list;
 	}
 	
 	

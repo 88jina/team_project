@@ -7,6 +7,13 @@ public class DealBean {
 	private String createDate;
 	private String totalOrder;
 	private String userId;
+	private String complete;
+	public String getComplete() {
+		return complete;
+	}
+	public void setComplete(String complete) {
+		this.complete = complete;
+	}
 	public String getUserId() {
 		return userId;
 	}
