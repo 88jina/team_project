@@ -1,5 +1,5 @@
-import Controller from './controller/controller';
-import View from './view/view.mjs';
-import Service from './service/service';
+import Controller from './controller/Controller.js';
+import View from './view/View.js';
+import Service from './service/Service.js';
 
 const app = new Controller(new Service(), new View());

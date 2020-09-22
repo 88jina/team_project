@@ -8,7 +8,9 @@ $font-stack: Arial,
 Helvetica,
 sans-serif;
 
-$z-index: (topp: 15,
+$z-index: (
+    topper: 100,
+    topp: 15,
     tom: 10,
     mid: 5,
     mib: 3,
@@ -38,8 +40,11 @@ img {
     overflow: auto;
 }
 
+.search-box {
+    max-width: inherit;
+}
+
 .shade {
-    display: none;
     position: fixed;
     top: 0;
     background: rgba(0, 0, 0, 0.7);
@@ -97,6 +102,10 @@ img {
     padding-top: 100px;
 }
 
+.pd-t-15px {
+    padding: 15px 9px;
+}
+
 .pd-b-100px {
     padding-bottom: 140px;
 }
@@ -107,6 +116,9 @@ img {
 
 .pd-lr-10px {
     padding: 0 10px;
+}
+.pd-lr-9px {
+    padding: 0 9px;
 }
 
 .pd-a-20px {
@@ -204,6 +216,13 @@ img {
     text-align: right;
 }
 
+.fixed{
+    position: fixed;
+    top: 0 ;
+}
+.rel {
+    position: relative;
+}
 
 //absolute position
 .ap-top {
@@ -268,6 +287,9 @@ img {
 
 
 //z-index setting
+.z-toppiest {
+    z-index: map-get($z-index, topper);
+}
 .z-top {
     z-index: map-get($z-index, topp);
 }

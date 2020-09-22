@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home() {
-		return "home/home";
+		return "home/index";
 	}
 //	@RequestMapping(value="/api", method=RequestMethod.GET)
 //	public String join() {
