@@ -29,8 +29,10 @@ public class LoginService {
 				break;
 			case "1":
 				bean.setUserType("seller");
+				break;
 			case "2":
 				bean.setUserType("admin");
+				break;
 
 			}
 
