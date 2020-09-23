@@ -12,12 +12,14 @@ public class MyPageController {
 	@Autowired
 	MyPageService service;
 	
-	@RequestMapping(value="/api/myPage", method=RequestMethod.GET)
+	@RequestMapping(value="/api/myPage", method=RequestMethod.POST)
 	public UserBean getMyPage(UserBean userBean) {
+		
+		System.out.println(userBean.getLoginId());
 		UserBean bean = new UserBean();
 		
 		bean = service.getUserInfo(userBean);
-		
+		System.out.println("mypage service done");
 		return bean;
 	}
 }

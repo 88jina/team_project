@@ -16,63 +16,31 @@ public class RestLoginController {
 	@Autowired
 	LoginService service;
 
-	@Autowired
-	UserBean userBean;
-
 	@PostMapping("api/login")
-	public LoginBean doLogin(@Valid LoginBean loginBean, BindingResult rs, HttpSession session, HttpServletResponse res) {
+	public LoginBean doLogin(@Valid LoginBean loginBean, BindingResult rs, HttpSession session,
+			HttpServletResponse res) {
 		LoginBean bean = new LoginBean();
-		System.out.println(loginBean.getLoginId());
-		System.out.println(loginBean.getUserPw());
-		
-		String msg=null;
+		bean = service.getUserInfo(loginBean);
+		String msg = null;
 		if (rs.hasErrors()) {
 			msg = rs.getAllErrors().get(0).getDefaultMessage();
 			bean.setErrorMsg(msg);
 		}
-		bean.setErrorMsg("no errors");
+	
+		
+		System.out.println(bean.getLoginId());
+		System.out.println("회원등급 : " + bean.getDegree());
+		
+	
 		System.out.println("에러 없음");
-
-		boolean exist = service.checkUserExist(loginBean);
-		bean.setExist(exist);
-		System.out.println("가입 여부 : " + exist);
-		if (exist == false) {
-			msg = "가입된 계정이 아닙니다";
-			bean.setErrorMsg(msg);
-			bean.setLoggedIn(false);
-		} else {
-			bean.setLoginId(loginBean.getLoginId());
-			bean.setUserPw(loginBean.getUserPw());
-			bean.setDegree(loginBean.getDegree());
-			String userType = service.userType(loginBean);
-			bean.setLoggedIn(true);
-			System.out.println("유저타입 : " + userType);
-			if (userType != null) {
-				Object login =session.getAttribute("login");
-				Cookie loginCookie = new Cookie("loginCookie",(String)login);
-				loginCookie.setPath("/");
-				loginCookie.setValue(loginBean.getLoginId());
-				loginCookie.setMaxAge(-1);
-				res.addCookie(loginCookie);
-				
-				switch (userType) {
-				case "2":
-					bean.setUserType("admin");
-					break;
-				case "1":
-					bean.setUserType("seller");
-					break;
-				case "0":
-					bean.setUserType("user");
-					break;
-				}
-
-			} 
 		
-		else {
-				bean.setUserType(null);
-			}
-		
+		if(bean.getUserType()!=null) {
+		Object login =session.getAttribute("login"); //세션불러오기
+		Cookie loginCookie = new Cookie("loginCookie",(String)login); //세션값 쿠키저장
+		loginCookie.setPath("/"); //쿠키 접근 범위
+		loginCookie.setValue(bean.getLoginId()); //로그인한 아이디값을 쿠키에 넣어줌
+		loginCookie.setMaxAge(-1); //브라우저 끄면 쿠키 소멸
+		res.addCookie(loginCookie); //클라이언트에 쿠키 저장
 		}
 		return bean;
 	}

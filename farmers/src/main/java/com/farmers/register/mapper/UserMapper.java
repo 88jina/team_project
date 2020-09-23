@@ -17,9 +17,10 @@ public interface UserMapper {
 	public List<String> duplId(UserBean userBean);
 
 	// 로그인할때
-	@Select("SELECT userType FROM users WHERE loginId=#{loginId} AND userPw=#{userPw}")
-	public String checkUserInfo(LoginBean loginBean);
+	@Select("SELECT * FROM users WHERE loginId=#{loginId} AND userPw=#{userPw}")
+	public List<LoginBean> checkUserInfo(LoginBean loginBean);
 	
+	//마이페이지
 	@Select("SELECT * FROM users WHERE loginId=#{loginId}")
 	public List<UserBean> getUserInfo(UserBean userBean);
 

@@ -247,21 +247,21 @@ const mailAuthTemplate = `
 `
 
 const myPageTemplate = (data = true) => {
-    console.log(data);
     let res = data;
-
-    let rate = res => {
+    function rate(res){
         switch (res.degree) {
             case "0":
-                return "5% 적립";
+                return "일반 등급 5% 적립";
             case "1":
-                return "10% 적립";
+                return "와우 등급 10% 적립";
+            case undefined:
+                break;
         }
-    };
+    }
 
     let userType = res.userType;
     switch (userType) {
-        case 0:
+        case "user":
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
@@ -274,7 +274,7 @@ const myPageTemplate = (data = true) => {
                             </div>
                         </div>
                         <div class="">
-                            <div class="left mg-a-10px bgc-pyel box-50px"></div>
+                            <div class="left mg-a-10px bgc-pyel box-50px">일반</div>
                             <div class="pd-a-15px">${res.loginId}</div>
                             <div class="">${rate(res)}</div>
                         </div>
@@ -330,7 +330,7 @@ const myPageTemplate = (data = true) => {
                     </div>
                 </div>
                 `;
-        case 1:
+        case "seller":
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
@@ -409,7 +409,7 @@ const myPageTemplate = (data = true) => {
                     </div>
                 </div>
                 `;
-        case 2:
+        case "admin":
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
@@ -489,7 +489,7 @@ const myPageTemplate = (data = true) => {
                 </div>
                 `;
         default:
-            return `<div class="m_p_e"></div>`;
+            return `<div class="m_p_e">템플릿 에러</div>`;
     }
 };
 

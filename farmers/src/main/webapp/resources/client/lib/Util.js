@@ -4,11 +4,11 @@ class Util {
     }
 
 
-    showMyPage(selector, result, that) {
+    showMyPage(selector, result, main) {
         const self = this;
         const template = self.$(selector);
         template.innerHTML = result;
-        that.appendChild(template.content.cloneNode(true));
+        main.appendChild(template.content.cloneNode(true));
     }
 
     mkElement(selector, Template, that) {

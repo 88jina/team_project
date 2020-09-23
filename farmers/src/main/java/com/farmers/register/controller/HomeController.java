@@ -9,6 +9,11 @@ public class HomeController {
 	public String home() {
 		return "home/index";
 	}
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public String test() {
+		return "admin/itemPost";
+	}
+	
 //	@RequestMapping(value="/api", method=RequestMethod.GET)
 //	public String join() {
 //		return "join/join";

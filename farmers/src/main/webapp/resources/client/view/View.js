@@ -202,30 +202,32 @@ class View {
     }
 
     sendMail() {
-        const email = _u.$('#email');
+        const email = _u.$('#email').value;
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', './api/auth/sendMail');
+        xhr.open('GET', './api/auth/sendMail?' + 'userEmail=' + email);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-        xhr.send(email);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 let res = JSON.parse(xhr.responseText);
                 console.log(res);
-                alert('메일이 발송되었습니다. 인증번호를 확인해주세요');
+                alert('메일이 발송되었습니다. 인증번호를 확인해주세요. 3분 안에 해주세요.');
             }
         };
+        xhr.send(email);
     }
 
     mailAuth() {
-        const mailCookie = document.cookie.split('authCookie=')[1];
+        const mailCookie = document.cookie.split('authKey=')[1];
         const mailAuthCode = _u.$('#mailAuth');
         switch (mailCookie) {
             case mailAuthCode.value:
                 alert('인증 완료되셨습니다.');
                 _u.$('#postBtn').style.display = "block";
+                _u.$('#mailAuthBtn').required = true;
                 break;
             case undefined:
                 alert('인증하기 버튼을 눌러주세요');
+                break;
             default:
                 alert('코드가 일치하지 않습니다.');
                 break;
@@ -270,11 +272,14 @@ class View {
         // const rgx = /([A-z]|[0-9])\w+/;
         if (cookie !== undefined) {
             console.log('cookie:' + cookie);
-            const res = this.getUserData(cookie);
+            const req = cookie;
+            const res = this.getUserData(req);
             if (res === "") {
-                that.switchPage('#h_p_t');
+                alert('res is null');
+                //로컬에서 기능 테스트를 위해 .나중에 홈으로 바꿀 것 
+                that.switchPage('#l_p_t', that.loginPage.bind(this));
             } else {
-                this.switchTo(thisPage, res);
+                this.switchTo(thisPage, _t.__mpT(res));
             }
         } else if (cookie === undefined) {
             alert('로그인을 해주세요');
@@ -414,14 +419,14 @@ class View {
         let that = this;
         that.res = "";
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', './api/myPage', false);
+        xhr.open('POST', './api/myPage?loginId='+userId, false);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 that.res = JSON.parse(xhr.responseText);
             } else {
                 alert('서버가 응답하지 않습니다.');
-                that.switchPage('#h_p_t');
+                that.switchPage('#l_p_t');
             }
         };
         xhr.send(userId);
@@ -439,10 +444,11 @@ class View {
     }
 
     joinPostRequest() {
+        let that = this;
         const lId = document.querySelector('#joinId');
         const uPw = document.querySelector('#joinPw');
         const dCB = document.querySelector('#duplicateCheck');
-        const mAth = document.querySelector('#mailAuth');
+        const mAth = document.querySelector('#mailAuthBtn');
         const pwC = document.querySelector('#passwordChk');
         const uEm = document.querySelector('#email');
         const ergx = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -480,14 +486,11 @@ class View {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 let res = JSON.parse(xhr.responseText);
-                return res;
+                alert(res.errorMsg);
+                that.switchTo('#m_p_t', _t.__mpT(res));
             }
         };
 
-        let returnValue = xhr.onreadystatechange;
-        console.log(returnValue);
-        console.log(param);
-        return returnValue;
     }
 
     duplGetRequest() {

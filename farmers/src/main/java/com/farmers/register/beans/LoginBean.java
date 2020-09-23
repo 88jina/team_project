@@ -7,12 +7,12 @@ public class LoginBean {
 	private String loginId;
 	@NotBlank
 	private String userPw;
+	private String userType;
+	private String degree;
+	private String errorMsg;
 	private boolean isExist;
 	private boolean isLoggedIn;
-	private String userType;
-	private String errorMsg;
 	private int availablePoint;
-	private String degree;
 
 	public String getDegree() {
 		return degree;

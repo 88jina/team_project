@@ -7,6 +7,16 @@ import org.apache.ibatis.annotations.*;
 import com.farmers.register.beans.*;
 
 public interface ItemMapper {
+	
+	
+	
+	
+	//이미지 업로드 테스트용 쿼리
+	@Insert("INSERT INTO test(img) VALUES(#{img})")
+	public void imgUploadTest(TestBean test);
+	
+	
+	
 
 	// 상품상세보기
 	@Select("SELECT * FROM items WHERE itemId =#{itemId}")
