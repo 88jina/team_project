@@ -26,6 +26,7 @@
 <template id="p_p_t"></template>
 <template id="w_p_t"></template>
 <template id="c_p_t"></template>
+<template id="m_a_t"></template>
 
 <body id="body" class="container">
 
@@ -62,7 +63,6 @@
 
   </div>
 </body>
-
 
 <script id="app" src="/farmers/resources/client/app.js" type="module">
 </script>

@@ -18,7 +18,10 @@ public interface UserMapper {
 
 	// 로그인할때
 	@Select("SELECT userType FROM users WHERE loginId=#{loginId} AND userPw=#{userPw}")
-	public String checkUserInfo(UserBean userBean);
+	public String checkUserInfo(LoginBean loginBean);
+	
+	@Select("SELECT * FROM users WHERE loginId=#{loginId}")
+	public List<UserBean> getUserInfo(UserBean userBean);
 
 
 }

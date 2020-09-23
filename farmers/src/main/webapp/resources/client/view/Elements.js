@@ -16,8 +16,16 @@ import {
     __rpT,
     __ppT,
     __wpT,
-    __cpT
+    __cpT,
+    __maT
 } from "./Templates.js";
+
+class MailAuth extends HTMLElement{
+    constructor() {
+        super();
+        _u.mkElement('#m_a_t', __maT, this);
+    }
+}
 
 class SearchBox extends HTMLElement {
     constructor() {
@@ -69,7 +77,8 @@ class HomePage extends HTMLElement {
 class MyPage extends HTMLElement {
     constructor() {
         super();
-        _u.mkElement('#m_p_t', __mpT, this);
+        this._mpT = __mpT();
+        _u.mkElement('#m_p_t', this._mpT, this);
     }
 }
 // dealPageTemplate,
@@ -121,7 +130,8 @@ class PaymentPage extends HTMLElement {
 class WishlistPage extends HTMLElement {
     constructor() {
         super();
-        _u.mkElement('#w_p_t', __wpT, this);
+        this._wpT = __wpT();
+        _u.mkElement('#w_p_t', this._wpT, this);
     }
 }
 // categoryPageTemplate
@@ -149,5 +159,6 @@ export {
     ReviewPage as RP_,
     PaymentPage as PP_,
     WishlistPage as WP_,
-    CategoryPage as CP_
+    CategoryPage as CP_,
+    MailAuth as MA_
 };

@@ -12,12 +12,12 @@ public class LoginService {
 	@Autowired
 	UserMapper userMapper;
 
-	public boolean checkUserExist(UserBean userBean) {
+	public boolean checkUserExist(LoginBean loginBean) {
 		boolean check = false;
-		String userType = userMapper.checkUserInfo(userBean);
+		String userType = userMapper.checkUserInfo(loginBean);
 		if (userType != null) {
 			check = true;
-			userBean.setExist(true);
+			loginBean.setExist(true);
 		} else {
 			check = false;
 		}
@@ -25,8 +25,8 @@ public class LoginService {
 		return check;
 	}
 
-	public String userType(UserBean userBean) {
-		String userType = userMapper.checkUserInfo(userBean);
+	public String userType(LoginBean loginBean) {
+		String userType = userMapper.checkUserInfo(loginBean);
 		return userType;
 	}
 

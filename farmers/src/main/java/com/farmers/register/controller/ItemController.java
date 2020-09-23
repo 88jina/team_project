@@ -15,8 +15,8 @@ import com.farmers.register.service.*;
 public class ItemController {
 	@Autowired
 	ItemPostService service;
-	
-	//상품등록
+
+	// 상품등록
 	@RequestMapping(value = "/seller/postItem", method = RequestMethod.POST)
 	public ItemBean postItem(@Valid ItemBean itemBean, BindingResult rs) {
 		String msg = null;
@@ -31,8 +31,8 @@ public class ItemController {
 		itemBean.setMsg("상품등록 완료되었습니다.");
 		return itemBean;
 	}
-	
-	//상품수정페이지 불러오기
+
+	// 상품수정페이지 불러오기
 	@RequestMapping(value = "/seller/callItem", method = RequestMethod.POST)
 	public ItemBean callItem(ItemBean itemBean) {
 		System.out.println("controller starts");
@@ -53,13 +53,12 @@ public class ItemController {
 		}
 		return bean;
 	}
-	
-	
-	//상품수정완료
+
+	// 상품수정완료
 	@RequestMapping(value = "/seller/modifyItem", method = RequestMethod.POST)
 	public ItemBean modifyItem(@Valid ItemBean itemBean, BindingResult rs) {
-		String msg=null;
-		if(rs.hasErrors()) {
+		String msg = null;
+		if (rs.hasErrors()) {
 			msg = rs.getAllErrors().get(0).getDefaultMessage();
 			itemBean.setMsg(msg);
 		}
@@ -67,9 +66,9 @@ public class ItemController {
 		itemBean.setMsg("수정 완료 되었습니다.");
 		return itemBean;
 	}
-	
-	//상품 삭제
-	@RequestMapping(value="/seller/delItem", method=RequestMethod.GET)
+
+	// 상품 삭제
+	@RequestMapping(value = "/seller/delItem", method = RequestMethod.GET)
 	public void delItem(ItemBean itemBean) {
 		service.delItem(itemBean);
 	}

@@ -19,6 +19,10 @@ public class ItemPostService {
 		mapper.postItem(itemBean);
 	}
 	
+	public void postImgItem(ItemBean itemBean) {
+		mapper.postImgItem(itemBean);
+	}
+	
 	
 	//상품수정페이지 불러오기
 	public List<ItemBean> callItem(ItemBean itemBean) {

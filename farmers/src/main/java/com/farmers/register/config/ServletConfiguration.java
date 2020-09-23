@@ -2,6 +2,9 @@ package com.farmers.register.config;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
+import org.springframework.web.multipart.*;
+import org.springframework.web.multipart.commons.*;
+import org.springframework.web.multipart.support.*;
 import org.springframework.web.servlet.config.annotation.*;
 
 import com.farmers.register.beans.*;
@@ -33,5 +36,11 @@ public class ServletConfiguration implements WebMvcConfigurer {
 //		registry.addInterceptor(new LoginInterceptor(loginBean)).addPathPatterns("/admin/**");
 //		WebMvcConfigurer.super.addInterceptors(registry);
 //	}
-
+	
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver multipartResolver() {
+	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+	    multipartResolver.setMaxUploadSize(100000);
+	    return multipartResolver;
+	}
 }

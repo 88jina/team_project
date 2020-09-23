@@ -4,6 +4,8 @@ import _u from "../lib/Util.js";
 //dummy
 import {
     login,
+    loginManager,
+    loginSeller,
     searchTags,
     cookie,
     joinComplete,
@@ -16,15 +18,29 @@ import {
     itemEditComplete,
     dealInit,
     dealJoin,
-    myDeal
+    myDeal,
+    wishlist
 } from '../dummydata.js';
 
 //서버와 소통하는 객체.
 //서버에서 전달되는 로우 데이터만 받는다.
 class Model {
 
+    _wishlistDummy() {
+        let res = wishlist;
+        return res;
+    }
+
     _loginMDummy() {
         let res = login;
+        return res;
+    }
+    _loginSellerDummy() {
+        let res = loginSeller;
+        return res;
+    }
+    _loginManagerDummy() {
+        let res = loginManager;
         return res;
     }
     _searchDummy() {

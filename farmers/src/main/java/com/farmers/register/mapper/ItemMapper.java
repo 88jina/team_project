@@ -27,6 +27,11 @@ public interface ItemMapper {
 	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount) "
 			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount}) ")
 	public void postItem(ItemBean itemBean);
+	
+	//상품등록 이미지 포함
+	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount) "
+			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount}) ")
+	public void postImgItem(ItemBean itemBean);
 
 	// 상품 정보 수정하기 위해 상품 정보 불러오기
 	@Select("SELECT *" + "FROM items WHERE itemId=#{itemId}")

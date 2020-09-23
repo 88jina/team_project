@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.*;
+import org.springframework.web.multipart.support.*;
 
 import com.farmers.register.beans.*;
 import com.farmers.register.mapper.*;
@@ -42,50 +43,44 @@ public class RootConfiguration {
 		SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
 		return sqlSessionFactory;
 	}
-	
-	
+
 	@Bean
 	public MapperFactoryBean<UserMapper> loginMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<ItemMapper> itemMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<ItemMapper> factoryBean = new MapperFactoryBean<ItemMapper>(ItemMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<AdminMapper> adminMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<AdminMapper> factoryBean = new MapperFactoryBean<AdminMapper>(AdminMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<DealMapper> dealMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<DealMapper> factoryBean = new MapperFactoryBean<DealMapper>(DealMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-	
-	@Bean 
+
+	@Bean
 	public UserBean userBean() {
 		return new UserBean();
 	}
+
 	@Bean
 	@SessionScope
 	public LoginBean loginBean() {
 		return new LoginBean();
 	}
-	
-	
-	
-	
-	
-	
 
 }

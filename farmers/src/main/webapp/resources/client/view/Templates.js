@@ -221,11 +221,15 @@ const joinPageTemplate = `
                     <i class="fas fa-eye-slash fa-larger"></i>
                 </div>
             </div>
-                <input class="fs-xl pd-a-15px mg-a-5px" type="email" name="userEmail" id="email" placeholder="이메일 주소를 입력해주세요">
-            <div class="flex-row mg-a-10px">
-                <input class="pd-a-15px mg-a-5px" type="checkbox" name="agreement" id="agrChk">
-                <label class="fs-xl" for="agrChk">전체 동의합니다.</label>
+            <div class="flex-row width-100">
+                <input class="fs-xl pd-a-15px mg-a-5px width-100" type="email" name="userEmail" id="email" placeholder="이메일 주소를 입력해주세요">
+                <input class="fs-xl pd-a-10px mg-a-5px width-140px btns" id="mailSendBtn" type="button" value="인증하기">
             </div>
+            <div class="flex-row width-100">
+                <input class="fs-xl pd-a-15px mg-a-5px width-100" type="text" "name="mailAuth" id="mailAuth" placeholder="인증번호를 입력해주세요">
+                <input class="fs-xl pd-a-10px mg-a-5px width-140px btns" id="mailAuthBtn" type="button" value="인증확인">
+            </div>
+
             <input class="fs-xl pd-a-10px mg-a-5px btns" id="postBtn" type="button" value="가입하기">
 
         </div>
@@ -233,81 +237,268 @@ const joinPageTemplate = `
 </div>
 `
 
-const myPageTemplate = (callback) => {
-let res = callback();
-
-return`
-<div class="m_p_e container">
-    <div class="bgc-ggrn page">
-        <div class="flex-row just-between">
-            <div>
-                내페이지
-            </div>
-            <div id="myPageExit">
-                <i class="fas fa-times"></i>
-            </div>
-        </div>
-        <div class="">
-            <div class="left mg-a-10px bgc-pyel box-50px">${res.userType}</div>
-            <div class="pd-a-15px">${res.loginId}</div>
-            <div class="">${res.degree}</div>
-        </div>
-        <div class="mg-t-10px flex-row">
-            <button class="mg-a-10px width-100">등급 정책</button>
-            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
-        </div>
-        <div class="flex-col mg-a-10px">
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">적립금</div>
-                <div class="right">${res.availablePoint}></div>
-            </div>
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">친구초대</div>
-                <div class="right">5000원></div>
-            </div>
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">상품후기</div>
-                <div class="right">1000원</div>
-            </div>
-        </div>
-
-        <div class="flex-col mg-a-10px">
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">상품 문의</div>
-                <div class="right">></div>
-            </div>
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">대량주문 문의</div>
-                <div class="right">></div>
-            </div>
-        </div>
-        <div class="flex-col mg-a-10px">
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">주문내역</div>
-                <div class="right">></div>
-            </div>
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">배송안내</div>
-                <div class="right">></div>
-            </div>
-        </div>
-        <div class="flex-col mg-a-10px">
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">개인정보 수정</div>
-                <div class="right">></div>
-            </div>
-            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                <div class="left">로그아웃</div>
-                <div class="right">></div>
-            </div>
-        </div>
+const mailAuthTemplate = `
+<div class="m_a_e container page">
+    <div class="flex-row width-100">
+        <input class="fs-xl pd-a-15px mg-a-5px fcenter width-100" type="text" name="mailAuth" id="mailAuth" placeholder="인증번호를 입력해주세요">
+        <input class="fs-xl pd-a-10px mg-a-5px width-140px btns" id="mailAuthBtn" type="button" value="인증하기">
     </div>
 </div>
 `
+
+const myPageTemplate = (data = true) => {
+    console.log(data);
+    let res = data;
+
+    let rate = res => {
+        switch (res.degree) {
+            case "0":
+                return "5% 적립";
+            case "1":
+                return "10% 적립";
+        }
+    };
+
+    let userType = res.userType;
+    switch (userType) {
+        case 0:
+            return `
+                <div class="m_p_e container">
+                    <div class="bgc-ggrn page">
+                        <div class="flex-row just-between">
+                            <div>
+                                내페이지
+                            </div>
+                            <div id="myPageExit">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="left mg-a-10px bgc-pyel box-50px"></div>
+                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div class="">${rate(res)}</div>
+                        </div>
+                        <div class="mg-t-10px flex-row">
+                            <button class="mg-a-10px width-100">등급 정책</button>
+                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">적립금</div>
+                                <div class="right">${res.availablePoint}원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">친구초대</div>
+                                <div class="right">5000원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품후기</div>
+                                <div class="right">1000원</div>
+                            </div>
+                        </div>
+                
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품 문의</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문 문의</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">주문내역</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">배송안내</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">개인정보 수정</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">로그아웃</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+        case 1:
+            return `
+                <div class="m_p_e container">
+                    <div class="bgc-ggrn page">
+                        <div class="flex-row just-between">
+                            <div>
+                                내페이지
+                            </div>
+                            <div id="myPageExit">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="left mg-a-10px bgc-pyel box-50px">판매자</div>
+                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div class="">${rate(res)}</div>
+                        </div>
+                        <div class="mg-t-10px flex-row">
+                            <button class="mg-a-10px width-100">등급 정책</button>
+                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">상품 등록</div>
+                            <div class="right">></div>
+                        </div>
+                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">배송지 수정</div>
+                            <div class="right">></div>
+                        </div>
+                     </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">적립금</div>
+                                <div class="right">${res.availablePoint}원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">친구초대</div>
+                                <div class="right">5000원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품후기</div>
+                                <div class="right">1000원</div>
+                            </div>
+                        </div>
+                
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품 문의</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문 문의</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">주문내역</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">배송안내</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">개인정보 수정</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">로그아웃</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+        case 2:
+            return `
+                <div class="m_p_e container">
+                    <div class="bgc-ggrn page">
+                        <div class="flex-row just-between">
+                            <div>
+                                내페이지
+                            </div>
+                            <div id="myPageExit">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <div class="">
+                            <div class="left mg-a-10px bgc-pyel box-50px">관리자</div>
+                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div class="">${rate(res)}</div>
+                        </div>
+                        <div class="mg-t-10px flex-row">
+                            <button class="mg-a-10px width-100">등급 정책</button>
+                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">상품 등록</div>
+                            <div class="right">></div>
+                        </div>
+                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">판매자 등록</div>
+                            <div class="right">></div>
+                        </div>
+                     </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">적립금</div>
+                                <div class="right">${res.availablePoint}원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">친구초대</div>
+                                <div class="right">5000원></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품후기</div>
+                                <div class="right">1000원</div>
+                            </div>
+                        </div>
+                
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품 문의</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문 문의</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">주문내역</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">배송안내</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                        <div class="flex-col mg-a-10px">
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">개인정보 수정</div>
+                                <div class="right">></div>
+                            </div>
+                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">로그아웃</div>
+                                <div class="right">></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+        default:
+            return `<div class="m_p_e"></div>`;
+    }
 };
 
-const dealPageTemplate = `
-<div class="d_p_e container">
+const dealPageTemplate = (data) => {
+
+    let res = data;
+
+
+`<div class="d_p_e container">
     <div class="page bgc-ggrn">
         <div class="container deal-item">
             <div class="width-90 center item">
@@ -347,8 +538,9 @@ const dealPageTemplate = `
             </div>
         </div>
     </div>
-</div>
-`
+</div>`
+
+}
 
 const itemPageTemplate = `
 <div class="i_p_e container">
@@ -414,6 +606,7 @@ const reviewPageTemplate = `
 </div>
 `
 
+
 const paymentPageTemplate = `
 <div class="p_p_e container">    
     <div class="flex-col center page bgc-ggrn">
@@ -427,7 +620,13 @@ const paymentPageTemplate = `
 </div>
 `
 
-const wishlistPageTemplate = `
+const wishlistPageTemplate = (callback = function () {
+    return "null"
+}) => {
+    let res = callback();
+    let leftAmount = parseInt(res.totalAmount) - parseInt(res.currentAmount);
+    let pricePerGram = parseInt(res.pricePerUnit) / parseInt(res.sellingUnit);
+    return `
 <div class="w_p_e container">
     <div class="flex-col bgc-lgrn page">
         <div class="bgc-wgrn pd-a-15px">
@@ -438,31 +637,29 @@ const wishlistPageTemplate = `
             </div>
             <div class="pd-a-15px item-nav">
                 <input type="checkbox" class="item-list" id="select">
-                <label class=" width-100 pd-a-15px" for="select">상품 이름</label>
+                <label class=" width-100 pd-a-15px" for="select">${res.itemName}</label>
                 <div class="right pd-a-5px" id="wishlistExit">
                     <i class="fas fa-times"></i>
                 </div>
             </div>
 
             <div class="pd-a-15px flex-row left">
-
                 <div class="img-box-140px">
                     <img src="/farmers/resources/client/img/cheese.jpg" alt="" class="item-img">
                 </div>
-
                 <div class="pd-a-10px">
-                    <div class="pd-lr-10px">생산자:</div>
-                    <div class="pd-lr-10px">생산지:</div>
-                    <div class="pd-lr-10px">남은 수량:</div>
-                    <div class="pd-lr-10px">포장 단위:</div>
-                    <div class="pd-lr-10px">그램 당 가격:</div>
+                    <div class="pd-lr-10px">생산자: ${res.sellerName}</div>
+                    <div class="pd-lr-10px">생산지: ${res.location}</div>
+                    <div class="pd-lr-10px">남은 수량: ${leftAmount}개</div>
+                    <div class="pd-lr-10px">포장 단위: ${res.sellingUnit}g</div>
+                    <div class="pd-lr-10px">그램 당 가격: ${pricePerGram}원</div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 `
+};
 
 const categoryPageTemplate = `
 <div class="c_p_e container">
@@ -501,5 +698,6 @@ export {
     reviewPageTemplate as __rpT,
     paymentPageTemplate as __ppT,
     wishlistPageTemplate as __wpT,
-    categoryPageTemplate as __cpT
+    categoryPageTemplate as __cpT,
+    mailAuthTemplate as __maT
 };

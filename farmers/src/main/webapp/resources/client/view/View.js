@@ -166,7 +166,7 @@ class View {
     topNav() {
         _u.addEvent('h1', 'click', this.toHome);
         _u.addEvent('#wishlist', 'click', () => {
-            this.ifLoggedInMoveTo('#w_p_t');
+            this.switchTo('#w_p_t', _t.__wpT(_m._wishlistDummy));
         });
     }
 
@@ -186,16 +186,50 @@ class View {
     }
 
     joinPage() {
+        _u.$('#postBtn').style.display = "hidden";
         _u.addEvent('#joinExit', 'click', () => {
             this.switchPage('#h_p_t');
         });
         _u.addEvent('#postBtn', 'click', this.joinPostRequest.bind(this));
         _u.addEvent('#duplicateCheck', 'click', this.duplGetRequest.bind(this));
+        _u.addEvent('#mailSendBtn', 'click', this.sendMail.bind(this));
+        _u.addEvent('#mailAuthBtn', 'click', this.mailAuth.bind(this));
 
         _u.addEvent('#oEye1', 'click', this.showPassword);
         _u.addEvent('#oEye2', 'click', this.showPasswordChk);
         _u.addEvent('#cEye1', 'click', this.hidePassword);
         _u.addEvent('#cEye2', 'click', this.hidePasswordChk);
+    }
+
+    sendMail() {
+        const email = _u.$('#email');
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', './api/auth/sendMail');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.send(email);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                console.log(res);
+                alert('메일이 발송되었습니다. 인증번호를 확인해주세요');
+            }
+        };
+    }
+
+    mailAuth() {
+        const mailCookie = document.cookie.split('authCookie=')[1];
+        const mailAuthCode = _u.$('#mailAuth');
+        switch (mailCookie) {
+            case mailAuthCode.value:
+                alert('인증 완료되셨습니다.');
+                _u.$('#postBtn').style.display = "block";
+                break;
+            case undefined:
+                alert('인증하기 버튼을 눌러주세요');
+            default:
+                alert('코드가 일치하지 않습니다.');
+                break;
+        }
     }
 
     slider() {
@@ -231,16 +265,20 @@ class View {
 
 
     ifLoggedInMoveTo(thisPage) {
-        const cookie = document.cookie;
-        switch (cookie) {
-            case "":
-                console.log('cookie:' + cookie);
-                this.switchPage('#l_p_t', this.loginPage.bind(this));
-                break;
-            default:
-                console.log('cookie:' + cookie);
-                this.switchTo('#m_p_t', _t.__mpT(_m._loginMDummy));
-                break;
+        let that = this;
+        const cookie = document.cookie.split('loginCookie=')[1];
+        // const rgx = /([A-z]|[0-9])\w+/;
+        if (cookie !== undefined) {
+            console.log('cookie:' + cookie);
+            const res = this.getUserData(cookie);
+            if (res === "") {
+                that.switchPage('#h_p_t');
+            } else {
+                this.switchTo(thisPage, res);
+            }
+        } else if (cookie === undefined) {
+            alert('로그인을 해주세요');
+            this.switchPage('#l_p_t', this.loginPage.bind(this));
         }
     }
 
@@ -292,6 +330,9 @@ class View {
                 break;
             case _u.$('.c_p_e'):
                 _u.rmElements('.c_p_e');
+                break;
+            case _u.$('.m_a_e'):
+                _u.rmElements('.m_a_e');
                 break;
             default:
                 break;
@@ -369,11 +410,39 @@ class View {
         document.querySelectorAll('.closed-eye')[1].style.display = "none";
     }
 
+    getUserData(userId) {
+        let that = this;
+        that.res = "";
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', './api/myPage', false);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                that.res = JSON.parse(xhr.responseText);
+            } else {
+                alert('서버가 응답하지 않습니다.');
+                that.switchPage('#h_p_t');
+            }
+        };
+        xhr.send(userId);
+        console.log("res::::" + typeof (that.res));
+        console.log("res::::" + that.res);
+        return that.res;
+    }
+
+    setResData(data) {
+        that.res = data;
+    }
+
+    getResData() {
+        return this.responseText;
+    }
 
     joinPostRequest() {
-
         const lId = document.querySelector('#joinId');
         const uPw = document.querySelector('#joinPw');
+        const dCB = document.querySelector('#duplicateCheck');
+        const mAth = document.querySelector('#mailAuth');
         const pwC = document.querySelector('#passwordChk');
         const uEm = document.querySelector('#email');
         const ergx = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -389,44 +458,70 @@ class View {
             "메일 주소를 입력해주세요" :
             (ergx.test(uEm.value) !== true) ?
             "메일 양식이 올바르지 않습니다." :
+            (dCB.required === false) ?
+            "중복확인 버튼을 눌러주세요." :
+            (mAth.required === false) ?
+            "인증확인 버튼을 눌러주세요." :
+            (mAth.value === "") ?
+            "인증번호를 입력해주세요." :
             true;
 
         if (typeof (msg) === "string") {
-
             alert(msg);
             return false;
         }
 
         const param = `loginId=${lId.value}&userPw=${uPw.value}&userEmail=${uEm.value}`;
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/join');
+
+        xhr.open('POST', './api/join');
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.send(param);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                alert(xhr.responseText);
+                let res = JSON.parse(xhr.responseText);
+                return res;
             }
         };
+
+        let returnValue = xhr.onreadystatechange;
+        console.log(returnValue);
         console.log(param);
+        return returnValue;
     }
 
-    // api / auth / sendMail
-
     duplGetRequest() {
+        const duplBtn = document.querySelector('#duplicateCheck');
+        duplBtn.required = true;
         const joinId = document.querySelector('#joinId').value;
         const param = `loginId=${joinId}`;
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/join/duplicateCheck?' + 'loginId=' + joinId);
+        xhr.open('GET', './api/join/duplicateCheck?' + 'loginId=' + joinId);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.send('loginId=' + joinId);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                alert(xhr.responseText);
+                let res = JSON.parse(xhr.responseText);
+                console.log(res.msg);
+                alert(res.msg);
+                if (res.dupl === true) {
+                    const duplValue = res.loginId;
+                    _u.$('#joinId').value = "";
+                    _u.addEvent('#joinId', 'keydown', this.duplChk(duplValue))
+                };
+            }else if (xhr.readyState == 4 && xhr.status == 404) {
+                alert('404 에러');
             }
         };
         console.log(param);
     }
 
+    duplChk(value) {
+        const input = _u.$('#joinId').value
+        if (value === input) {
+            input = "";
+        }
+    }
 
     sendAjax() {
         let that = this;
@@ -434,18 +529,16 @@ class View {
         const userPw = document.getElementById('loginPw');
 
         var param = `loginId=${loginId.value}&userPw=${userPw.value}`;
-
-        console.log(loginId, userPw);
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'api/login');
+        xhr.open('POST', './api/login');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.send(param);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-                res = JSON.parse(xhr.responseText);
+                let res = JSON.parse(xhr.responseText);
                 switch (res.loggedIn) {
                     case true:
-                        that.switchPage('#m_p_t');
+                        that.switchTo('#m_p_t', _t.__mpT(res));
                         break;
                     case false:
                         alert(res.errorMsg);
@@ -453,14 +546,7 @@ class View {
                 }
             }
         };
-
-        xhr.send(param);
-        console.log(param);
-
     }
-
-
-
 }
 
 // const _v = new View(_e);

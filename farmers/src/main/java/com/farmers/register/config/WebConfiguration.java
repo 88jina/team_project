@@ -29,5 +29,6 @@ public class WebConfiguration implements WebApplicationInitializer {
 		FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
 		filter.addMappingForServletNames(null, false, "dispathcer");
 		filter.setInitParameter("encoding", "UTF-8");
+
 	}
 }

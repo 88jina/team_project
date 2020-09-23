@@ -37,16 +37,4 @@ public class AuthService {
 			e.printStackTrace();
 		}
 	}
-
-	public boolean checkAuthKey (String authKey, String authCookie) {
-		boolean check;
-		
-		if(authKey.equals(authCookie)) {
-			check = true;
-		}else {
-			check=false;
-		}
-		return check;
-	}
-
 }

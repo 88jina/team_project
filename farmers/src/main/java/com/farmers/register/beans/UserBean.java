@@ -18,8 +18,6 @@ public class UserBean {
 	private String degree;
 	private String userType;
 	private int availablePoint;
-	private boolean isExist;
-	private boolean isLoggedIn;
 	
 	public int getAvailablePoint() {
 		return availablePoint;
@@ -27,27 +25,6 @@ public class UserBean {
 
 	public void setAvailablePoint(int availablePoint) {
 		this.availablePoint = availablePoint;
-	}
-
-	public UserBean() {
-		this.isExist = false;
-		this.isLoggedIn = false;
-	}
-
-	public boolean isExist() {
-		return isExist;
-	}
-
-	public void setExist(boolean isExist) {
-		this.isExist = isExist;
-	}
-
-	public boolean isLoggedIn() {
-		return isLoggedIn;
-	}
-
-	public void setLoggedIn(boolean isLoggedIn) {
-		this.isLoggedIn = isLoggedIn;
 	}
 
 	public String getUserEmail() {

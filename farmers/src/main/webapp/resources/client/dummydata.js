@@ -8,7 +8,41 @@ const login = {
     "exist": true,
     "loggedIn": true
 };
-
+const loginSeller = {
+    "loginId": "gidoong",
+    "userPw": "1234",
+    "userType": "seller",
+    "degree": "0",
+    "errorMsg": "no errors",
+    "availablePoint": 0,
+    "exist": true,
+    "loggedIn": true
+};
+const loginManager = {
+    "loginId": "gidoong",
+    "userPw": "1234",
+    "userType": "manager",
+    "degree": "0",
+    "errorMsg": "no errors",
+    "availablePoint": 0,
+    "exist": true,
+    "loggedIn": true
+};
+const wishlist = {
+    "itemName": "청정 횡성 한우",
+    "category": "meat",
+    "sellingUnit": "500",
+    "totalAmount": "45",
+    "currentAmount": "20",
+    "description": "맛있어요",
+    "location": "횡성",
+    "img": "null",
+    "sellerId": "12",
+    "sellerName": "김이박",
+    "pricePerUnit": "50000",
+    "maxAmount": "10",
+    "minAmount": "5"
+}
 const searchTags = {
     "p1":"asdasd",
     "p2":"2",
@@ -134,6 +168,8 @@ const myDeal = {
 
 export {
     login,
+    loginSeller,
+    loginManager,
     searchTags,
     cookie,
     joinComplete,
@@ -146,5 +182,6 @@ export {
     itemEditComplete,
     dealInit,
     dealJoin,
-    myDeal
+    myDeal,
+    wishlist
 };
