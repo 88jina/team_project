@@ -11,15 +11,14 @@ public class ReviewService {
 	@Autowired
 	ReviewMapper reviewMapper;
 	
-	//상품 고유번호 얻기
-	public String getItemId(ItemBean itemBean) {
-		String itemId = reviewMapper.getItemId(itemBean);
-		return itemId;
-	}
-	
+//	//상품 고유번호 얻기
+//	public String getItemId(ItemBean itemBean) {
+//		String itemId = reviewMapper.getItemId(itemBean);
+//		return itemId;
+//	}
+//	
 	//상품평 쓰기
-	public void postReview(ReviewBean reviewBean,String itemId) {
-		reviewBean.setItemId(itemId);
+	public void postReview(ReviewBean reviewBean) {
 		reviewMapper.postReview(reviewBean);
 	}
 	

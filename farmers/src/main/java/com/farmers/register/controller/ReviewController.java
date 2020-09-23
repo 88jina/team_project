@@ -15,9 +15,8 @@ public class ReviewController {
 	
 	//상품평 등록
 	@RequestMapping(value="/user/postReview", method=RequestMethod.POST)
-	public void postReview(ReviewBean reviewBean,ItemBean itemBean) {
-		String itemId = service.getItemId(itemBean);
-		service.postReview(reviewBean, itemId);
+	public void postReview(ReviewBean reviewBean) {
+		service.postReview(reviewBean);
 	}
 	
 	//상품평 수정 화면 불러오기
