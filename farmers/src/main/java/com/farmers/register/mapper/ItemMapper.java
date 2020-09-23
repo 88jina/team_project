@@ -8,20 +8,13 @@ import com.farmers.register.beans.*;
 
 public interface ItemMapper {
 	
-	
-	
-	
-	//이미지 업로드 테스트용 쿼리
-	@Insert("INSERT INTO test(img) VALUES(#{img})")
-	public void imgUploadTest(TestBean test);
-	
-	
-	
+	 public void imgUploadTest(String imgSrc);
 
 	// 상품상세보기
 	@Select("SELECT * FROM items WHERE itemId =#{itemId}")
 	public List<ItemBean> concreteItem(ItemBean itemBean);
-	// 딜불러오기
+	
+	// 상품 화면에서 딜불러오기
 	@Select("SELECT FROM deals WEHRE itemId=#{itemId} AND complete=0")
 	public List<DealBean> showDeals(DealBean dealBean);
 
@@ -34,27 +27,34 @@ public interface ItemMapper {
 	public List<ItemBean> myItemList(ItemBean itemBean);
 
 	// 상품등록
-	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount) "
-			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount}) ")
+	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount,discount) "
+			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount},#{discount}) ")
 	public void postItem(ItemBean itemBean);
-	
-	//상품등록 이미지 포함
-	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount) "
-			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount}) ")
-	public void postImgItem(ItemBean itemBean);
+
+	//썸네일 업데이트
+	@Update("UPDATE items SET thumbNail=#{thumbNail} WHERE itemId=#{itemId}")
+	public void updateThumb(ItemBean itemBean);
 
 	// 상품 정보 수정하기 위해 상품 정보 불러오기
-	@Select("SELECT *" + "FROM items WHERE itemId=#{itemId}")
+	@Select("SELECT * FROM items WHERE itemId=#{itemId}")
 	public List<ItemBean> callItem(ItemBean itemBean);
+	@Select("SELECT * FROM images WHERE itemID=#{itemId}")
+	public List<String> callImg(ImgBean imgBean);
 
 	// 수정된 상품 정보 저장
 	@Update("UPDATE items SET itemName=#{itemName},category=#{category},"
 			+ "sellingUnit=#{sellingUnit}, totalAmount=#{totalAmount}, "
 			+ "description=#{description}, pricePerUnit=#{pricePerUnit},"
-			+ "minAmount=#{minAmount}, maxAmount=#{maxAmount}" + "WHERE itemId=#{itemId}")
+			+ "minAmount=#{minAmount}, maxAmount=#{maxAmount},discount=#{discount}" 
+			+ "WHERE itemId=#{itemId}")
 	public void modifyItem(ItemBean itemBean);
+	
+	@Update("UPDATE images SET img=#{img} WHERE imgId=#{imgId}")
+	public void modifyImg(ImgBean imgBean);
 
 	// 상품 삭제
 	@Delete("DELETE FROM items WHERE itemId=#{itemId}")
 	public void delItem(ItemBean itemBean);
+	@Delete("DELETE FROM images WHERE itemId=#{itemId}")
+	public void delImg(ImgBean imgBean);
 }

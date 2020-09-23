@@ -2,13 +2,10 @@ package com.farmers.register.config;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
-import org.springframework.web.multipart.*;
 import org.springframework.web.multipart.commons.*;
-import org.springframework.web.multipart.support.*;
 import org.springframework.web.servlet.config.annotation.*;
 
 import com.farmers.register.beans.*;
-import com.farmers.register.interceptor.*;
 
 @Configuration
 @EnableWebMvc
@@ -40,7 +37,7 @@ public class ServletConfiguration implements WebMvcConfigurer {
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver() {
 	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-	    multipartResolver.setMaxUploadSize(100000);
+	    multipartResolver.setMaxUploadSize(50000000);
 	    return multipartResolver;
 	}
 }

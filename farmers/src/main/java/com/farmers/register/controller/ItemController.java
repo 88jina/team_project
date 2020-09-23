@@ -1,5 +1,6 @@
 package com.farmers.register.controller;
 
+
 import java.util.*;
 
 import javax.validation.*;
@@ -31,26 +32,22 @@ public class ItemController {
 		itemBean.setMsg("상품등록 완료되었습니다.");
 		return itemBean;
 	}
+	@PostMapping("/seller/postImg")
+	public Map<String,String> postThumbNail(ItemBean itemBean) {
+		Map<String,String> map = new HashMap<String,String>();
+		service.updateThumbnail(itemBean);
+		String msg ="썸네일 등록 완료";
+		map.put("msg", msg);
+		return map;
+	}
 
 	// 상품수정페이지 불러오기
 	@RequestMapping(value = "/seller/callItem", method = RequestMethod.POST)
 	public ItemBean callItem(ItemBean itemBean) {
 		System.out.println("controller starts");
-		List<ItemBean> itemList = service.callItem(itemBean);
 		ItemBean bean = new ItemBean();
-		if (itemList.size() != 0) {
-			bean.setItemId(itemList.get(0).getItemId());
-			bean.setSellerId(itemList.get(0).getSellerId());
-			bean.setCategory(itemList.get(0).getCategory());
-			bean.setItemName(itemList.get(0).getItemName());
-			bean.setSellingUnit(itemList.get(0).getSellingUnit());
-			bean.setTotalAmount(itemList.get(0).getTotalAmount());
-			bean.setDescription(itemList.get(0).getDescription());
-			bean.setPricePerUnit(itemList.get(0).getPricePerUnit());
-			bean.setMinAmount(itemList.get(0).getMinAmount());
-			bean.setMaxAmount(itemList.get(0).getMaxAmount());
-			bean.setMsg("상품정보 불러옴");
-		}
+		bean= service.callItem(itemBean);
+		System.out.println("service done");
 		return bean;
 	}
 

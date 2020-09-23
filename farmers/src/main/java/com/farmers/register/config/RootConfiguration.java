@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.*;
-import org.springframework.web.multipart.support.*;
 
 import com.farmers.register.beans.*;
 import com.farmers.register.mapper.*;
@@ -68,6 +67,13 @@ public class RootConfiguration {
 	@Bean
 	public MapperFactoryBean<DealMapper> dealMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<DealMapper> factoryBean = new MapperFactoryBean<DealMapper>(DealMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<ReviewMapper> reviewMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<ReviewMapper> factoryBean = new MapperFactoryBean<ReviewMapper>(ReviewMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}

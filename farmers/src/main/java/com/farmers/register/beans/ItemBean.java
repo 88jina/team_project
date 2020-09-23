@@ -19,16 +19,17 @@ public class ItemBean {
 	private String pricePerUnit;
 	private String minAmount;
 	private String maxAmount;
-	private String img;
 	private String thumbNail;
 	private String msg;
+	private String discount;
 
-	public String getImg() {
-		return img;
+
+	public String getDiscount() {
+		return discount;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setDiscount(String discount) {
+		this.discount = discount;
 	}
 
 	public String getThumbNail() {

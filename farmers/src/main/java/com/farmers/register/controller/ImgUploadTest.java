@@ -3,22 +3,22 @@ package com.farmers.register.controller;
 import java.io.*;
 
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
+import com.farmers.register.beans.*;
 import com.farmers.register.service.*;
 
-@Controller
+@RestController
 public class ImgUploadTest {
 	@Autowired
 	TestService service;
-//	
-//	@RequestMapping(value="/post", method=RequestMethod.POST)
-	public void imgUploadTest(@RequestParam("file")MultipartFile file) {
+	
+	@RequestMapping(value="/post", method=RequestMethod.POST)
+	public TestBean imgUploadTest(@RequestParam("file")MultipartFile file) {
+		TestBean testBean = new TestBean();
 		
-		
-		String path = "home/jina01/img";
+		String path = "/home/jina01/img/";
 		
 		String originFileName = file.getOriginalFilename();
 		long fileSize = file.getSize();
@@ -34,7 +34,8 @@ public class ImgUploadTest {
 		}catch(IllegalStateException e){
 			e.printStackTrace();
 		}
-		
-		
+		service.imgUploadTest(safeFile);
+		testBean.setImg(safeFile);
+		return testBean;
 	}
 }
