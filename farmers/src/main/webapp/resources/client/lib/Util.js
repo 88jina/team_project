@@ -11,6 +11,7 @@ class Util {
         const template = self.$(selector);
         template.innerHTML = result;
         main.appendChild(template.content.cloneNode(true)).onload = event();
+
     }
 
     mkElement(selector, Template, that) {

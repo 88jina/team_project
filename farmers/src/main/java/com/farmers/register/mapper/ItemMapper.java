@@ -8,11 +8,6 @@ import com.farmers.register.beans.*;
 
 public interface ItemMapper {
 	
-	 public void imgUploadTest(String imgSrc);
-	 
-	 
-	
-	
 	// 상품상세보기
 	@Select("SELECT * FROM items WHERE itemId =#{itemId}")
 	public List<ItemBean> concreteItem(ItemBean itemBean);
@@ -25,9 +20,7 @@ public interface ItemMapper {
 	@Select("SELECT * FROM items")
 	public List<ItemBean> itemList();
 
-	//로그인 아이디로 셀러 아이디 불러오기
-	@Select("SELECT userId FROM users WHERE loginId=#{loginId}")
-	public String getUserId(UserBean userBean);
+
 	
 	// 내상품목록보기(판매자)
 	@Select("SELECT * FROM items WHERE sellerId=#{sellerId}")
@@ -37,6 +30,9 @@ public interface ItemMapper {
 	@Insert("INSERT INTO items (sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount,discount) "
 			+ "VALUES(#{sellerId},#{itemName},#{category},#{sellingUnit},#{totalAmount},#{description},#{pricePerUnit},#{maxAmount},#{minAmount},#{discount}) ")
 	public void postItem(ItemBean itemBean);
+	
+	@Select("SELECT itemId FROM items WHERE description=#{description}")
+	public String getItemId(String description);
 
 	//썸네일 업데이트
 	@Update("UPDATE items SET thumbNail=#{thumbNail} WHERE itemId=#{itemId}")

@@ -8,10 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" action="post" enctype="multipart/form-data">
+	<form method="post" action="seller/postItem" enctype="multipart/form-data">
 
 	상품이미지<br>
-       	<input type="file" name="file" /><br>
+       	<input type="file" name="thumbNail" /><br>
 		<input type="submit" value="Submit" />
 
 	</form>

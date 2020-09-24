@@ -29,9 +29,10 @@
 <template id="m_a_t"></template>
 <template id="i_p_p_t"></template>
 <template id="i_e_p_t"></template>
+<template id="i_e_l_p_t"></template>
+<!-- <template id="i_e_l_c_t"></template> -->
 
 <body id="body" class="container">
-
   <!-- page customElements -->
   <my-page class="container"></my-page>
   <home-page class="container"></home-page>
@@ -43,11 +44,12 @@
   <payment-page class="container"></payment-page>
   <wishlist-page class="container"></wishlist-page>
   <category-page class="container"></category-page>
-  <item-post-page class="container"></category-page>
-  <item-edit-page class="container"></category-page>
+  <item-post-page class="container"></item-post-page>
+  <item-edit-page class="container"></item-edit-page>
+  <item-edit-list-page class="container"></item-edit-list-page>
 
   <search-box id="searchBox" class="container center bgc-wgrn"></search-box>
-  <div id="mainPage" class="pd-t-100px container">
+  <div id="mainPage" class=" container">
 
     <header id="mainHeader" class="container">
       <nav id="mainTopNav" class="container top-nav-wrapper flex-col c-lgrn bgc-wgrn">
@@ -56,7 +58,7 @@
       </nav>
     </header>
 
-    <main class="container">
+    <main id="main" class="container">
     </main>
 
     <footer-nav class="container">

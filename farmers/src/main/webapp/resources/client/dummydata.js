@@ -28,6 +28,55 @@ const loginManager = {
     "exist": true,
     "loggedIn": true
 };
+const itemEditList = 
+{
+    "count" : 3,
+    "myItem0": { 
+        "sellerId": "13",
+        "itemId": "4",
+        "itemName": "마늘",
+        "category": "채소",
+        "sellingUnit": "100",
+        "totalAmount": "12",
+        "description": "마늘이다",
+        "pricePerUnit": "1000",
+        "minAmount": "2",
+        "maxAmount": "2",
+        "thumbNail": null,
+        "discount": "2",
+        "msg": "상품정보를 성공적으로 불러왔습니다."
+    },
+    "myItem1": { 
+        "sellerId": "13",
+        "itemId": "4",
+        "itemName": "마늘",
+        "category": "채소",
+        "sellingUnit": "100",
+        "totalAmount": "12",
+        "description": "마늘이다",
+        "pricePerUnit": "1000",
+        "minAmount": "2",
+        "maxAmount": "2",
+        "thumbNail": null,
+        "discount": "2",
+        "msg": "상품정보를 성공적으로 불러왔습니다."
+    },
+    "myItem2": { 
+        "sellerId": "13",
+        "itemId": "4",
+        "itemName": "마늘",
+        "category": "채소",
+        "sellingUnit": "100",
+        "totalAmount": "12",
+        "description": "마늘이다",
+        "pricePerUnit": "1000",
+        "minAmount": "2",
+        "maxAmount": "2",
+        "thumbNail": null,
+        "discount": "2",
+        "msg": "상품정보를 성공적으로 불러왔습니다."
+    }
+};
 const wishlist = {
     "itemName": "청정 횡성 한우",
     "category": "meat",
@@ -179,6 +228,7 @@ export {
     emailAuth,
     addItem,
     itemEdit,
+    itemEditList,
     itemEditComplete,
     dealInit,
     dealJoin,

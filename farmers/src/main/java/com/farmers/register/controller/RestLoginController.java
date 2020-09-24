@@ -35,8 +35,8 @@ public class RestLoginController {
 		System.out.println("에러 없음");
 		
 		if(bean.getUserType()!=null) {
-		Object login =session.getAttribute("login"); //세션불러오기
-		Cookie loginCookie = new Cookie("loginCookie",(String)login); //세션값 쿠키저장
+		session.setAttribute("userId", bean.getUserId());
+		Cookie loginCookie = new Cookie("loginCookie",bean.getLoginId()); //세션값 쿠키저장
 		loginCookie.setPath("/"); //쿠키 접근 범위
 		loginCookie.setValue(bean.getLoginId()); //로그인한 아이디값을 쿠키에 넣어줌
 		loginCookie.setMaxAge(-1); //브라우저 끄면 쿠키 소멸

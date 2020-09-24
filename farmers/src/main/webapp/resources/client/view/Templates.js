@@ -64,8 +64,8 @@ const footerNavTemplate = `
 
 
 const topNavTemplate = `
-<div class="t_n_e container flex-col">
-    <div class="top-nav container flex-row">
+<div class="t_n_e containerH flex-col">
+    <div class="top-nav containerH flex-row">
         <h1 class="center pd-a-10px">
         #farmers 
         </h1>
@@ -90,7 +90,7 @@ const subTopNavTemplate = `
 //----------------page templates--------------------
 
 const homePageTemplate = `
-<div class="h_p_e container">
+<div class="h_p_e page container">
     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -248,7 +248,8 @@ const mailAuthTemplate = `
 
 const myPageTemplate = (data = true) => {
     let res = data;
-    function rate(res){
+
+    function rate(res) {
         switch (res.degree) {
             case "0":
                 return "일반 등급 5% 적립";
@@ -366,7 +367,7 @@ const myPageTemplate = (data = true) => {
                             <div class="left">상품 등록</div>
                             <div class="right">></div>
                         </div>
-                        <div id="itemEdit" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                        <div id="itemEditList" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                             <div class="left">상품 수정</div>
                             <div class="right">></div>
                         </div>
@@ -580,13 +581,65 @@ const itemPostPageTemplate = `
 
 
     <div class="flex-col dis-none">
-        <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail">상품 사진:</label>
-        <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
-        <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
+
+          <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail" id="thumbNailLabel">상품 사진:</label>
+            <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
+            <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
+
     </div>
 </div>
 </div>
 `;
+
+
+const itemEditListPageTemplate = (data = true) => {
+    console.log("itemEditListData = "+data)
+    const main = document.getElementById('main');
+    main.innerHTML = `<div class="i_e_l_p_e page container"></div>`;
+    const _ielpe = document.querySelector('.i_e_l_p_e');
+
+    switch (data) {
+        case true:
+            _ielpe.innerHTML=
+            `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
+            return _ielpe.parentNode.innerHTML;
+        case undefined:
+            _ielpe.innerHTML=
+            `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
+            return _ielpe.parentNode.innerHTML;
+        default:
+            const list = Object.values(data);
+            let i = data.count;
+            do {
+                const template = document.getElementById('i_e_l_p_t')
+                template.innerHTML = 
+                    `<ul class="i_e_l_c_e">
+                        <div class="">
+                        </div>
+                        <li class="flex-col center ">
+                            <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
+                                <img src="${list[i].thumbNail}" alt="이미지가 로드되지 않았습니다." srcset="">
+                            </div>
+                            <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
+                                <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>
+                                <div id="category${i}" class="mg-a-10px pd-a-10px width-100">${list[i].category}</div>
+                                <div id="sellingUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].sellingUnit}</div>
+                                <div id="totalAmount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].totalAmount}</div>
+                                <div id="description${i}" class="mg-a-10px pd-a-10px width-100">${list[i].description}</div>
+                                <div id="pricePerUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].pricePerUnit}</div>
+                                <div id="discount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].discount}</div>
+                            </div>
+                            <button id="editThisBtn${i}" type="submit">수정하기</button>
+                        </li>
+                    </ul>`
+                window.localStorage.setItem(`itemId${i}`,`${list[i].itemId}`);
+                window.localStorage.setItem(`sellerId${i}`,`${list[i].sellerId}`);
+                _ielpe.appendChild(template.content.cloneNode(true));
+                --i;
+            } while (i > 0);
+            return _ielpe.parentNode.innerHTML;
+    }
+};
 
 const itemEditPageTemplate = `
 <div class="i_e_p_e page center">
@@ -634,7 +687,7 @@ const itemEditPageTemplate = `
         <input class="pd-a-10px fs-xl width-100" type="number" name="minAmount" id="minAmount" required>
     </div>
     <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">판매 가능한 최대 단위:</label>
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">배송 가능한 최대 단위:</label>
         <input class="pd-a-10px fs-xl width-100" type="number" name="maxAmount" id="maxAmount" required>
     </div>
     <div class="flex-col">
@@ -664,11 +717,8 @@ const itemEditPageTemplate = `
 `
 
 
-const dealPageTemplate = (data=true) => {
-
-    let res = data;
-
-`<div class="d_p_e container">
+const dealPageTemplate =
+    `<div class="d_p_e container">
     <div class="page bgc-ggrn">
         <div class="container deal-item">
             <div class="width-90 center item">
@@ -709,8 +759,6 @@ const dealPageTemplate = (data=true) => {
         </div>
     </div>
 </div>`
-
-}
 
 const itemPageTemplate = `
 <div class="i_p_e container">
@@ -799,6 +847,7 @@ const wishlistPageTemplate = (callback = function () {
     return `
 <div class="w_p_e container">
     <div class="flex-col bgc-lgrn page">
+
         <div class="bgc-wgrn pd-a-15px">
             <div class="pd-a-15px item-nav">
                 <input class="pd-a-15px" type="checkbox" name="" id="selectA">
@@ -812,7 +861,6 @@ const wishlistPageTemplate = (callback = function () {
                     <i class="fas fa-times"></i>
                 </div>
             </div>
-
             <div class="pd-a-15px flex-row left">
                 <div class="img-box-140px">
                     <img src="/farmers/resources/client/img/cheese.jpg" alt="" class="item-img">
@@ -826,13 +874,13 @@ const wishlistPageTemplate = (callback = function () {
                 </div>
             </div>
         </div>
+
     </div>
-</div>
-`
+</div>`
 };
 
-const categoryPageTemplate = `
-<div class="c_p_e container">
+const categoryPageTemplate =
+    `<div class="c_p_e container">
     <main class="page">
         <div class="flex-col pd-a-10px">
           <div class="pd-tb-20px" id="vegi"><i class="fas fa-carrot c-lgrn width-50px pd-lr-10px"></i>야채 <i class="fas fa-angle-down right pd-lr-10px"></i> </div>
@@ -843,13 +891,12 @@ const categoryPageTemplate = `
           <div class="pd-tb-20px" id="organic"><i class="fas fa-leaf c-lgrn width-50px pd-lr-10px"></i>유기농 <i class="fas fa-angle-down right padding-lr-10px"></i> </div>
         </div>
     </main>
-</div>
-`
-const aniButtonTemplate = `
-<div class="a_b_e container">
+</div>`
+
+const aniButtonTemplate =
+    `<div class="a_b_e container">
     <i class="fas fa-arrow-circle-up fa-2x c-ggrn round"></i>
-</div>
-`
+</div>`
 
 export {
     recentSearchTagsTemplate as __rstT,
@@ -871,5 +918,6 @@ export {
     categoryPageTemplate as __cpT,
     mailAuthTemplate as __maT,
     itemPostPageTemplate as __ippT,
-    itemEditPageTemplate as __iepT
+    itemEditPageTemplate as __iepT,
+    itemEditListPageTemplate as __ielpT
 };

@@ -22,6 +22,7 @@ public class LoginService {
 			bean.setAvailablePoint(list.get(0).getAvailablePoint());
 			bean.setLoginId(list.get(0).getLoginId());
 			bean.setDegree(list.get(0).getDegree());
+			bean.setUserId(list.get(0).getUserId());
 			String userType = list.get(0).getUserType();
 			switch (userType) {
 			case "0":

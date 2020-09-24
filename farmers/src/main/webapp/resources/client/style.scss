@@ -39,6 +39,12 @@ img {
     margin: 0 auto;
     overflow: auto;
 }
+.containerH {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
 .search-box {
     max-width: inherit;

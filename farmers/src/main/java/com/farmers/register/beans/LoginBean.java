@@ -3,6 +3,7 @@ package com.farmers.register.beans;
 import javax.validation.constraints.*;
 
 public class LoginBean {
+	private String userId;
 	@NotBlank(message = "빈칸이 있습니다")
 	private String loginId;
 	@NotBlank
@@ -13,6 +14,15 @@ public class LoginBean {
 	private boolean isExist;
 	private boolean isLoggedIn;
 	private int availablePoint;
+
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 	public String getDegree() {
 		return degree;

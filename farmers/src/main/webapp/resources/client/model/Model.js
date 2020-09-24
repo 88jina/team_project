@@ -15,6 +15,7 @@ import {
     emailAuth,
     addItem,
     itemEdit,
+    itemEditList,
     itemEditComplete,
     dealInit,
     dealJoin,
@@ -25,6 +26,11 @@ import {
 //서버와 소통하는 객체.
 //서버에서 전달되는 로우 데이터만 받는다.
 class Model {
+
+    _itemEditListDummy() {
+        let res = itemEditList;
+        return res;
+    }
 
     _wishlistDummy() {
         let res = wishlist;

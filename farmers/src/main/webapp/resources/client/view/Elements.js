@@ -19,7 +19,8 @@ import {
     __cpT,
     __maT,
     __ippT,
-    __iepT
+    __iepT,
+    __ielpT
 } from "./Templates.js";
 
 class MailAuth extends HTMLElement{
@@ -155,6 +156,13 @@ class ItemEditPage extends HTMLElement {
         _u.mkElement('#i_e_p_t', __iepT, this);
     }
 }
+class ItemEditListPage extends HTMLElement {
+    constructor() {
+        super();
+        this.__ielpT = __ielpT();
+        _u.mkElement('#i_e_l_c_t', this.__ielpT, this);
+    }
+}
 
 
 export {
@@ -176,5 +184,6 @@ export {
     CategoryPage as CP_,
     MailAuth as MA_,
     ItemPostPage as IPP_,
-    ItemEditPage as IEP_
+    ItemEditPage as IEP_,
+    ItemEditListPage as IELP_
 };
