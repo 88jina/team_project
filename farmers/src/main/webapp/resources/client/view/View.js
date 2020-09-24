@@ -2,7 +2,7 @@ import _u from "../lib/Util.js";
 import * as _e from "./Elements.js";
 import _m from "../model/Model.js";
 import * as _t from "./Templates.js";
-
+import * as _d from "../dummydata.js";
 //이벤트 리스너는 전부 뷰에 담아야해
 //그래야 뷰의 이벤트를 구독중인 컨트롤러가 정보를 받을 수 있다.
 //컨트롤러는 엘리먼트를 모르고
@@ -30,6 +30,8 @@ class View {
         this.define('payment-page', _e.PP_);
         this.define('wishlist-page', _e.WP_);
         this.define('category-page', _e.CP_);
+        this.define('item-post-page', _e.IPP_);
+        this.define('item-edit-page', _e.IEP_);
 
         _u.rmElements(
             '.h_p_e',
@@ -46,7 +48,9 @@ class View {
             '.r_p_e',
             '.p_p_e',
             '.w_p_e',
-            '.c_p_e'
+            '.c_p_e',
+            '.i_e_p_e',
+            '.i_p_p_e'
         );
 
 
@@ -144,8 +148,12 @@ class View {
             this.switchPage('#h_p_t');
         });
 
+        // _u.addEvent('#myPage', 'click', () => {
+        //     this.switchTo('#m_p_t', _t.__mpT(_m._loginSellerDummy()), this.myPage.bind(this));
+        // });
+
         _u.addEvent('#myPage', 'click', () => {
-            this.ifLoggedInMoveTo('#m_p_t');
+            this.ifLoggedInMoveTo('#m_p_t', this.myPage.bind(this));
         });
 
         _u.addEvent('#search', 'click', () => {
@@ -266,7 +274,7 @@ class View {
     }
 
 
-    ifLoggedInMoveTo(thisPage) {
+    ifLoggedInMoveTo(thisPage, event) {
         let that = this;
         const cookie = document.cookie.split('loginCookie=')[1];
         // const rgx = /([A-z]|[0-9])\w+/;
@@ -279,13 +287,52 @@ class View {
                 //로컬에서 기능 테스트를 위해 .나중에 홈으로 바꿀 것 
                 that.switchPage('#l_p_t', that.loginPage.bind(this));
             } else {
-                this.switchTo(thisPage, _t.__mpT(res));
+                this.switchTo(thisPage, _t.__mpT(res), event);
             }
         } else if (cookie === undefined) {
             alert('로그인을 해주세요');
             this.switchPage('#l_p_t', this.loginPage.bind(this));
         }
     }
+
+    myPage() {
+        _u.addEvent('#myPageExit', 'click', () => this.switchPage('#h_p_t').bind(this));
+        _u.addEvent('#degreePolicy', 'click', this.switchPage.bind(this));
+        _u.addEvent('#expectedDegree', 'click', this.switchPage.bind(this));
+        _u.addEvent('#availablePoint', 'click', this.switchPage.bind(this));
+        _u.addEvent('#inviteFriend', 'click', this.switchPage.bind(this));
+        _u.addEvent('#itemReview', 'click', this.switchPage.bind(this));
+        _u.addEvent('#itemQuery', 'click', this.switchPage.bind(this));
+        _u.addEvent('#bulkOrder', 'click', this.switchPage.bind(this));
+        _u.addEvent('#dealHistory', 'click', this.switchPage.bind(this));
+        _u.addEvent('#orderHistory', 'click', this.switchPage.bind(this));
+        _u.addEvent('#deliveryPolicy', 'click', this.switchPage.bind(this));
+        _u.addEvent('#editMyInfo', 'click', this.switchPage.bind(this));
+        _u.addEvent('#logOut', 'click', this.switchPage.bind(this));
+        const userType = _u.$('#userType').innerText;
+        switch (userType) {
+            case "판매자":
+                _u.addEvent('#itemPost', 'click', () => this.switchPage('#i_p_p_t', this.itemPostPage.bind(this)));
+                _u.addEvent('#itemEdit', 'click', () => this.switchPage('#i_e_p_t', this.itemEditPage.bind(this)));
+                _u.addEvent('#destinationEdit', 'click', this.switchPage.bind(this));
+                break;
+            case "관리자":
+                _u.addEvent('#toAdminPage', 'click', this.switchPage.bind(this));
+                break;
+            default:
+                break;
+        }
+    }
+
+    itemPostPage() {
+        _u.addEvent('#imgPostBtn', 'click', this.imgPostRequest.bind(this));
+        _u.addEvent('#itemPostBtn', 'click', this.itemPostRequest.bind(this));
+    }
+    itemEditPage() {
+        _u.addEvent('#imgPostBtn', 'click', this.imgEditRequest.bind(this));
+        _u.addEvent('#itemPostBtn', 'click', this.itemEditRequest.bind(this));
+    }
+
 
     switchUnit() {
         const currentUnit = _u.$('search-box');
@@ -299,6 +346,7 @@ class View {
                 break;
         }
     }
+
 
     switchPage(pageTemplate, addEventFunction = () => {
         return;
@@ -346,7 +394,7 @@ class View {
         _u.addElement_withEvent(pageTemplate, 'main', addEventFunction);
     }
 
-    switchTo(page, data) {
+    switchTo(page, data, event) {
         const currentPage = _u.$('main').firstElementChild;
         console.log("currentPage:" + currentPage.className);
         switch (currentPage) {
@@ -383,7 +431,7 @@ class View {
             default:
                 break;
         }
-        _u.showMyPage(page, data, _u.$('main'));
+        _u.showMainPage(page, data, _u.$('main'), event);
     }
 
     moveTop() {
@@ -419,7 +467,7 @@ class View {
         let that = this;
         that.res = "";
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', './api/myPage?loginId='+userId, false);
+        xhr.open('POST', './api/myPage?loginId=' + userId, false);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -441,6 +489,83 @@ class View {
 
     getResData() {
         return this.responseText;
+    }
+
+
+
+    imgPostRequest() {
+        const thumb = document.querySelector('#thumbNail'); //따로 등록
+        const msg =
+            (thumb.value === "") ?
+            "이미지를 업로드 해주세요" :
+            true;
+
+        if (typeof (msg) === "string") {
+            alert(msg);
+            return false;
+        }
+
+        const param = `
+        thumbName=${thumb.value}
+        `;
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', './seller/postImg');
+        xhr.setRequestHeader('Content-type', 'multipart/form-data');
+        xhr.send(param);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                alert(res);
+            }
+        };
+    }
+
+    itemPostRequest() {
+        const iName = document.querySelector('#itemName');
+        const iCategory = document.querySelector('#itemCategory');
+        const sUnit = document.querySelector('#sellingUnit');
+        const pPerUnit = document.querySelector('#pricePerUnit');
+        const tAmount = document.querySelector('#totalAmount');
+        const minAmount = document.querySelector('#minAmount');
+        const maxAmount = document.querySelector('#maxAmount');
+        const disc = document.querySelector('#discount');
+        const desc = document.querySelector('#description');
+        const imgPostBtn = document.querySelector('#imgPostBtn');
+
+        const msg =
+            (iName.value === "") ?
+            "상품 이름을 입력해주세요" :
+            (pPerUnit.value === "") ?
+            "단위 당 판매 가격을 입력해주세요" :
+            (tAmount.value === "") ?
+            "판매 가능한 총량을 입력해주세요" :
+            (minAmount.value === "") ?
+            "최소 단위를 입력해주세요" :
+            (maxAmount.value === "") ?
+            "최대 단위를 입력해주세요" :
+            (desc.value === "") ?
+            "상품 설명을 입력해주세요" :
+            true;
+
+        if (typeof (msg) === "string") {
+            alert(msg);
+            return false;
+        }
+
+        const param = `itemName=${iName.value}&itemCategory=${iCategory.value}&sellingUnit=${sUnit.value}&pricePerUnit=${pPerUnit.value}&totalAmount=${tAmount.value}&minAmount=${minAmount.value}&maxAmount=${maxAmount.value}&discount=${disc.value}&description=${desc.value}`;
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', './seller/postItem');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.send(param);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                alert(res);
+                imgPostBtn.style.display = "block";
+            }
+        };
     }
 
     joinPostRequest() {
@@ -487,7 +612,7 @@ class View {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 let res = JSON.parse(xhr.responseText);
                 alert(res.errorMsg);
-                that.switchTo('#m_p_t', _t.__mpT(res));
+                that.switchTo('#m_p_t', _t.__mpT(res), this.myPage.bind(this));
             }
         };
 
@@ -512,7 +637,7 @@ class View {
                     _u.$('#joinId').value = "";
                     _u.addEvent('#joinId', 'keydown', this.duplChk(duplValue))
                 };
-            }else if (xhr.readyState == 4 && xhr.status == 404) {
+            } else if (xhr.readyState == 4 && xhr.status == 404) {
                 alert('404 에러');
             }
         };
@@ -541,7 +666,7 @@ class View {
                 let res = JSON.parse(xhr.responseText);
                 switch (res.loggedIn) {
                     case true:
-                        that.switchTo('#m_p_t', _t.__mpT(res));
+                        that.switchTo('#m_p_t', _t.__mpT(res), this.myPage.bind(this));
                         break;
                     case false:
                         alert(res.errorMsg);

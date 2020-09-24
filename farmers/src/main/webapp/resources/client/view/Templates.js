@@ -265,64 +265,74 @@ const myPageTemplate = (data = true) => {
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
-                        <div class="flex-row just-between">
-                            <div>
-                                내페이지
-                            </div>
-                            <div id="myPageExit">
+                        <div class="flex-row just-between mg-a-10px">
+                            <h2 class="pd-a-5px">
+                                마이페이지
+                            </h2>
+                            <h2 class="pd-a-5px" id="myPageExit">
                                 <i class="fas fa-times"></i>
-                            </div>
+                            </h2>
                         </div>
                         <div class="">
-                            <div class="left mg-a-10px bgc-pyel box-50px">일반</div>
-                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div id="userType" class="left mg-a-10px bgc-pyel box-50px">일반</div>
+                            <div class="pd-a-15px">${res.loginId}님</div>
                             <div class="">${rate(res)}</div>
                         </div>
+
                         <div class="mg-t-10px flex-row">
-                            <button class="mg-a-10px width-100">등급 정책</button>
-                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                            <button id="degreePolicy" class="mg-a-10px width-100">등급 정책</button>
+                            <button id="expectedDegree" class="mg-a-10px width-100">다음 달 예상 등급</button>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+
+                            <div id="availablePoint" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">적립금</div>
                                 <div class="right">${res.availablePoint}원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="inviteFriend" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">친구초대</div>
                                 <div class="right">5000원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="itemReview" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">상품후기</div>
                                 <div class="right">1000원</div>
                             </div>
                         </div>
                 
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">상품 문의</div>
+                            <div id="itemQuery" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품문의</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">대량주문 문의</div>
+                            <div id="bulkOrder" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="dealHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">참여한 딜</div>
+                                <div class="right">></div>
+                            </div>
+                                <div id="dealHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">참여한 딜</div>
+                                <div class="right">></div>
+                            </div>
+                            <div id="orderHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">주문내역</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="deliveryPolicy" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">배송안내</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="editMyInfo" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">개인정보 수정</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="logOut" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">로그아웃</div>
                                 <div class="right">></div>
                             </div>
@@ -334,74 +344,82 @@ const myPageTemplate = (data = true) => {
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
-                        <div class="flex-row just-between">
-                            <div>
-                                내페이지
-                            </div>
-                            <div id="myPageExit">
+                        <div class="flex-row just-between mg-a-10px">
+                            <h2 class="pd-a-5px">
+                                마이페이지
+                            </h2>
+                            <h2 class="pd-a-5px" id="myPageExit">
                                 <i class="fas fa-times"></i>
-                            </div>
+                            </h2>
                         </div>
                         <div class="">
-                            <div class="left mg-a-10px bgc-pyel box-50px">판매자</div>
-                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div id="userType" class="left t-center mg-a-10px bgc-pyel box-50px">판매자</div>
+                            <div class="pd-a-15px">${res.loginId}님</div>
                             <div class="">${rate(res)}</div>
                         </div>
                         <div class="mg-t-10px flex-row">
-                            <button class="mg-a-10px width-100">등급 정책</button>
-                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                            <button id="degreePolicy" class="mg-a-10px width-100">등급 정책</button>
+                            <button id="expectedDegree" class="mg-a-10px width-100">다음 달 예상 등급</button>
                         </div>
                         <div class="flex-col mg-a-10px">
-                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                        <div id="itemPost" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                             <div class="left">상품 등록</div>
                             <div class="right">></div>
                         </div>
-                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                        <div id="itemEdit" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">상품 수정</div>
+                            <div class="right">></div>
+                        </div>
+                        <div id="destinationEdit" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                             <div class="left">배송지 수정</div>
                             <div class="right">></div>
                         </div>
                      </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="availablePoint" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">적립금</div>
                                 <div class="right">${res.availablePoint}원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="inviteFriend" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">친구초대</div>
                                 <div class="right">5000원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="itemReview" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">상품후기</div>
                                 <div class="right">1000원</div>
                             </div>
                         </div>
                 
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">상품 문의</div>
+                            <div id="itemQuery" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품문의</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">대량주문 문의</div>
+                            <div id="bulkOrder" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="dealHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">참여한 딜</div>
+                                <div class="right">></div>
+                            </div>
+                            <div id="orderHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">주문내역</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="deliveryPolicy" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">배송안내</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="editMyInfo" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">개인정보 수정</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="logOut" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">로그아웃</div>
                                 <div class="right">></div>
                             </div>
@@ -413,74 +431,74 @@ const myPageTemplate = (data = true) => {
             return `
                 <div class="m_p_e container">
                     <div class="bgc-ggrn page">
-                        <div class="flex-row just-between">
-                            <div>
-                                내페이지
-                            </div>
-                            <div id="myPageExit">
+                        <div class="flex-row just-between mg-a-10px">
+                            <h2 class="pd-a-5px">
+                                마이페이지
+                            </h2>
+                            <h2 class="pd-a-5px" id="myPageExit">
                                 <i class="fas fa-times"></i>
-                            </div>
+                            </h2>
                         </div>
                         <div class="">
-                            <div class="left mg-a-10px bgc-pyel box-50px">관리자</div>
-                            <div class="pd-a-15px">${res.loginId}</div>
+                            <div id="userType" class="left mg-a-10px bgc-pyel box-50px">관리자</div>
+                            <div class="pd-a-15px">${res.loginId}님</div>
                             <div class="">${rate(res)}</div>
                         </div>
                         <div class="mg-t-10px flex-row">
-                            <button class="mg-a-10px width-100">등급 정책</button>
-                            <button class="mg-a-10px width-100">다음 달 예상 등급</button>
+                            <button id="degreePolicy" class="mg-a-10px width-100">등급 정책</button>
+                            <button id="expectedDegree" class="mg-a-10px width-100">다음 달 예상 등급</button>
                         </div>
                         <div class="flex-col mg-a-10px">
-                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                            <div class="left">상품 등록</div>
-                            <div class="right">></div>
-                        </div>
-                        <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                            <div class="left">판매자 등록</div>
+                        <div id="toAdminPage" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div class="left">관리자 페이지로</div>
                             <div class="right">></div>
                         </div>
                      </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="availablePoint" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">적립금</div>
                                 <div class="right">${res.availablePoint}원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="inviteFriend" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">친구초대</div>
                                 <div class="right">5000원></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="itemReview" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">상품후기</div>
                                 <div class="right">1000원</div>
                             </div>
                         </div>
                 
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">상품 문의</div>
+                            <div id="itemQuery" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">상품문의</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
-                                <div class="left">대량주문 문의</div>
+                            <div id="bulkOrder" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">대량주문</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="dealHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                                <div class="left">참여한 딜</div>
+                                <div class="right">></div>
+                            </div>
+                            <div id="orderHistory" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">주문내역</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="deliveryPolicy" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">배송안내</div>
                                 <div class="right">></div>
                             </div>
                         </div>
                         <div class="flex-col mg-a-10px">
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="editMyInfo" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">개인정보 수정</div>
                                 <div class="right">></div>
                             </div>
-                            <div class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
+                            <div id="logOut" class="bgc-wgrn mg-a-1px round-10px pd-a-15px">
                                 <div class="left">로그아웃</div>
                                 <div class="right">></div>
                             </div>
@@ -493,10 +511,162 @@ const myPageTemplate = (data = true) => {
     }
 };
 
-const dealPageTemplate = (data) => {
+
+const itemPostPageTemplate = `
+<div class="i_p_p_e page center">
+<div class="width-90 center">
+    <h2>
+        상품 등록
+    </h2>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemName">상품 이름:</label>
+        <input class="pd-a-10px fs-xl width-100" type="text" name="itemName" id="itemName">
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemCategory">상품 종류:</label>
+        <select class="pd-a-10px fs-xl width-100" name="itemCategory" id="itemCategory" required>
+            <option value="vegi">야채</option>
+            <option value="fruit">과일</option>
+            <option value="meat">육류</option>
+            <option value="seaFood">수산물</option>
+            <option value="dairy">유제품</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="sellingUnit">판매 단위:</label>
+        <select class="pd-a-10px fs-xl width-100" name="sellingUnit" id="sellingUnit" required>
+            <option value="100">100g</option>
+            <option value="200">200g</option>
+            <option value="500">500g</option>
+            <option value="1000">1kg</option>
+            <option value="2000">2kg</option>
+            <option value="5000">5kg</option>
+            <option value="10000">10kg</option>
+            <option value="100000">100kg</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="pricePerUnit">단위 당 판매 가격:</label>
+        <input class="pd-a-10px fs-xl width-100 t-right" type="text" name="pricePerUnit" id="pricePerUnit" placeholder="원" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="totalAmount">판매 가능한 총량:</label>
+        <input class="pd-a-10px fs-xl width-100" type="text" name="totalAmount" id="totalAmount" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="minAmount">딜 체결 가능한 최소 단위:</label>
+        <input class="pd-a-10px fs-xl width-100" type="number" name="minAmount" id="minAmount" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">판매 가능한 최대 단위:</label>
+        <input class="pd-a-10px fs-xl width-100" type="number" name="maxAmount" id="maxAmount" required>
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="discount">판매 단위 당 할인율:</label>
+        <select class="pd-a-10px fs-xl width-100"  name="discount" id="discount" required>
+            <option value="2">2단위 당 5%</option>
+            <option value="3">3단위 당 5%</option>
+            <option value="4">4단위 당 5%</option>
+            <option value="5">5단위 당 5%</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="description">상품 설명:</label>
+        <textarea class="pd-a-10px fs-xl width-100" height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
+    </div>
+    <div>
+        <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
+    </div>
+
+
+    <div class="flex-col dis-none">
+        <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail">상품 사진:</label>
+        <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
+        <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
+    </div>
+</div>
+</div>
+`;
+
+const itemEditPageTemplate = `
+<div class="i_e_p_e page center">
+<div class="width-90 center">
+    <h2>
+        상품 수정
+    </h2>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemName">상품 이름:</label>
+        <input class="pd-a-10px fs-xl width-100" type="text" name="itemName" id="itemName">
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemCategory">상품 종류:</label>
+        <select class="pd-a-10px fs-xl width-100" name="itemCategory" id="itemCategory" required>
+            <option value="vegi">야채</option>
+            <option value="fruit">과일</option>
+            <option value="meat">육류</option>
+            <option value="seaFood">수산물</option>
+            <option value="dairy">유제품</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="sellingUnit">판매 단위:</label>
+        <select class="pd-a-10px fs-xl width-100" name="sellingUnit" id="sellingUnit" required>
+            <option value="100">100g</option>
+            <option value="200">200g</option>
+            <option value="500">500g</option>
+            <option value="1000">1kg</option>
+            <option value="2000">2kg</option>
+            <option value="5000">5kg</option>
+            <option value="10000">10kg</option>
+            <option value="100000">100kg</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="pricePerUnit">단위 당 판매 가격:</label>
+        <input class="pd-a-10px fs-xl width-100 t-right" type="text" name="pricePerUnit" id="pricePerUnit" placeholder="원" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="totalAmount">판매 가능한 총량:</label>
+        <input class="pd-a-10px fs-xl width-100" type="text" name="totalAmount" id="totalAmount" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="minAmount">딜 체결 가능한 최소 단위:</label>
+        <input class="pd-a-10px fs-xl width-100" type="number" name="minAmount" id="minAmount" required>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">판매 가능한 최대 단위:</label>
+        <input class="pd-a-10px fs-xl width-100" type="number" name="maxAmount" id="maxAmount" required>
+    </div>
+    <div class="flex-col">
+        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="discount">판매 단위 당 할인율:</label>
+        <select class="pd-a-10px fs-xl width-100"  name="discount" id="discount" required>
+            <option value="2">2단위 당 5%</option>
+            <option value="3">3단위 당 5%</option>
+            <option value="4">4단위 당 5%</option>
+            <option value="5">5단위 당 5%</option>
+        </select>
+    </div>
+    <div class="flex-col">
+        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="description">상품 설명:</label>
+        <textarea class="pd-a-10px fs-xl width-100 height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
+    </div>
+    <div>
+        <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
+    </div>
+
+    <div class="flex-col dis-none">
+        <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail">상품 사진:</label>
+        <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
+        <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
+    </div>
+</div>
+</div>
+`
+
+
+const dealPageTemplate = (data=true) => {
 
     let res = data;
-
 
 `<div class="d_p_e container">
     <div class="page bgc-ggrn">
@@ -699,5 +869,7 @@ export {
     paymentPageTemplate as __ppT,
     wishlistPageTemplate as __wpT,
     categoryPageTemplate as __cpT,
-    mailAuthTemplate as __maT
+    mailAuthTemplate as __maT,
+    itemPostPageTemplate as __ippT,
+    itemEditPageTemplate as __iepT
 };

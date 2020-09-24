@@ -17,6 +17,15 @@ public class ItemController {
 	@Autowired
 	ItemPostService service;
 
+	//내가 등록한 상품 목록 불러오기(판매자기능)
+	@RequestMapping(value="/seller/myItemList", method=RequestMethod.GET)
+	public Map<String, Object> myItemList(UserBean userBean){
+		System.out.println("controller started");
+		Map<String, Object> map = service.myItemList(userBean);
+		System.out.println("service done");
+		return map;
+	}
+	
 	// 상품등록
 	@RequestMapping(value = "/seller/postItem", method = RequestMethod.POST)
 	public ItemBean postItem(@Valid ItemBean itemBean, BindingResult rs) {
@@ -42,7 +51,7 @@ public class ItemController {
 	}
 
 	// 상품수정페이지 불러오기
-	@RequestMapping(value = "/seller/callItem", method = RequestMethod.POST)
+	@RequestMapping(value = "/seller/callItem", method = RequestMethod.GET)
 	public ItemBean callItem(ItemBean itemBean) {
 		System.out.println("controller starts");
 		ItemBean bean = new ItemBean();
@@ -52,7 +61,7 @@ public class ItemController {
 	}
 
 	// 상품수정완료
-	@RequestMapping(value = "/seller/modifyItem", method = RequestMethod.POST)
+	@RequestMapping(value = "/seller/modifyItem", method = RequestMethod.PUT)
 	public ItemBean modifyItem(@Valid ItemBean itemBean, BindingResult rs) {
 		String msg = null;
 		if (rs.hasErrors()) {
@@ -65,7 +74,7 @@ public class ItemController {
 	}
 
 	// 상품 삭제
-	@RequestMapping(value = "/seller/delItem", method = RequestMethod.GET)
+	@RequestMapping(value = "/seller/delItem", method = RequestMethod.DELETE)
 	public void delItem(ItemBean itemBean) {
 		service.delItem(itemBean);
 	}

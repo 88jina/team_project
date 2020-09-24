@@ -20,8 +20,9 @@ public class ItemBean {
 	private String minAmount;
 	private String maxAmount;
 	private String thumbNail;
-	private String msg;
 	private String discount;
+	private String msg;
+	
 
 
 	public String getDiscount() {

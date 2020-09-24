@@ -1,14 +1,16 @@
+//나중에 유틸함수들 클래스 떼고 개별 함수로 나눠서 익스포트하기!
+
 class Util {
     $(selector) {
         return document.querySelector(selector);
     }
 
 
-    showMyPage(selector, result, main) {
+    showMainPage(selector, result, main, event = () => {return;}) {
         const self = this;
         const template = self.$(selector);
         template.innerHTML = result;
-        main.appendChild(template.content.cloneNode(true));
+        main.appendChild(template.content.cloneNode(true)).onload = event();
     }
 
     mkElement(selector, Template, that) {

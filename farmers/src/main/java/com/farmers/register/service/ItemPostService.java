@@ -18,11 +18,43 @@ public class ItemPostService {
 	public void postItem(ItemBean itemBean) {
 		mapper.postItem(itemBean);
 	}
+	
+	//썸네일 업데이트
 	public void updateThumbnail(ItemBean itemBean) {
 		mapper.updateThumb(itemBean);
 	}
 
-	
+	//판매자별 상품목록 불러오기
+	public Map<String,Object> myItemList(UserBean userBean) {
+		String sellerId = mapper.getUserId(userBean);
+		System.out.println("판매자 아이디 :" +sellerId);
+		List<ItemBean> itemList = mapper.myItemList(sellerId);
+		List<ItemBean>list = new ArrayList<ItemBean>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		int count =0;
+		for(int i=0; i<itemList.size();i++) {
+			ItemBean bean = new ItemBean();
+			System.out.println(itemList.get(i).getItemName());
+			bean.setItemId(itemList.get(i).getItemId());
+			bean.setSellerId(itemList.get(i).getSellerId());
+			bean.setCategory(itemList.get(i).getCategory());
+			bean.setItemName(itemList.get(i).getItemName());
+			bean.setSellingUnit(itemList.get(i).getSellingUnit());
+			bean.setTotalAmount(itemList.get(i).getTotalAmount());
+			bean.setDescription(itemList.get(i).getDescription());
+			bean.setPricePerUnit(itemList.get(i).getPricePerUnit());
+			bean.setMinAmount(itemList.get(i).getMinAmount());
+			bean.setMaxAmount(itemList.get(i).getMaxAmount());
+			bean.setThumbNail(itemList.get(i).getThumbNail());
+			bean.setDiscount(itemList.get(i).getDiscount());
+			bean.setMsg("상품정보를 성공적으로 불러왔습니다.");
+			count++;
+			list.add(bean);
+			map.put("myItem"+Integer.toString(i), list.get(i));
+		}
+		map.put("count",(Object)count);
+		return map;
+	}
 	
 	//상품수정페이지 불러오기
 	public ItemBean callItem(ItemBean itemBean) {

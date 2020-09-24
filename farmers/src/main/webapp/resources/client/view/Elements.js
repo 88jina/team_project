@@ -17,7 +17,9 @@ import {
     __ppT,
     __wpT,
     __cpT,
-    __maT
+    __maT,
+    __ippT,
+    __iepT
 } from "./Templates.js";
 
 class MailAuth extends HTMLElement{
@@ -141,6 +143,18 @@ class CategoryPage extends HTMLElement {
         _u.mkElement('#c_p_t', __cpT, this);
     }
 }
+class ItemPostPage extends HTMLElement {
+    constructor() {
+        super();
+        _u.mkElement('#i_p_p_t', __ippT, this);
+    }
+}
+class ItemEditPage extends HTMLElement {
+    constructor() {
+        super();
+        _u.mkElement('#i_e_p_t', __iepT, this);
+    }
+}
 
 
 export {
@@ -160,5 +174,7 @@ export {
     PaymentPage as PP_,
     WishlistPage as WP_,
     CategoryPage as CP_,
-    MailAuth as MA_
+    MailAuth as MA_,
+    ItemPostPage as IPP_,
+    ItemEditPage as IEP_
 };

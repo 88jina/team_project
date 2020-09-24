@@ -27,6 +27,8 @@
 <template id="w_p_t"></template>
 <template id="c_p_t"></template>
 <template id="m_a_t"></template>
+<template id="i_p_p_t"></template>
+<template id="i_e_p_t"></template>
 
 <body id="body" class="container">
 
@@ -41,6 +43,8 @@
   <payment-page class="container"></payment-page>
   <wishlist-page class="container"></wishlist-page>
   <category-page class="container"></category-page>
+  <item-post-page class="container"></category-page>
+  <item-edit-page class="container"></category-page>
 
   <search-box id="searchBox" class="container center bgc-wgrn"></search-box>
   <div id="mainPage" class="pd-t-100px container">
