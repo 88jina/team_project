@@ -27,7 +27,7 @@
 <td>${row.degree}</td>
 <td>${row.userEmail}</td>
 <td>${row.availablePoint }</td>
-<td><a href="http://localhost:8090/farmers/admin/delSeller?userId=${row.userId }&sellerId=+${row.userId}" >판매자 삭제</a></td>
+<td><a href="http://192.168.1.137:8090/farmers/admin/delSeller?userId=${row.userId }&sellerId=${row.userId}" >판매자 삭제</a></td>
 </tr>
 </c:forEach>
 </table>

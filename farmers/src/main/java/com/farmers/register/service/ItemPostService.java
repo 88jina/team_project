@@ -1,11 +1,14 @@
 package com.farmers.register.service;
 
+import java.io.*;
+import java.net.*;
 import java.util.*;
 
 import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.web.multipart.*;
 
 import com.farmers.register.beans.*;
 import com.farmers.register.mapper.*;
@@ -16,20 +19,55 @@ public class ItemPostService {
 	ItemMapper mapper;
 	@Autowired
 	HttpSession session;
+	
+	
+	//멀티파트파일-문자열 데이터타입 변환
+	public String convertDataType(MultipartHttpServletRequest req) throws UnsupportedEncodingException {
+		MultipartFile file = req.getFile("thumbNail");
+		String path = "/home/jina01/img/";
+		String originFileName = file.getOriginalFilename();
+		String decoded =URLDecoder.decode(originFileName,"UTF-8");
+		long fileSize = file.getSize();
+		System.out.println("FileName : "+decoded);
+		System.out.println("fileSize : "+fileSize);
+		
+		String safeFile = path+System.currentTimeMillis()+decoded;
+		
+		try {
+			file.transferTo(new File(safeFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch(IllegalStateException e){
+			e.printStackTrace();
+		}
+		return safeFile;
+	}
 
 	// 상품등록
-	public void postItem(ItemBean itemBean) {
+	public ItemBean postItem(ItemDto itemDto, MultipartHttpServletRequest req) throws UnsupportedEncodingException {
 		String sellerId = (String)session.getAttribute("userId");
+		itemDto.setSellerId(sellerId);
+		String thumbNail = convertDataType(req);
+		String itemName = URLDecoder.decode(itemDto.getItemName(),"UTF-8");
+		String description = URLDecoder.decode(itemDto.getDescription(), "UTF-8");
+		ItemBean itemBean = new ItemBean();
+		itemBean.setCategory(itemDto.getCategory());
+		itemBean.setDescription(description);
+		itemBean.setDiscount(itemDto.getDiscount());
+		itemBean.setItemName(itemName);
+		itemBean.setMaxAmount(itemDto.getMaxAmount());
+		itemBean.setMinAmount(itemDto.getMinAmount());
+		itemBean.setPricePerUnit(itemDto.getPricePerUnit());
 		itemBean.setSellerId(sellerId);
+		itemBean.setSellingUnit(itemDto.getSellingUnit());
+		itemBean.setThumbNail(thumbNail);
+		itemBean.setTotalAmount(itemDto.getTotalAmount());
+		itemBean.setMsg("상품 등록이 완료되었습니다");
 		mapper.postItem(itemBean);
-		itemBean.setItemId(mapper.getItemId(itemBean.getDescription()));
-		
+		return itemBean;
 	}
 
-	// 썸네일 업데이트
-	public void updateThumbnail(ItemBean itemBean) {
-		mapper.updateThumb(itemBean);
-	}
+
 
 //	public ResultDto test123(UserBean userBean) {
 //		String sellerId = mapper.getUserId(userBean);
@@ -42,12 +80,12 @@ public class ItemPostService {
 	public Map<String, Object> myItemList(UserBean userBean) {
 		String sellerId = (String)session.getAttribute("userId");
 		System.out.println("판매자 아이디 :" + sellerId);
-		List<ItemBean> itemList = mapper.myItemList(sellerId);
-		List<ItemBean> list = new ArrayList<ItemBean>();
+		List<ItemDto> itemList = mapper.myItemList(sellerId);
+		List<ItemDto> list = new ArrayList<ItemDto>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		int count = 0;
 		for (int i = 0; i < itemList.size(); i++) {
-			ItemBean bean = new ItemBean();
+			ItemDto bean = new ItemDto();
 			System.out.println(itemList.get(i).getItemName());
 			bean.setItemId(itemList.get(i).getItemId());
 			bean.setSellerId(itemList.get(i).getSellerId());
@@ -61,7 +99,6 @@ public class ItemPostService {
 			bean.setMaxAmount(itemList.get(i).getMaxAmount());
 			bean.setThumbNail(itemList.get(i).getThumbNail());
 			bean.setDiscount(itemList.get(i).getDiscount());
-			bean.setMsg("상품정보를 성공적으로 불러왔습니다.");
 			count++;
 			list.add(bean);
 			map.put("myItem" + Integer.toString(i), list.get(i));
@@ -71,30 +108,45 @@ public class ItemPostService {
 	}
 
 	// 상품수정페이지 불러오기
-	public ItemBean callItem(ItemBean itemBean) {
+	public ItemDto callItem(ItemBean itemBean) {
 		List<ItemBean> itemList = mapper.callItem(itemBean);
-		ItemBean bean = new ItemBean();
+		ItemDto dto = new ItemDto();
 		if (itemList.size() != 0) {
-			bean.setItemId(itemList.get(0).getItemId());
-			bean.setSellerId(itemList.get(0).getSellerId());
-			bean.setCategory(itemList.get(0).getCategory());
-			bean.setItemName(itemList.get(0).getItemName());
-			bean.setSellingUnit(itemList.get(0).getSellingUnit());
-			bean.setTotalAmount(itemList.get(0).getTotalAmount());
-			bean.setDescription(itemList.get(0).getDescription());
-			bean.setPricePerUnit(itemList.get(0).getPricePerUnit());
-			bean.setMinAmount(itemList.get(0).getMinAmount());
-			bean.setMaxAmount(itemList.get(0).getMaxAmount());
-			bean.setDiscount(itemList.get(0).getDiscount());
-			bean.setMsg("상품정보를 성공적으로 불러왔습니다.");
-		} else {
-			bean.setMsg("상품정보를 불러오는 데 실패했습니다.");
-		}
-		return bean;
+			dto.setItemId(itemList.get(0).getItemId());
+			dto.setSellerId(itemList.get(0).getSellerId());
+			dto.setCategory(itemList.get(0).getCategory());
+			dto.setItemName(itemList.get(0).getItemName());
+			dto.setSellingUnit(itemList.get(0).getSellingUnit());
+			dto.setTotalAmount(itemList.get(0).getTotalAmount());
+			dto.setDescription(itemList.get(0).getDescription());
+			dto.setPricePerUnit(itemList.get(0).getPricePerUnit());
+			dto.setMinAmount(itemList.get(0).getMinAmount());
+			dto.setMaxAmount(itemList.get(0).getMaxAmount());
+			dto.setDiscount(itemList.get(0).getDiscount());
+		} 
+		return dto;
 	}
 
 	// 상품수정정보 저장
-	public void modifyItem(ItemBean itemBean) {
+	public void modifyItem(MultipartHttpServletRequest req,ItemDto itemDto) throws UnsupportedEncodingException {
+		ItemBean itemBean = new ItemBean();
+		String sellerId = (String)session.getAttribute("userId");
+		itemDto.setSellerId(sellerId);
+		String thumbNail = convertDataType(req);
+		String itemName = URLDecoder.decode(itemDto.getItemName(),"UTF-8");
+		String description = URLDecoder.decode(itemDto.getDescription(), "UTF-8");
+		itemBean.setCategory(itemDto.getCategory());
+		itemBean.setDescription(description);
+		itemBean.setDiscount(itemDto.getDiscount());
+		itemBean.setItemName(itemName);
+		itemBean.setMaxAmount(itemDto.getMaxAmount());
+		itemBean.setMinAmount(itemDto.getMinAmount());
+		itemBean.setPricePerUnit(itemDto.getPricePerUnit());
+		itemBean.setSellerId(sellerId);
+		itemBean.setSellingUnit(itemDto.getSellingUnit());
+		itemBean.setThumbNail(thumbNail);
+		itemBean.setTotalAmount(itemDto.getTotalAmount());
+		itemBean.setMsg("상품 등록이 완료되었습니다");
 		mapper.modifyItem(itemBean);
 	}
 

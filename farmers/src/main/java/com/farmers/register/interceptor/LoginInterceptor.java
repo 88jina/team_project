@@ -9,7 +9,8 @@ import com.farmers.register.beans.*;
 public class LoginInterceptor implements HandlerInterceptor {
 //
 //	LoginBean loginBean;
-//
+//	HttpSession session;
+//	
 //	public LoginInterceptor(LoginBean loginBean) {
 //		this.loginBean = loginBean;
 //	}
@@ -17,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 //	@Override
 //	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 //			throws Exception {
-//		if(!loginBean.isLoggedIn() && !loginBean.getLoginId().equals("admin")) {
+//		if(!loginBean.isLoggedIn() && !session.getAttribute("userId").equals(1)) {
 //			response.sendRedirect("/farmers/");
 //			return false;
 //		}

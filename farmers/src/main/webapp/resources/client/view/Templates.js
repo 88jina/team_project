@@ -515,104 +515,101 @@ const myPageTemplate = (data = true) => {
 
 const itemPostPageTemplate = `
 <div class="i_p_p_e page center">
-<div class="width-90 center">
-    <h2>
-        상품 등록
-    </h2>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemName">상품 이름:</label>
-        <input class="pd-a-10px fs-xl width-100" type="text" name="itemName" id="itemName">
+    <div class="width-90 center">
+        <h2>
+            상품 등록
+        </h2>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemName">상품 이름:</label>
+            <input class="pd-a-10px fs-xl width-100" type="text" name="itemName" id="itemName">
+        </div>
+        <div class="flex-col">
+            <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="category">상품 종류:</label>
+            <select class="pd-a-10px fs-xl width-100" name="category" id="category" required>
+                <option value="vegi">야채</option>
+                <option value="fruit">과일</option>
+                <option value="meat">육류</option>
+                <option value="seaFood">수산물</option>
+                <option value="dairy">유제품</option>
+            </select>
+        </div>
+        <div class="flex-col">
+            <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="sellingUnit">판매 단위:</label>
+            <select class="pd-a-10px fs-xl width-100" name="sellingUnit" id="sellingUnit" required>
+                <option value="100">100g</option>
+                <option value="200">200g</option>
+                <option value="500">500g</option>
+                <option value="1000">1kg</option>
+                <option value="2000">2kg</option>
+                <option value="5000">5kg</option>
+                <option value="10000">10kg</option>
+                <option value="100000">100kg</option>
+            </select>
+        </div>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="pricePerUnit">단위 당 판매 가격:</label>
+            <input class="pd-a-10px fs-xl width-100 t-right" type="text" name="pricePerUnit" id="pricePerUnit" placeholder="원" required>
+        </div>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="totalAmount">판매 가능한 총량:</label>
+            <input class="pd-a-10px fs-xl width-100" type="text" name="totalAmount" id="totalAmount" required>
+        </div>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="minAmount">딜 체결 가능한 최소 단위:</label>
+            <input class="pd-a-10px fs-xl width-100" type="number" name="minAmount" id="minAmount" required>
+        </div>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">판매 가능한 최대 단위:</label>
+            <input class="pd-a-10px fs-xl width-100" type="number" name="maxAmount" id="maxAmount" required>
+        </div>
+        <div class="flex-col">
+            <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="discount">판매 단위 당 할인율:</label>
+            <select class="pd-a-10px fs-xl width-100"  name="discount" id="discount" required>
+                <option value="2">2단위 당 5%</option>
+                <option value="3">3단위 당 5%</option>
+                <option value="4">4단위 당 5%</option>
+                <option value="5">5단위 당 5%</option>
+            </select>
+        </div>
+        <div class="flex-col">
+            <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="description">상품 설명:</label>
+            <textarea class="pd-a-10px fs-xl width-100" height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
+        </div>
+        <div>
+            <form id="itemPostForm" enctype="multipart/form-data">
+                <div class="flex-col ">
+                    <label class=" mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail" id="thumbNailLabel">상품 사진:</label>
+                    <input class=" pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
+                </div>
+                <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
+            </form>
+        </div>
     </div>
-    <div class="flex-col">
-        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="itemCategory">상품 종류:</label>
-        <select class="pd-a-10px fs-xl width-100" name="itemCategory" id="itemCategory" required>
-            <option value="vegi">야채</option>
-            <option value="fruit">과일</option>
-            <option value="meat">육류</option>
-            <option value="seaFood">수산물</option>
-            <option value="dairy">유제품</option>
-        </select>
-    </div>
-    <div class="flex-col">
-        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="sellingUnit">판매 단위:</label>
-        <select class="pd-a-10px fs-xl width-100" name="sellingUnit" id="sellingUnit" required>
-            <option value="100">100g</option>
-            <option value="200">200g</option>
-            <option value="500">500g</option>
-            <option value="1000">1kg</option>
-            <option value="2000">2kg</option>
-            <option value="5000">5kg</option>
-            <option value="10000">10kg</option>
-            <option value="100000">100kg</option>
-        </select>
-    </div>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="pricePerUnit">단위 당 판매 가격:</label>
-        <input class="pd-a-10px fs-xl width-100 t-right" type="text" name="pricePerUnit" id="pricePerUnit" placeholder="원" required>
-    </div>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="totalAmount">판매 가능한 총량:</label>
-        <input class="pd-a-10px fs-xl width-100" type="text" name="totalAmount" id="totalAmount" required>
-    </div>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="minAmount">딜 체결 가능한 최소 단위:</label>
-        <input class="pd-a-10px fs-xl width-100" type="number" name="minAmount" id="minAmount" required>
-    </div>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="maxAmount">판매 가능한 최대 단위:</label>
-        <input class="pd-a-10px fs-xl width-100" type="number" name="maxAmount" id="maxAmount" required>
-    </div>
-    <div class="flex-col">
-        <label  class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="discount">판매 단위 당 할인율:</label>
-        <select class="pd-a-10px fs-xl width-100"  name="discount" id="discount" required>
-            <option value="2">2단위 당 5%</option>
-            <option value="3">3단위 당 5%</option>
-            <option value="4">4단위 당 5%</option>
-            <option value="5">5단위 당 5%</option>
-        </select>
-    </div>
-    <div class="flex-col">
-        <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="description">상품 설명:</label>
-        <textarea class="pd-a-10px fs-xl width-100" height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
-    </div>
-    <div>
-        <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
-    </div>
-
-
-    <div class="flex-col dis-none">
-
-          <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail" id="thumbNailLabel">상품 사진:</label>
-            <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
-            <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
-
-    </div>
-</div>
 </div>
 `;
 
 
 const itemEditListPageTemplate = (data = true) => {
-    console.log("itemEditListData = "+data)
+    console.log("itemEditListData = " + data)
     const main = document.getElementById('main');
     main.innerHTML = `<div class="i_e_l_p_e page container"></div>`;
     const _ielpe = document.querySelector('.i_e_l_p_e');
 
     switch (data) {
         case true:
-            _ielpe.innerHTML=
-            `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
+            _ielpe.innerHTML =
+                `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
             return _ielpe.parentNode.innerHTML;
         case undefined:
-            _ielpe.innerHTML=
-            `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
+            _ielpe.innerHTML =
+                `<div class="i_e_l_c_e">아이템에딧리스트페이지에러 담긴 데이터가 없습니다.</div>`;
             return _ielpe.parentNode.innerHTML;
         default:
             const list = Object.values(data);
             let i = data.count;
             do {
                 const template = document.getElementById('i_e_l_p_t')
-                template.innerHTML = 
+                template.innerHTML =
                     `<ul class="i_e_l_c_e">
                         <div class="">
                         </div>
@@ -632,8 +629,8 @@ const itemEditListPageTemplate = (data = true) => {
                             <button id="editThisBtn${i}" type="submit">수정하기</button>
                         </li>
                     </ul>`
-                window.localStorage.setItem(`itemId${i}`,`${list[i].itemId}`);
-                window.localStorage.setItem(`sellerId${i}`,`${list[i].sellerId}`);
+                window.localStorage.setItem(`itemId${i}`, `${list[i].itemId}`);
+                window.localStorage.setItem(`sellerId${i}`, `${list[i].sellerId}`);
                 _ielpe.appendChild(template.content.cloneNode(true));
                 --i;
             } while (i > 0);
@@ -703,15 +700,13 @@ const itemEditPageTemplate = `
         <label class="mg-t-10px pd-a-10px fs-xl width-350px t-center" for="description">상품 설명:</label>
         <textarea class="pd-a-10px fs-xl width-100 height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
     </div>
+    <div class="flex-col">
+        <label class=" mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail">상품 사진:</label>
+        <input class=" pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
+    </div>
     <div>
-        <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
-    </div>
-
-    <div class="flex-col dis-none">
-        <label class="dis-none mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail">상품 사진:</label>
-        <input class="dis-none pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
-        <input class="dis-none pd-a-10px fs-xl width-100" id="imgPostBtn" type="submit" value="썸네일 이미지 등록">
-    </div>
+    <input class="pd-a-10px fs-xl width-100" id="itemPostBtn" type="submit" value="상품 등록">
+</div>
 </div>
 </div>
 `

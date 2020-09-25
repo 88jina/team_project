@@ -148,7 +148,7 @@ class View {
         _u.addEvent('#homePage', 'click', () => {
             this.switchPage('#h_p_t');
         });
-
+//로컬테스트용
         // _u.addEvent('#myPage', 'click', () => {
         //     this.switchTo('#m_p_t', _t.__mpT(_m._loginSellerDummy()), this.myPage.bind(this));
         // });
@@ -326,12 +326,10 @@ class View {
     }
 
     itemPostPage() {
-         _u.addEvent('#imgPostBtn', 'click', this.imgPostRequest.bind(this));
-        _u.addEvent('#itemPostBtn', 'click', this.itemPostRequest.bind(this));
+        _u.addEvent('#itemPostBtn', 'click', this.fetchItemPost.bind(this));
     }
 
     itemEditPage() {
-        _u.addEvent('#imgPostBtn', 'click', this.imgEditRequest.bind(this));
         _u.addEvent('#itemPostBtn', 'click', this.itemEditRequest.bind(this));
     }
 
@@ -506,37 +504,9 @@ class View {
         return this.responseText;
     }
 
-     imgPostRequest() {
-         const thumb = document.querySelector('#thumbNail'); //따로 등록
-         const msg =
-             (thumb.value === "") ?
-             "이미지를 업로드 해주세요" :
-             true;
-
-         if (typeof (msg) === "string") {
-             alert(msg);
-             return false;
-         }
-
-         const param = `thumbNail=${thumb.value}`;
-         const xhr = new XMLHttpRequest();
-         xhr.open('POST', './seller/postImg');
-         xhr.setRequestHeader('enctype', 'multipart/form-data');
-         xhr.setRequestHeader('contentType', 'false');
-         xhr.setRequestHeader('processData', 'false');
-         xhr.setRequestHeader('data', 'formData');
-         xhr.send(param);
-         xhr.onreadystatechange = function () {
-             if (xhr.readyState == 4 && xhr.status == 200) {
-                 let res = JSON.parse(xhr.responseText);
-                 alert(res);
-             }
-         };
-     }
-
     itemPostRequest() {
         const iName = document.querySelector('#itemName');
-        const iCategory = document.querySelector('#itemCategory');
+        const iCategory = document.querySelector('#category');
         const sUnit = document.querySelector('#sellingUnit');
         const pPerUnit = document.querySelector('#pricePerUnit');
         const tAmount = document.querySelector('#totalAmount');
@@ -544,9 +514,7 @@ class View {
         const maxAmount = document.querySelector('#maxAmount');
         const disc = document.querySelector('#discount');
         const desc = document.querySelector('#description');
-        const imgPostBtn = document.querySelector('#imgPostBtn');
         const thumbNail = document.querySelector('#thumbNail');
-        const thumbNailLabel = document.querySelector('#thumbNailLabel');
 
         const msg =
             (iName.value === "") ?
@@ -561,34 +529,7 @@ class View {
             "최대 단위를 입력해주세요" :
             (desc.value === "") ?
             "상품 설명을 입력해주세요" :
-            true;
-
-        if (typeof (msg) === "string") {
-            alert(msg);
-            return false;
-        }
-
-        const param = `itemName=${iName.value}&category=${iCategory.value}&sellingUnit=${sUnit.value}&pricePerUnit=${pPerUnit.value}&totalAmount=${tAmount.value}&minAmount=${minAmount.value}&maxAmount=${maxAmount.value}&discount=${disc.value}&description=${desc.value}`;
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('POST', './seller/postItem');
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-        xhr.send(param);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                let res = JSON.parse(xhr.responseText);
-                alert(res);
-                imgPostBtn.style.display = "block";
-                thumbNail.style.display = "block";
-                thumbNailLabel.style.display = "block";
-            }
-        };
-    }
-
-    imgEditRequest() {
-        const thumb = document.querySelector('#thumbNail'); //따로 등록
-        const msg =
-            (thumb.value === "") ?
+            (thumbNail.value === "") ?
             "이미지를 업로드 해주세요" :
             true;
 
@@ -596,23 +537,67 @@ class View {
             alert(msg);
             return false;
         }
+        const formElement = _u.$('#itemPostForm');
+        const formData = new FormData(formElement);
+        formData.append('itemName',encodeURIComponent(iName.value));
 
-        const param = `
-        thumbNail=${thumb.value}
-        `;
+        for (let value of formData.values()){
+            console.log("value:"+value)
+        }
         const xhr = new XMLHttpRequest();
 
-        xhr.open('PUT', './seller/modifyImg');
-        xhr.setRequestHeader('Content-type', 'multipart/form-data');
-        xhr.send(param);
+        xhr.open('POST', './seller/postItem', false);
+        xhr.send(formData);
+        xhr.setRequestHeader('Accept-Language', '*');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                let res = JSON.parse(xhr.responseText);
-                alert(res);
+                // let res = JSON.parse(xhr.responseText);
+                alert(xhr.responseText);
             }
         };
     }
 
+    fetchItemPost() {
+        const iN_ = document.querySelector('#itemName');
+        const C_ = document.querySelector('#category');
+        const sU_ = document.querySelector('#sellingUnit');
+        const pPU_ = document.querySelector('#pricePerUnit');
+        const tA_ = document.querySelector('#totalAmount');
+        const minA_ = document.querySelector('#minAmount');
+        const maxA_ = document.querySelector('#maxAmount');
+        const dc_ = document.querySelector('#discount');
+        const dp_ = document.querySelector('#description');
+    
+
+        const form = _u.$('#itemPostForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            formData.append('itemName', encodeURIComponent(iN_.value))
+            formData.append('category', C_.value)
+            formData.append('sellingUnit', sU_.value)
+            formData.append('pricePerUnit', pPU_.value)
+            formData.append('totalAmount', tA_.value)
+            formData.append('minAmount', minA_.value)
+            formData.append('maxAmount', maxA_.value)
+            formData.append('discount', dc_.value)
+            formData.append('description', encodeURIComponent(dp_.value))
+
+            fetch('./seller/postItem', {
+                method: 'post',
+                body: formData
+            }).then(function (response) {
+                return response.text();
+            }).then(function (text){
+                console.log(text);
+            }).catch(function (error) {
+                console.log(error);
+            })
+        })
+    }
+
+
+    // action="./seller/postItem" method="post"
     itemEditRequest() {
         const iName = document.querySelector('#itemName');
         const iCategory = document.querySelector('#itemCategory');
@@ -640,6 +625,8 @@ class View {
             "최대 단위를 입력해주세요" :
             (desc.value === "") ?
             "상품 설명을 입력해주세요" :
+            (thumbNail.value === "") ?
+            "이미지를 업로드 해주세요" :
             true;
 
         if (typeof (msg) === "string") {
@@ -651,15 +638,12 @@ class View {
         const xhr = new XMLHttpRequest();
 
         xhr.open('PUT', './seller/modifyItem');
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.setRequestHeader('Accept-Language', '*');
         xhr.send(param);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 let res = JSON.parse(xhr.responseText);
                 alert(res);
-                imgPostBtn.style.display = "block";
-                thumbNail.style.display = "block";
-                thumbNailLabel.style.display = "block";
             }
         };
     }

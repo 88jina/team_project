@@ -2,6 +2,7 @@ package com.farmers.register.config;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
+import org.springframework.http.*;
 import org.springframework.web.multipart.commons.*;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -40,4 +41,13 @@ public class ServletConfiguration implements WebMvcConfigurer {
 	    multipartResolver.setMaxUploadSize(50000000);
 	    return multipartResolver;
 	}
+	
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods(HttpMethod.POST.name())
+                .allowCredentials(false)
+                .maxAge(3600);
+    }
 }
