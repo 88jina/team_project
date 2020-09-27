@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
+import org.apache.commons.io.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
@@ -23,15 +24,14 @@ public class ItemPostService {
 	
 	//멀티파트파일-문자열 데이터타입 변환
 	public String convertDataType(MultipartHttpServletRequest req) throws UnsupportedEncodingException {
+		String userId = (String)session.getAttribute("userId");
 		MultipartFile file = req.getFile("thumbNail");
-		String path = "/home/jina01/img/";
-		String originFileName = file.getOriginalFilename();
-		String decoded =URLDecoder.decode(originFileName,"UTF-8");
+		String path = "/home/jina01/eclipse-workspace/farmers/src/main/webapp/resources/client/img/";
 		long fileSize = file.getSize();
-		System.out.println("FileName : "+decoded);
+		String originFileName =file.getOriginalFilename();
 		System.out.println("fileSize : "+fileSize);
-		
-		String safeFile = path+System.currentTimeMillis()+decoded;
+		String extension = FilenameUtils.getExtension(originFileName);
+		String safeFile = path+System.currentTimeMillis()+"_"+userId+"."+extension;
 		
 		try {
 			file.transferTo(new File(safeFile));
@@ -80,12 +80,12 @@ public class ItemPostService {
 	public Map<String, Object> myItemList(UserBean userBean) {
 		String sellerId = (String)session.getAttribute("userId");
 		System.out.println("판매자 아이디 :" + sellerId);
-		List<ItemDto> itemList = mapper.myItemList(sellerId);
-		List<ItemDto> list = new ArrayList<ItemDto>();
+		List<ItemBean> itemList = mapper.myItemList(sellerId);
+		List<ItemBean> list = new ArrayList<ItemBean>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		int count = 0;
 		for (int i = 0; i < itemList.size(); i++) {
-			ItemDto bean = new ItemDto();
+			ItemBean bean = new ItemBean();
 			System.out.println(itemList.get(i).getItemName());
 			bean.setItemId(itemList.get(i).getItemId());
 			bean.setSellerId(itemList.get(i).getSellerId());

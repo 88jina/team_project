@@ -145,6 +145,7 @@ class View {
     }
 
     footerNav() {
+        // const that = this;
         _u.addEvent('#homePage', 'click', () => {
             this.switchPage('#h_p_t');
         });
@@ -169,7 +170,7 @@ class View {
     loginPage() {
         _u.addEvent('#loginExit', 'click', () => this.switchPage('#h_p_t'));
         _u.addEvent('#join', 'click', () => this.switchPage('#j_p_t', this.joinPage.bind(this)));
-        _u.addEvent('#loginBtn', 'click', this.sendAjax.bind(this));
+        _u.addEvent('#loginBtn', 'click', this.loginPostReq.bind(this));
     }
 
     topNav() {
@@ -567,12 +568,16 @@ class View {
         const maxA_ = document.querySelector('#maxAmount');
         const dc_ = document.querySelector('#discount');
         const dp_ = document.querySelector('#description');
-    
+        const tN_ = document.querySelector('#thumbNail');
+
 
         const form = _u.$('#itemPostForm');
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const formData = new FormData(this);
+            const myImg = tN_.files[0];
+            // const encoded = encodeURIComponent(myImg.name);
+
+            const formData = new FormData();
             formData.append('itemName', encodeURIComponent(iN_.value))
             formData.append('category', C_.value)
             formData.append('sellingUnit', sU_.value)
@@ -582,7 +587,8 @@ class View {
             formData.append('maxAmount', maxA_.value)
             formData.append('discount', dc_.value)
             formData.append('description', encodeURIComponent(dp_.value))
-
+            formData.append('thumbNail', myImg)
+            
             fetch('./seller/postItem', {
                 method: 'post',
                 body: formData
@@ -737,7 +743,7 @@ class View {
                 if (resArr[1] === undefined) {
                     alert('등록하신 상품이 없습니다.');
                 } else {
-                    that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(this))
+                    that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(that))
                     alert(resArr[1].msg);
                 }
             } else if (xhr.readyState == 4 && xhr.status == 404) {
@@ -787,7 +793,7 @@ class View {
         }
     }
 
-    sendAjax() {
+    loginPostReq() {
         let that = this;
         const loginId = document.getElementById('loginId');
         const userPw = document.getElementById('loginPw');
@@ -802,7 +808,7 @@ class View {
                 let res = JSON.parse(xhr.responseText);
                 switch (res.loggedIn) {
                     case true:
-                        that.switchTo('#m_p_t', _t.__mpT(res), that.myPage.bind(this));
+                        that.switchTo('#m_p_t', _t.__mpT(res), that.myPage.bind(that));
                         break;
                     case false:
                         alert(res.errorMsg);

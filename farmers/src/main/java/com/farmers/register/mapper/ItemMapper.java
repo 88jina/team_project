@@ -24,7 +24,7 @@ public interface ItemMapper {
 	
 	// 내상품목록보기(판매자)
 	@Select("SELECT * FROM items WHERE sellerId=#{sellerId}")
-	public List<ItemDto> myItemList(String sellerId);
+	public List<ItemBean> myItemList(String sellerId);
 
 	// 상품등록
 	@Insert("INSERT INTO items (thumbNail,sellerId,itemName,category,sellingUnit,totalAmount,description,pricePerUnit,maxAmount,minAmount,discount) "

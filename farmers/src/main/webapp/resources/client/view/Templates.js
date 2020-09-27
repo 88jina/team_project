@@ -576,7 +576,7 @@ const itemPostPageTemplate = `
             <textarea class="pd-a-10px fs-xl width-100" height-200px" name="description" id="description" placeholder="상품 설명을 입력해주세요" required></textarea>
         </div>
         <div>
-            <form id="itemPostForm" enctype="multipart/form-data">
+            <form id="itemPostForm">
                 <div class="flex-col ">
                     <label class=" mg-t-10px pd-a-10px fs-xl width-350px t-center" for="thumbNail" id="thumbNailLabel">상품 사진:</label>
                     <input class=" pd-a-10px fs-xl width-100" type="file" name="thumbNail" id="thumbNail" accept=".png, .jpg, .jpeg" multiple required>
@@ -608,6 +608,17 @@ const itemEditListPageTemplate = (data = true) => {
             const list = Object.values(data);
             let i = data.count;
             do {
+                let imgRoot = list[i].thumbNail;
+
+                img: switch (imgRoot) {
+                    case null:
+                        imgRoot= '/img/noItem'
+                        break img;
+                    default:
+                        break img;
+                };
+                
+                const imgPath = imgRoot.split('webapp')[1];
                 const template = document.getElementById('i_e_l_p_t')
                 template.innerHTML =
                     `<ul class="i_e_l_c_e">
@@ -615,7 +626,7 @@ const itemEditListPageTemplate = (data = true) => {
                         </div>
                         <li class="flex-col center ">
                             <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
-                                <img src="${list[i].thumbNail}" alt="이미지가 로드되지 않았습니다." srcset="">
+                                <img src="http://192.168.1.137:8090/farmers${imgPath}" alt="이미지가 로드되지 않았습니다." srcset="">
                             </div>
                             <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
                                 <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>

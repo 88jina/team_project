@@ -7,66 +7,57 @@ class Util {
 
 
     showMainPage(selector, result, main, event = () => {return;}) {
-        const self = this;
-        const template = self.$(selector);
+        const template = _u.$(selector);
         template.innerHTML = result;
         main.appendChild(template.content.cloneNode(true)).onload = event();
 
     }
 
     mkElement(selector, Template, that) {
-        const self = this;
-        const template = self.$(selector);
+        const template = _u.$(selector);
         template.innerHTML = Template;
         that.appendChild(template.content.cloneNode(true));
         return that;
     }
 
     addElement(selector1, selector2) {
-        const self = this;
-        const template = self.$(selector1);
-        const parent = self.$(selector2);
+        const template = _u.$(selector1);
+        const parent = _u.$(selector2);
         parent.appendChild(template.content.cloneNode(true));
         return parent.firstElementChild;
     }
 
     addElements(template, parent, ...selectors) {
-        const self = this;
-        const tem = self.$(template);
+        const tem = _u.$(template);
         parent.appendChild(tem.content.cloneNode(true));
-
         for (let i = 0, s_l = selectors.length; i < s_l; i++) {
             console.log("selectors[i]:" + selectors[i]);
-            parent.$(selectors[i]).appendChild(self.$(selectors[i]));
+            parent.$(selectors[i]).appendChild(_u.$(selectors[i]));
         }
     }
 
     addElement_withEvent(selector1, selector2, func = () => {
         return;
     }) {
-        const self = this;
-        self.addElement(selector1, selector2).onload = func();
+        _u.addElement(selector1, selector2).onload = func();
     }
 
 
     rmElements() {
         console.log(arguments);
-        const self = this;
         for (let arg of arguments) {
             console.log("arg:" + arg);
             console.log("arguments:" + arguments);
-            self.$(arg).parentNode.removeChild(self.$(arg));
+            _u.$(arg).parentNode.removeChild(_u.$(arg));
         }
     }
 
     addEvent(selector, trigger, callback) {
-        const self = this;
-        self.$(selector).addEventListener(trigger, callback);
+        _u.$(selector).addEventListener(trigger, callback);
     }
 
     rmEvent(selector, trigger, callback) {
-        const self = this;
-        self.$(selector).removeEventListener(trigger, callback);
+        _u.$(selector).removeEventListener(trigger, callback);
     }
 
 

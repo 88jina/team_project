@@ -34,6 +34,7 @@ public class ItemController {
 	public ItemBean postItem(MultipartHttpServletRequest mr, ItemDto itemDto) throws UnsupportedEncodingException {
 		ItemBean itemBean = new ItemBean();
 		itemBean=service.postItem(itemDto, mr);
+		System.out.println(itemBean.getThumbNail());
 		return itemBean;
 	}
 

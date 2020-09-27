@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="webapp/views/admin/index.css">
+    <link rel="stylesheet" href="/farmers/src/webapp/views/admin/index.css">
     <title>Document</title>
 </head>
 <body>
