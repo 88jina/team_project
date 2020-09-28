@@ -18,7 +18,16 @@ public class UserBean {
 	private String degree;
 	private String userType;
 	private int availablePoint;
+	private boolean isLoggedIn;
 	
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
 	public int getAvailablePoint() {
 		return availablePoint;
 	}

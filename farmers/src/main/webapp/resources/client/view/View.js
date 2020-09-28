@@ -149,7 +149,7 @@ class View {
         _u.addEvent('#homePage', 'click', () => {
             this.switchPage('#h_p_t');
         });
-//로컬테스트용
+        //로컬테스트용
         // _u.addEvent('#myPage', 'click', () => {
         //     this.switchTo('#m_p_t', _t.__mpT(_m._loginSellerDummy()), this.myPage.bind(this));
         // });
@@ -192,16 +192,36 @@ class View {
 
     homePage() {
         _u.$('#main').onload = setInterval(this.slider, 2000);
-        _u.addEvent('.c-item1','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.c-item2','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.c-item3','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.c-item4','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.c-item5','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.s-item1','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.s-item2','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.s-item3','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.s-item4','click',()=>{this.switchTo(p,d,e)});
-        _u.addEvent('.s-item5','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.c-item1', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.c-item2', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.c-item3', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.c-item4', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.c-item5', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.s-item1', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.s-item2', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.s-item3', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.s-item4', 'click', () => {
+            this.switchTo(p, d, e)
+        });
+        _u.addEvent('.s-item5', 'click', () => {
+            this.switchTo(p, d, e)
+        });
     }
 
     joinPage() {
@@ -266,7 +286,7 @@ class View {
                 (firstSlide.classList.add('show'), lastSlide.classList.remove('show')) :
                 console.log('error');
         } else {
-            _u.$('#main').removeEventListener('load', ()=> setInterval(this.slider, 2000));
+            _u.$('#main').removeEventListener('load', () => setInterval(this.slider, 2000));
             return;
         }
     }
@@ -288,20 +308,16 @@ class View {
 
     ifLoggedInMoveTo(thisPage, event) {
         let that = this;
-        const cookie = document.cookie.split('loginCookie=')[1];
-        // const rgx = /([A-z]|[0-9])\w+/;
-        if (cookie !== undefined) {
-            console.log('cookie:' + cookie);
-            const req = cookie;
-            const res = this.getUserData(req);
+        const loginId = sessionStorage.loginId;
+        if (loginId) {
+            const res = this.getUserData(loginId);
             if (res === "") {
                 alert('res is null');
-                //로컬에서 기능 테스트를 위해 .나중에 홈으로 바꿀 것 
                 that.switchPage('#l_p_t', that.loginPage.bind(this));
             } else {
                 this.switchTo(thisPage, _t.__mpT(res), event);
             }
-        } else if (cookie === undefined) {
+        } else if (loginId === undefined) {
             alert('로그인을 해주세요');
             this.switchPage('#l_p_t', this.loginPage.bind(this));
         }
@@ -320,7 +336,7 @@ class View {
         _u.addEvent('#orderHistory', 'click', this.switchPage.bind(this));
         _u.addEvent('#deliveryPolicy', 'click', this.switchPage.bind(this));
         _u.addEvent('#editMyInfo', 'click', this.switchPage.bind(this));
-        _u.addEvent('#logOut', 'click', this.switchPage.bind(this));
+        _u.addEvent('#logOut', 'click', this.logOut.bind(this));
         const userType = _u.$('#userType').innerText;
         switch (userType) {
             case "판매자":
@@ -334,6 +350,36 @@ class View {
             default:
                 break;
         }
+    }
+
+    deleteCookie(name) {
+        if (this.getCookie(name)) {
+            document.cookie = name + "=" +
+                ((path) ? ";path=" + path : "") +
+                ((domain) ? ";domain=" + domain : "") +
+                ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        }
+    }
+
+    getCookie(name) {
+        return document.cookie.split(';').some(c => {
+            return c.trim().startsWith(name + '=');
+        });
+    }
+
+    logOut() {
+        const that = this;
+        fetch('./logOut', {
+            method: 'get'
+        }).then(function (response) {
+        	sessionStorage.removeItem('loginId');
+            that.switchPage('#h_p_t').bind(that);
+            return response.text();
+        }).then(function (text) {
+            console.log(text);
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toAdmin() {
@@ -497,7 +543,7 @@ class View {
         let that = this;
         that.res = "";
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', './api/myPage?loginId=' + userId, false);
+        xhr.open('POST', './api/myPage', false);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -556,10 +602,10 @@ class View {
         }
         const formElement = _u.$('#itemPostForm');
         const formData = new FormData(formElement);
-        formData.append('itemName',encodeURIComponent(iName.value));
+        formData.append('itemName', encodeURIComponent(iName.value));
 
-        for (let value of formData.values()){
-            console.log("value:"+value)
+        for (let value of formData.values()) {
+            console.log("value:" + value)
         }
         const xhr = new XMLHttpRequest();
 
@@ -603,16 +649,16 @@ class View {
             formData.append('discount', dc_.value)
             formData.append('description', encodeURIComponent(dp_.value))
 
-            for (let i =0, f = tN_.files; i<f.length; i++){
+            for (let i = 0, f = tN_.files; i < f.length; i++) {
                 formData.append('thumbNail', f[i]);
             }
-            
+
             fetch('./seller/postItem', {
                 method: 'post',
                 body: formData
             }).then(function (response) {
                 return response.text();
-            }).then(function (text){
+            }).then(function (text) {
                 console.log(text);
             }).catch(function (error) {
                 console.log(error);
@@ -774,34 +820,35 @@ class View {
     itemEditGetRequest() {
         let that = this;
         //itemId 
-        const req = document.cookie.split('loginCookie=')[1];
-        if (req !== undefined) {
-            const res = getReq(req);
-            if (res === "") {
-                alert('res is null f getReq err');
-                that.switchPage('#l_p_t', that.loginPage.bind(this));
-            } else {
-                this.switchTo('#m_p_t', _t.__ielpT(res), that.itemEditListPage.bind(this));
-            }
-        } else if (req === undefined) {
-            alert('로그인을 해주세요');
-            this.switchPage('#l_p_t', this.loginPage.bind(this));
-        }
+        // const req = document.cookie.split('loginCookie=')[1];
+        // if (req !== undefined) {
+        //     const res = getReq(req);
+        //     if (res === "") {
+        //         alert('res is null f getReq err');
+        //         that.switchPage('#l_p_t', that.loginPage.bind(this));
+        //     } else {
+        //         this.switchTo('#m_p_t', _t.__ielpT(res), that.itemEditListPage.bind(this));
+        //     }
+        // } else if (req === undefined) {
+        //     alert('로그인을 해주세요');
+        //     this.switchPage('#l_p_t', this.loginPage.bind(this));
+        // }
 
-        function getReq() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', './seller/callItem');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    let res = JSON.parse(xhr.responseText);
-                    alert(res);
-                    that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(this))
-                } else if (xhr.readyState == 4 && xhr.status == 404) {
-                    alert('404 에러');
-                }
-            };
-        }
+        // function getReq() {
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', './seller/callItem');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                let res = JSON.parse(xhr.responseText);
+                alert(res);
+                that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(this))
+            } else if (xhr.readyState == 4 && xhr.status == 404) {
+                alert('404 에러');
+            }
+        };
+        // }
     }
 
     duplChk(value) {
@@ -826,6 +873,7 @@ class View {
                 let res = JSON.parse(xhr.responseText);
                 switch (res.loggedIn) {
                     case true:
+                        sessionStorage.setItem('loginId', res.loginId);
                         that.switchTo('#m_p_t', _t.__mpT(res), that.myPage.bind(that));
                         break;
                     case false:

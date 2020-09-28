@@ -21,8 +21,8 @@ public interface UserMapper {
 	public List<LoginBean> checkUserInfo(LoginBean loginBean);
 	
 	//마이페이지
-	@Select("SELECT * FROM users WHERE loginId=#{loginId}")
-	public List<UserBean> getUserInfo(UserBean userBean);
+	@Select("SELECT * FROM users WHERE userId=#{userId}")
+	public List<UserBean> getUserInfo(String userId);
 
 
 }

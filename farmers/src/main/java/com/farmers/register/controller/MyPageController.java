@@ -1,5 +1,7 @@
 package com.farmers.register.controller;
 
+import javax.servlet.http.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +15,10 @@ public class MyPageController {
 	MyPageService service;
 	
 	@RequestMapping(value="/api/myPage", method=RequestMethod.POST)
-	public UserBean getMyPage(UserBean userBean) {
-		
-		System.out.println(userBean.getLoginId());
+	public UserBean getMyPage(HttpSession session) {
+		System.out.println("controller started");
 		UserBean bean = new UserBean();
-		
-		bean = service.getUserInfo(userBean);
+		bean = service.getUserInfo(session);
 		System.out.println("mypage service done");
 		return bean;
 	}

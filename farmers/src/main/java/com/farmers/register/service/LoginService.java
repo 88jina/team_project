@@ -12,7 +12,9 @@ import com.farmers.register.mapper.*;
 public class LoginService {
 	@Autowired
 	UserMapper userMapper;
-
+	
+	
+   //로그인할때 유저 정보 리턴해주기
 	public LoginBean getUserInfo(LoginBean loginBean) {
 		List<LoginBean> list = userMapper.checkUserInfo(loginBean);
 		LoginBean bean = new LoginBean();
