@@ -90,7 +90,7 @@ const subTopNavTemplate = `
 //----------------page templates--------------------
 
 const homePageTemplate = `
-<div class="h_p_e page container">
+<div class="h_p_e page bgc-ggrn container">
     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -100,37 +100,51 @@ const homePageTemplate = `
     <span class="sr-only">Next</span>
     </a>
 
-    <div class="carousel-inner container">
-        <div class="carousel-item show">
-          <img src="/farmers/resources/client/img/cheese.jpg" class="d-block w-100" alt="...">
+    <div class="carousel-inner containerH">
+        <div class="carousel-item c-item1 show">
+          <img src="/farmers/resources/client/img/vegij1.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
-            <h5>First slide label</h5>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            <h4 class="fw-7">청정 오이</h4>
+            <p class="">이것은 오이입니다.</p>
           </div>
         </div>
-        <div class="carousel-item">
-          <img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-item c-item2">
+          <img src="/farmers/resources/client/img/vegij2.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
-            <h5>Second slide label</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h4 class="fw-7">청정 풋고추</h4>
+            <p class="">이것은 풋고추입니다.</p>
           </div>
         </div>
-        <div class="carousel-item">
-          <img src="/farmers/resources/client/img/Instant-Pot-Oatmeal-007.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-item c-item3">
+          <img src="/farmers/resources/client/img/vegij3.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
-            <h5>Third slide label</h5>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            <h4 class="fw-7">청정 무농약 상추</h4>
+            <p class="">이것은 농약을 사용 안한 상추입니다.</p>
+          </div>
+        </div>
+        <div class="carousel-item c-item4">
+          <img src="/farmers/resources/client/img/vegij4.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h4 class="fw-7">청정 해남 마늘</h4>
+            <p class="">이것은 마늘입니다. 마늘.</p>
+          </div>
+        </div>
+        <div class="carousel-item c-item5">
+          <img src="/farmers/resources/client/img/vegij5.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h4 class="fw-7">청정 구워 먹는 대파</h4>
+            <p class="">이것은 고기랑 구워 먹으면 맛있습니다.</p>
           </div>
         </div>
     </div>
 
-    <nav class="container">
-        <div class="item-slider flex-row">
-          <div class="item mg-a-10px flex-row"><img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" alt="" srcset=""></div>
-          <div class="item mg-a-10px flex-row"><img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" alt="" srcset=""></div>
-          <div class="item mg-a-10px flex-row"><img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" alt="" srcset=""></div>
-          <div class="item mg-a-10px flex-row"><img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" alt="" srcset=""></div>
-          <div class="item mg-a-10px flex-row"><img src="/farmers/resources/client/img/redMeat-849360782-770x553.jpg" alt="" srcset=""></div>
+    <nav class="width-90 center parent">
+        <div class="item-slider flex-row child">
+          <div class="s-item1 item mg-a-10px flex-row"><img src="/farmers/resources/client/img/vegij1.jpg" alt="" srcset=""></div>
+          <div class="s-item2 item mg-a-10px flex-row"><img src="/farmers/resources/client/img/vegij2.jpg" alt="" srcset=""></div>
+          <div class="s-item3 item mg-a-10px flex-row"><img src="/farmers/resources/client/img/vegij3.jpg" alt="" srcset=""></div>
+          <div class="s-item4 item mg-a-10px flex-row"><img src="/farmers/resources/client/img/vegij4.jpg" alt="" srcset=""></div>
+          <div class="s-item5 item mg-a-10px flex-row"><img src="/farmers/resources/client/img/vegij5.jpg" alt="" srcset=""></div>
         </div>
     </nav>
 
@@ -245,7 +259,6 @@ const mailAuthTemplate = `
     </div>
 </div>
 `
-
 const myPageTemplate = (data = true) => {
     let res = data;
 
@@ -612,12 +625,12 @@ const itemEditListPageTemplate = (data = true) => {
 
                 img: switch (imgRoot) {
                     case null:
-                        imgRoot= '/img/noItem'
+                        imgRoot = '/img/noItem.jpg'
                         break img;
                     default:
                         break img;
                 };
-                
+                const origin = location.origin;
                 const imgPath = imgRoot.split('webapp')[1];
                 const template = document.getElementById('i_e_l_p_t')
                 template.innerHTML =
@@ -626,7 +639,7 @@ const itemEditListPageTemplate = (data = true) => {
                         </div>
                         <li class="flex-col center ">
                             <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
-                                <img src="http://192.168.1.137:8090/farmers${imgPath}" alt="이미지가 로드되지 않았습니다." srcset="">
+                                <img src="${origin}/farmers${imgPath}" alt="이미지가 로드되지 않았습니다." srcset="">
                             </div>
                             <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
                                 <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>
@@ -728,7 +741,7 @@ const dealPageTemplate =
     <div class="page bgc-ggrn">
         <div class="container deal-item">
             <div class="width-90 center item">
-                <img class="" id="dealPageItem1" src="/farmers/resources/client/img/cheese.jpg" alt="상품 이미지">
+                <img class="" id="dealPageItem1" src="/farmers/resources/client/img/vegij1.jpg" alt="상품 이미지">
                 <div class="item-desc round-10px pd-a-3px mg-a-1px ap-l-1" id="time">남은 time</div>
                 <div class="item-desc round-10px pd-a-3px mg-a-1px ap-l-2" id="count">참여중인 인원</div>
                 <div class="item-desc round-10px pd-a-3px mg-a-1px ap-l-3" id="first-price">최초 가격</div>
@@ -769,7 +782,7 @@ const dealPageTemplate =
 const itemPageTemplate = `
 <div class="i_p_e container">
     <div class="flex-col page bgc-lgrn">
-        <img class="" src="/farmers/resources/client/img/cheese.jpg" alt="상품 이미지">
+        <img class="" src="/farmers/resources/client/img/vegij1.jpg" alt="상품 이미지">
         <div class="item-nav bgc-wgrn flex-row just-around">
             <nav class="bgc-wgrn width-100 t-center pd-a-10px"><i class="fas c-lgrn pd-a-5px fa-seedling"></i>찜</nav>
             <nav class="bgc-wgrn width-100 t-center pd-a-10px"><i class="fas c-lgrn pd-a-5px fa-share-square"></i>공유</nav>
@@ -811,7 +824,7 @@ const reviewPageTemplate = `
                 </div>
                 <div class="flex-row just-between">
                     <div class="mg-a-10px img-box-140px">
-                        <img src="/farmers/resources/client/img/cheese.jpg" alt="item-image" class="item-img">
+                        <img src="/farmers/resources/client/img/vegij1.jpg" alt="item-image" class="item-img">
                     </div>
                     <div class="mleft">
                         <div class="mg-t-10px pd-a-10px">상품 이름</div>
@@ -869,7 +882,7 @@ const wishlistPageTemplate = (callback = function () {
             </div>
             <div class="pd-a-15px flex-row left">
                 <div class="img-box-140px">
-                    <img src="/farmers/resources/client/img/cheese.jpg" alt="" class="item-img">
+                    <img src="/farmers/resources/client/img/vegij1.jpg" alt="" class="item-img">
                 </div>
                 <div class="pd-a-10px">
                     <div class="pd-lr-10px">생산자: ${res.sellerName}</div>

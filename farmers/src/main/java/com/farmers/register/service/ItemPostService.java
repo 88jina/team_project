@@ -42,12 +42,41 @@ public class ItemPostService {
 		}
 		return safeFile;
 	}
+	
+	//다중 파일 데이터 타입 변환
+	public String convertDataListType(MultipartHttpServletRequest req) throws UnsupportedEncodingException {
+		String userId = (String)session.getAttribute("userId");
+		List<MultipartFile> fileList = req.getFiles("thumbNail");
+		String path = "/home/jina01/eclipse-workspace/farmers/src/main/webapp/resources/client/img/";
+		
+		String totalFile="";
+		
+		for(MultipartFile file : fileList) {
+			long fileSize = file.getSize();
+			System.out.println("fileSize : "+fileSize);
+			String originFileName =file.getOriginalFilename();
+			String extension = FilenameUtils.getExtension(originFileName);
+			String safeFile = path+System.currentTimeMillis()+"_"+userId+"."+extension;
+			
+			totalFile=totalFile+","+safeFile;
+			try {
+				file.transferTo(new File(safeFile));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}catch(IllegalStateException e){
+				e.printStackTrace();
+			}
+		}
+		
+		return totalFile;
+	}
 
 	// 상품등록
 	public ItemBean postItem(ItemDto itemDto, MultipartHttpServletRequest req) throws UnsupportedEncodingException {
 		String sellerId = (String)session.getAttribute("userId");
 		itemDto.setSellerId(sellerId);
-		String thumbNail = convertDataType(req);
+//		String thumbNail = convertDataType(req);
+		String thumbNail = convertDataListType(req);
 		String itemName = URLDecoder.decode(itemDto.getItemName(),"UTF-8");
 		String description = URLDecoder.decode(itemDto.getDescription(), "UTF-8");
 		ItemBean itemBean = new ItemBean();

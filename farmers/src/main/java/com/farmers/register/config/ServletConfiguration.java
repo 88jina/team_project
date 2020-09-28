@@ -7,6 +7,7 @@ import org.springframework.web.multipart.commons.*;
 import org.springframework.web.servlet.config.annotation.*;
 
 import com.farmers.register.beans.*;
+import com.farmers.register.interceptor.*;
 
 @Configuration
 @EnableWebMvc
@@ -29,11 +30,11 @@ public class ServletConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(new LoginInterceptor(loginBean)).addPathPatterns("/admin/**");
-//		WebMvcConfigurer.super.addInterceptors(registry);
-//	}
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoginInterceptor(loginBean)).addPathPatterns("/admin/**");
+		WebMvcConfigurer.super.addInterceptors(registry);
+	}
 	
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver() {

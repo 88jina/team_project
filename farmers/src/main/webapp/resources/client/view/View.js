@@ -192,6 +192,16 @@ class View {
 
     homePage() {
         _u.$('#main').onload = setInterval(this.slider, 2000);
+        _u.addEvent('.c-item1','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.c-item2','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.c-item3','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.c-item4','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.c-item5','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.s-item1','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.s-item2','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.s-item3','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.s-item4','click',()=>{this.switchTo(p,d,e)});
+        _u.addEvent('.s-item5','click',()=>{this.switchTo(p,d,e)});
     }
 
     joinPage() {
@@ -319,12 +329,17 @@ class View {
                 _u.addEvent('#destinationEdit', 'click', this.switchPage.bind(this));
                 break;
             case "관리자":
-                _u.addEvent('#toAdminPage', 'click', this.switchPage.bind(this));
+                _u.addEvent('#toAdminPage', 'click', this.toAdmin.bind(this));
                 break;
             default:
                 break;
         }
     }
+
+    toAdmin() {
+        location.href += 'admin/userView/';
+    }
+
 
     itemPostPage() {
         _u.addEvent('#itemPostBtn', 'click', this.fetchItemPost.bind(this));
@@ -397,6 +412,7 @@ class View {
 
         _u.addElement_withEvent(pageTemplate, 'main', addEventFunction);
     }
+
 
     switchTo(page, data, event) {
         const currentPage = _u.$('main').firstElementChild;
@@ -574,9 +590,8 @@ class View {
         const form = _u.$('#itemPostForm');
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const myImg = tN_.files[0];
-            // const encoded = encodeURIComponent(myImg.name);
 
+            // const encoded = encodeURIComponent(myImg.name);
             const formData = new FormData();
             formData.append('itemName', encodeURIComponent(iN_.value))
             formData.append('category', C_.value)
@@ -587,7 +602,10 @@ class View {
             formData.append('maxAmount', maxA_.value)
             formData.append('discount', dc_.value)
             formData.append('description', encodeURIComponent(dp_.value))
-            formData.append('thumbNail', myImg)
+
+            for (let i =0, f = tN_.files; i<f.length; i++){
+                formData.append('thumbNail', f[i]);
+            }
             
             fetch('./seller/postItem', {
                 method: 'post',

@@ -24,7 +24,7 @@ public class AdminFunctionController {
 	}
 
 	// 아이디로 회원 검색
-	@RequestMapping(value = "/admin/selectById", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/userView/selectById", method = RequestMethod.GET)
 	public String searchAdmin(AdminBean adminBean, Model model) {
 		List<AdminBean> list = service.searchUser(adminBean);
 		model.addAttribute("selectById", list);

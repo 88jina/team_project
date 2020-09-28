@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/farmers/src/webapp/views/admin/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/index.css">
     <title>Document</title>
 </head>
 <body>
