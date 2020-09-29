@@ -621,42 +621,85 @@ const itemEditListPageTemplate = (data = true) => {
             const list = Object.values(data);
             let i = data.count;
             do {
-                let imgRoot = list[i].thumbNail;
+                function getPath(list) {
+                    let imgRoot;
+                    imgRoot = list[i].thumbNail;
+                    if (imgRoot === null) {
+                        imgRoot = '/img/noItem.jpg';
+                        const path = imgRoot;
+                        return path;
+                    } else if (imgRoot.startsWith(',')) {
+                        const imgs = imgRoot.split(',');
+                        const path = [];
+                        for (let j = 1, l = imgs.length; j < l; j++) {
+                            console.log('getpath:::' + imgs[j].split('webapp')[1]);
+                            path.push(imgs[j].split('webapp')[1])
+                        }
+                        return path;
+                    };
+                }
 
-                img: switch (imgRoot) {
-                    case null:
-                        imgRoot = '/img/noItem.jpg'
-                        break img;
-                    default:
-                        break img;
-                };
+                const path = getPath(list);
                 const origin = location.origin;
-                const imgPath = imgRoot.split('webapp')[1];
                 const template = document.getElementById('i_e_l_p_t')
-                template.innerHTML =
-                    `<ul class="i_e_l_c_e">
-                        <div class="">
-                        </div>
-                        <li class="flex-col center ">
-                            <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
-                                <img src="${origin}/farmers${imgPath}" alt="이미지가 로드되지 않았습니다." srcset="">
-                            </div>
-                            <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
-                                <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>
-                                <div id="category${i}" class="mg-a-10px pd-a-10px width-100">${list[i].category}</div>
-                                <div id="sellingUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].sellingUnit}</div>
-                                <div id="totalAmount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].totalAmount}</div>
-                                <div id="description${i}" class="mg-a-10px pd-a-10px width-100">${list[i].description}</div>
-                                <div id="pricePerUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].pricePerUnit}</div>
-                                <div id="discount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].discount}</div>
-                            </div>
-                            <button id="editThisBtn${i}" type="submit">수정하기</button>
-                        </li>
-                    </ul>`
-                window.localStorage.setItem(`itemId${i}`, `${list[i].itemId}`);
-                window.localStorage.setItem(`sellerId${i}`, `${list[i].sellerId}`);
-                _ielpe.appendChild(template.content.cloneNode(true));
-                --i;
+                img: switch (typeof (path)) {
+                        case 'object':
+                            template.innerHTML =
+                                `<ul class="i_e_l_c_e">
+                                        <li class="flex-col center ">
+                                        
+                                            <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
+                                            </div>
+                                        
+                                            <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
+                                                <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>
+                                                <div id="category${i}" class="mg-a-10px pd-a-10px width-100">${list[i].category}</div>
+                                                <div id="sellingUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].sellingUnit}</div>
+                                                <div id="totalAmount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].totalAmount}</div>
+                                                <div id="description${i}" class="mg-a-10px pd-a-10px width-100">${list[i].description}</div>
+                                                <div id="pricePerUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].pricePerUnit}</div>
+                                                <div id="discount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].discount}</div>
+                                            </div>
+                                            <button id="editThisBtn${i}" type="submit">수정하기</button>
+                                        </li>
+                                    </ul>`
+                            _ielpe.appendChild(template.content.cloneNode(true));
+                            const imgContainer = document.getElementById(`itemThumb${i}`);
+                            for (let j = 0, l = path.length; j < l; j++) {
+                                let imgNode = document.createElement('img');
+                                imgNode.src = `${origin}/farmers${path[j]}`;
+                                imgContainer.appendChild(imgNode);
+                            }
+                            window.localStorage.setItem(`itemId${i}`, `${list[i].itemId}`);
+                            window.localStorage.setItem(`sellerId${i}`, `${list[i].sellerId}`);
+                            break img;
+                        case 'string':
+                            template.innerHTML =
+                                `<ul class="i_e_l_c_e">
+                                <li class="flex-col center ">
+        
+                                    <div id="itemThumb${i}" class="mg-a-10px pd-a-10px width-100">
+                                        <img src="${origin}/farmers${path}" alt="이미지가 로드되지 않았습니다." srcset="">
+                                    </div>
+                                
+                                    <div id="itemDescBox${i}" class="mg-a-10px pd-a-10px width-100 flex-col">
+                                        <div id="itemName${i}" class="mg-a-10px pd-a-10px width-100">${list[i].itemName}</div>
+                                        <div id="category${i}" class="mg-a-10px pd-a-10px width-100">${list[i].category}</div>
+                                        <div id="sellingUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].sellingUnit}</div>
+                                        <div id="totalAmount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].totalAmount}</div>
+                                        <div id="description${i}" class="mg-a-10px pd-a-10px width-100">${list[i].description}</div>
+                                        <div id="pricePerUnit${i}" class="mg-a-10px pd-a-10px width-100">${list[i].pricePerUnit}</div>
+                                        <div id="discount${i}" class="mg-a-10px pd-a-10px width-100">${list[i].discount}</div>
+                                    </div>
+                                    <button id="editThisBtn${i}" type="submit">수정하기</button>
+                                </li>
+                            </ul>`
+                            window.localStorage.setItem(`itemId${i}`, `${list[i].itemId}`);
+                            window.localStorage.setItem(`sellerId${i}`, `${list[i].sellerId}`);
+                            _ielpe.appendChild(template.content.cloneNode(true));
+                            break img;
+                    }
+                    --i;
             } while (i > 0);
             return _ielpe.parentNode.innerHTML;
     }

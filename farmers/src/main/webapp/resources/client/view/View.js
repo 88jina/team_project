@@ -372,7 +372,7 @@ class View {
         fetch('./logOut', {
             method: 'get'
         }).then(function (response) {
-        	sessionStorage.removeItem('loginId');
+            sessionStorage.removeItem('loginId');
             that.switchPage('#h_p_t').bind(that);
             return response.text();
         }).then(function (text) {
@@ -543,7 +543,7 @@ class View {
         let that = this;
         that.res = "";
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', './api/myPage', false);
+        xhr.open('POST', './api/myPage?loginId=' + userId, false);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -621,6 +621,7 @@ class View {
     }
 
     fetchItemPost() {
+        const that = this;
         const iN_ = document.querySelector('#itemName');
         const C_ = document.querySelector('#category');
         const sU_ = document.querySelector('#sellingUnit');
@@ -660,6 +661,8 @@ class View {
                 return response.text();
             }).then(function (text) {
                 console.log(text);
+                alert(text.msg);
+                that.switchTo('#m_p_t', _t.__mpT(res), that.myPage.bind(that));
             }).catch(function (error) {
                 console.log(error);
             })
@@ -807,10 +810,12 @@ class View {
                 if (resArr[1] === undefined) {
                     alert('등록하신 상품이 없습니다.');
                 } else {
-                    that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(that))
-                    alert(resArr[1].msg);
+                    //page, data, event
+                    that.switchTo('#i_e_l_p_t', _t.__ielpT(res), that.itemEditListPage.bind(that));
                 }
             } else if (xhr.readyState == 4 && xhr.status == 404) {
+                //로컬테스트
+                // that.switchTo('#i_e_l_p_t', _t.__ielpT(_m._itemEditListDummy()), that.itemEditListPage.bind(that));
                 alert('404 에러');
             }
         };

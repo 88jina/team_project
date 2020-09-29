@@ -15,6 +15,7 @@
     <div class="searchBox">
 <form action="selectById" method="get"><p>아이디로 찾기</p><input type="text" name="loginId"/><button type="submit">검색</button></form></div>
 <div class="table">
+<a href=http://192.168.1.137:8090/farmers>메인페이지로</a>
 <table>
 <tr>
 <td><p>회원번호</p></td>
